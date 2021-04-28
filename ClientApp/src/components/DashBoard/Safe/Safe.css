@@ -1,0 +1,30 @@
+.div_safe {
+    float: left;
+    margin-left: 2%;
+    margin-right: 2%;
+    width: 52%;
+}
+
+.div_safe_options {
+    border-bottom: 1px solid lightgray;
+}
+
+#btn_add_account, #btn_item_settings {
+    float: right;
+    background-color: lightgray;
+    border: none;
+    margin-top: 4%;
+    border-radius: 5px;
+}
+
+#btn_item_settings {
+    margin-right: 3%;
+}
+
+#lbl_safe {
+    border: none;
+    color: black;
+    font-size: 40px;
+    font-weight: 400;
+    display: inline;
+}

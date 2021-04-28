@@ -1,0 +1,76 @@
+.div_SafeSideBar {
+    float: left;
+    border: 1px solid black;
+    width: 23%;
+    overflow: auto;
+    margin-top: 2%;
+}
+
+.div_safesidebar_navigation {
+    margin-top: 12%;
+    margin-bottom: 8%;
+    margin-left: 7%;
+    margin-right: 7%;
+}
+
+#lbl_safeaccounts_navigation {
+    padding-left: 8%;
+    padding-top: 1.5%;
+    padding-bottom: 2.5%;
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#input_text_safe_search {
+    width: 100%;
+    resize: none;
+}
+
+#lbl-folders {
+    font-size: 22px;
+    font-weight: 300; 
+    margin-top: 10%;
+}
+
+#btn_delete_folder, #btn_add_folder {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*input has OS specific font-family*/
+    color: grey;
+    cursor: pointer;
+    float: right;
+}
+
+#btn_delete_folder {
+    margin-top: 12.75%;
+    font-size: 14px;
+}
+
+#btn_add_folder {
+    margin-top: 8%;
+    margin-right: 5%;
+    font-weight: 900;
+    font-size: 24px;
+}
+
+#lbl_safeaccounts_navigation {
+    color: black;
+    background-color: lightgray;
+    width: 100%;
+}
+
+#btn_safesidebar_all {
+    margin-top: 11%;
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*input has OS specific font-family*/
+    color: black;
+    cursor: pointer;
+}
+
+#folder_top_level {
+    margin-left: 1.5%;
+}

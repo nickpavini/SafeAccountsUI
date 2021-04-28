@@ -1,0 +1,16 @@
+.div_signup {
+    margin-top: 18%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#lbl_signup_lastname, #lbl_signup_email, #lbl_signup_pass {
+    margin-top: 10%;
+}
+
+#btn_signup {
+    margin-top: 15%;
+    width: 100%;
+}

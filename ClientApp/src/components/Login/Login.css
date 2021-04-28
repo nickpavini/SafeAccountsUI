@@ -1,0 +1,38 @@
+.div_login {
+    margin-top: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#p_login_successful {
+    margin-top: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.div_login_buttons {
+    margin-top: 10%;
+}
+
+#lbl_login_password {
+    margin-top: 10%;
+}
+
+#lbl-login-remember {
+    margin-left: 3%;
+}
+
+#btn_login {
+    float: right;
+    width: 25%;
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*input has OS specific font-family*/
+    color: black;
+    cursor: pointer;
+}
