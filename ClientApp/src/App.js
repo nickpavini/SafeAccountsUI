@@ -7,6 +7,7 @@ import { SignUp } from './components/SignUp/SignUp';
 import { Login } from './components/Login/Login';
 import { DashBoard } from './components/DashBoard/DashBoard.js';
 import { Account } from './components/Account/Account';
+import { SafeSideBar } from './components/SafeSideBar/SafeSideBar';
 
 import './custom.css'
 
@@ -73,46 +74,54 @@ class AppComponent extends Component {
             contents = <p>Loading...</p>;
         }
         else {
+            const RenderSafeSideBar = () => {
+                if (this.state.loggedIn)
+                    return <SafeSideBar device_mode={this.props.device_mode} Folders={this.state.folders} SetSelectedFolder={this.props.SetSelectedFolder} />
+            }
+
             // set path options based on whether or not the user is logged in and device mode
             if (this.props.device_mode == localStorage.getItem("MOBILE_MODE")) // mobile
                 return (
-                    <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} folders={this.state.folders} SetSelectedFolder={this.SetSelectedFolder} SetSearchString={this.SetSearchString}>
-                        <Route exact path='/' render={() => (
-                            this.state.loggedIn ? (
-                                <Redirect to="/dashboard" />
-                            ) : (
-                                    <Home />
-                                )
-                        )} />
-                        <Route path='/login' render={() => (
-                            this.state.loggedIn ? (
-                                <Redirect to="/dashboard" />
-                            ) : (
-                                    <Login updateUserLoggedIn={this.updateUserLoggedIn} />
-                                )
-                        )} />
-                        <Route path='/signup' render={() => (
-                            this.state.loggedIn ? (
-                                <Redirect to="/dashboard" />
-                            ) : (
-                                    <SignUp />
-                                )
-                        )} />
-                        <Route path='/dashboard' render={() => (
-                            this.state.loggedIn ? (
-                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID}/>
-                            ) : (
-                                    <Redirect to="/login" />
-                                )
-                        )} />
-                        <Route path='/account' render={() => (
-                            this.state.loggedIn ? (
-                                <Account uid={this.state.uid} />
-                            ) : (
-                                    <Redirect to="/login" />
-                                )
-                        )} />
-                    </Layout>
+                    <div>
+                        {RenderSafeSideBar()}
+                        <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} SetSearchString={this.SetSearchString}>
+                            <Route exact path='/' render={() => (
+                                this.state.loggedIn ? (
+                                    <Redirect to="/dashboard" />
+                                ) : (
+                                        <Home />
+                                    )
+                            )} />
+                            <Route path='/login' render={() => (
+                                this.state.loggedIn ? (
+                                    <Redirect to="/dashboard" />
+                                ) : (
+                                        <Login updateUserLoggedIn={this.updateUserLoggedIn} />
+                                    )
+                            )} />
+                            <Route path='/signup' render={() => (
+                                this.state.loggedIn ? (
+                                    <Redirect to="/dashboard" />
+                                ) : (
+                                        <SignUp />
+                                    )
+                            )} />
+                            <Route path='/dashboard' render={() => (
+                                this.state.loggedIn ? (
+                                    <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID}/>
+                                ) : (
+                                        <Redirect to="/login" />
+                                    )
+                            )} />
+                            <Route path='/account' render={() => (
+                                this.state.loggedIn ? (
+                                    <Account uid={this.state.uid} account_info={this.state.account_info}/>
+                                ) : (
+                                        <Redirect to="/login" />
+                                    )
+                            )} />
+                        </Layout>
+                    </div>
                 );
             else // desktop
                 return (

@@ -6,9 +6,8 @@
 
 @media screen and (max-width: 800px) {
     .div_safe {
-        margin: auto;
-        float: initial;
-        width: 80%;
+        margin-left: 0px;
+        width: 100%;
     }
 }
 .div_safe_options {

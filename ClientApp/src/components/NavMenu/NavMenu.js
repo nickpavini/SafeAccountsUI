@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { MainContainer } from '../MainContainer/MainContainer';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 
@@ -39,20 +38,11 @@ export class NavMenu extends Component {
         return (
             <header>
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
-                    <MainContainer>
+                    <div class="div_navbar_items">
                         <NavbarBrand tag={Link} to="/">SafeAccountsUI</NavbarBrand>
-                        <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-                        <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-                            <ul className="navbar-nav flex-grow">
-                                <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/signup">Sign Up</NavLink>
-                                </NavItem>
-                            </ul>
-                        </Collapse>
-                    </MainContainer>
+                        <NavLink id="navlinks" tag={Link} className="text-dark" to="/login">Login</NavLink>
+                        <NavLink id="navlinks" tag={Link} className="text-dark" to="/signup">Sign Up</NavLink>
+                    </div>
                 </Navbar>
             </header>
         );
@@ -63,17 +53,10 @@ export class NavMenu extends Component {
         return (
             <header>
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
-                    <MainContainer>
+                    <div class="div_navbar_items">
                         <NavbarBrand tag={Link} to="/">SafeAccountsUI</NavbarBrand>
-                        <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-                        <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-                            <ul className="navbar-nav flex-grow">
-                                <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/account">Account</NavLink>
-                                </NavItem>
-                            </ul>
-                        </Collapse>
-                    </MainContainer>
+                        <NavLink id="navlinks" tag={Link} className="text-dark" to="/account">Account</NavLink>
+                    </div>
                 </Navbar>
             </header>
         );

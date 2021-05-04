@@ -1,7 +1,30 @@
-﻿a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿.div_navbar_items {
+    height: 35px;
+    width: 100%;
+    text-align: right;
+}
+
+.navbar-brand {
+    float: left;
+}
+
+#ul_navbar_links, #navlink_acccount {
+    float: right;
+}
+
+/*#ul_navbar_links {
+    margin-top: 2px;
+    padding-right: 4px;
+    background-color: white;
+    width: 100px;
+    float: right;
+    border: 1px solid black;
+}*/
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 html {
