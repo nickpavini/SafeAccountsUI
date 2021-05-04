@@ -1,9 +1,10 @@
 .div_SafeSideBar {
     float: left;
     border: 1px solid black;
-    width: 23%;
+    width: 250px;
     overflow: auto;
     margin-top: 2%;
+    background-color: #FFF;
 }
 
 .div_safesidebar_navigation {
@@ -24,7 +25,7 @@
 
 #lbl-folders {
     font-size: 22px;
-    font-weight: 300; 
+    font-weight: 300;
     margin-top: 10%;
 }
 
@@ -68,4 +69,15 @@
 
 #folder_top_level {
     margin-left: 1.5%;
+}
+
+@media screen and (max-width: 800px) {
+    .div_SafeSideBar {
+        margin-top: 0%;
+        transition: 0.5s;
+        position: fixed;
+        z-index: 1;
+        height: 100%;
+        width: 200px;
+    }
 }

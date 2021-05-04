@@ -25,7 +25,7 @@ const useViewport = () => {
 
     // these numbers will likely change
     var mode;
-    if (width < 700)
+    if (width < 800)
         mode = localStorage.getItem("MOBILE_MODE"); // mobile
     else
         mode = localStorage.getItem("DESKTOP_MODE"); // desktop

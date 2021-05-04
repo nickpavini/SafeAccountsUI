@@ -1,10 +1,16 @@
 .div_safe {
     float: left;
-    margin-left: 2%;
-    margin-right: 2%;
-    width: 52%;
+    margin-left: 25px;
+    width: 500px;
 }
 
+@media screen and (max-width: 800px) {
+    .div_safe {
+        margin: auto;
+        float: initial;
+        width: 80%;
+    }
+}
 .div_safe_options {
     border-bottom: 1px solid lightgray;
 }
