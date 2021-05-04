@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
+import { MainContainer } from './MainContainer/MainContainer';
 import { NavMenu } from './NavMenu/NavMenu';
 import { SafeSideBar } from './SafeSideBar/SafeSideBar';
 
@@ -17,9 +17,9 @@ export class Layout extends Component {
             <div>
                 {RenderSafeSideBar()}
                 <NavMenu device_mode={this.props.device_mode} loggedIn={this.props.loggedIn} />
-                <Container >
+                <MainContainer className="main_container">
                     {this.props.children}
-                </Container>
+                </MainContainer>
             </div>
         );
     }
