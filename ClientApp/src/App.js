@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Route } from 'react-router';
-import { MobileLayout, DesktopLayout } from './components/Layout.js';
+import { Layout } from './components/Layout.js';
 import { Home } from './components/Home/Home';
 import { SignUp } from './components/SignUp/SignUp';
 import { Login } from './components/Login/Login';
-import { MobileDashBoard, DesktopDashBoard } from './components/DashBoard/DashBoard.js';
+import { DashBoard } from './components/DashBoard/DashBoard.js';
 import { Account } from './components/Account/Account';
 
 import './custom.css'
@@ -71,9 +71,9 @@ class AppComponent extends Component {
         }
         else {
             // set path options based on whether or not the user is logged in and device mode
-            if (this.props.device_mode == 0)
+            if (this.props.device_mode == 0) // mobile
                 return (
-                    <MobileLayout loggedIn={this.state.loggedIn}>
+                    <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} folders={this.state.folders} SetSelectedFolder={this.SetSelectedFolder}>
                         <Route exact path='/' render={() => (
                             this.state.loggedIn ? (
                                 <Redirect to="/dashboard" />
@@ -97,7 +97,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/dashboard' render={() => (
                             this.state.loggedIn ? (
-                                <MobileDashBoard uid={this.state.uid} safe={this.state.safe} />
+                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID}/>
                             ) : (
                                     <Redirect to="/login" />
                                 )
@@ -109,11 +109,11 @@ class AppComponent extends Component {
                                     <Redirect to="/login" />
                                 )
                         )} />
-                    </MobileLayout>
+                    </Layout>
                 );
-            else
+            else // desktop
                 return (
-                    <DesktopLayout loggedIn={this.state.loggedIn}>
+                    <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn}>
                         <Route exact path='/' render={() => (
                             this.state.loggedIn ? (
                                 <Redirect to="/dashboard" />
@@ -137,7 +137,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/dashboard' render={() => (
                             this.state.loggedIn ? (
-                                <DesktopDashBoard uid={this.state.uid} safe={this.state.safe} folders={this.state.folders} selectedFolderID={this.state.selectedFolderID} searchString={this.state.searchString} SetSearchString={this.SetSearchString} SetSelectedFolder={this.SetSelectedFolder} />
+                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} folders={this.state.folders} selectedFolderID={this.state.selectedFolderID} searchString={this.state.searchString} SetSearchString={this.SetSearchString} SetSelectedFolder={this.SetSelectedFolder} />
                             ) : (
                                     <Redirect to="/login" />
                                 )
@@ -149,7 +149,7 @@ class AppComponent extends Component {
                                     <Redirect to="/login" />
                                 )
                         )} />
-                    </DesktopLayout>
+                    </Layout>
                 );
         }
 
