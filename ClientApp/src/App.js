@@ -10,6 +10,9 @@ import { Account } from './components/Account/Account';
 
 import './custom.css'
 
+localStorage.setItem("MOBILE_MODE", "MOBILE");
+localStorage.setItem("DESKTOP_MODE", "DESKTOP");
+
 // hook for returning device mode based on width
 const useViewport = () => {
     const [width, setWidth] = React.useState(window.innerWidth);
@@ -23,9 +26,9 @@ const useViewport = () => {
     // these numbers will likely change
     var mode;
     if (width < 700)
-        mode = 0; // mobile
+        mode = localStorage.getItem("MOBILE_MODE"); // mobile
     else
-        mode = 1; // desktop
+        mode = localStorage.getItem("DESKTOP_MODE"); // desktop
 
     return mode;
 }
@@ -71,9 +74,9 @@ class AppComponent extends Component {
         }
         else {
             // set path options based on whether or not the user is logged in and device mode
-            if (this.props.device_mode == 0) // mobile
+            if (this.props.device_mode == localStorage.getItem("MOBILE_MODE")) // mobile
                 return (
-                    <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} folders={this.state.folders} SetSelectedFolder={this.SetSelectedFolder}>
+                    <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} folders={this.state.folders} SetSelectedFolder={this.SetSelectedFolder} SetSearchString={this.SetSearchString}>
                         <Route exact path='/' render={() => (
                             this.state.loggedIn ? (
                                 <Redirect to="/dashboard" />

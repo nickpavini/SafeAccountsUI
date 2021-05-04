@@ -22,11 +22,6 @@
     font-weight: 600;
 }
 
-#input_text_safe_search {
-    width: 100%;
-    resize: none;
-}
-
 #lbl-folders {
     font-size: 22px;
     font-weight: 300; 
