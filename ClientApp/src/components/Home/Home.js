@@ -10,7 +10,7 @@ export class Home extends Component {
           <p>Never worry about passwords, we got you covered</p>
           <img src="Assets/securityIcon.png" alt="SecurityIcon"></img>
           <p>Be Safe with</p>
-          <img src="" alt="Logo">Logo to be added</img>
+          <img src="" alt="Logo"></img>
           <span class="sinup-button">
             <button type="button">Start for free</button>
           </span>
