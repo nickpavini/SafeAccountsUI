@@ -4,6 +4,7 @@ import { ReactTitle } from 'react-meta-tags';
 
 export class Home extends Component {
   static displayName = Home.name;
+  {/* This function removes the element that's passed to it*/}
   remove (el) {
     var element = el;
     element.remove();
@@ -34,6 +35,7 @@ export class Home extends Component {
           <div class="cookies-window">
             <pre>[cookies policy go here]</pre>
             <span>
+                {/* A button that on click removes the cookies-window by calling on the remove fuction*/}
                 <button type="button" onClick="remove(.cookies-window)"><img src={require("./Assets/closeIcon.png")} alt="close-icon"></img></button>
             </span> 
           </div>
