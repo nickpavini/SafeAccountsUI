@@ -24,7 +24,7 @@ export class Home extends Component {
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         </MetaTags>
         <ReactTitle title="Home" />
-        <link rel="stylesheet" type="text/css" href="Home.css"/>
+        <link rel="stylesheet" type="text/css" href="./Home.css"/>
         <body>
           <p className="slogan">Never worry about passwords, we got you covered</p>
           <img src={require("./Assets/securityIcon.png")} alt="SecurityIcon" />
