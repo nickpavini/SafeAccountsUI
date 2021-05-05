@@ -4,7 +4,7 @@ import { ReactTitle } from 'react-meta-tags';
 
 export class Home extends Component {
   static displayName = Home.name;
-  {/* This function removes the element that's passed to it*/}
+  /* This function removes the element that's passed to it*/
   remove (el) {
     var element = el;
     element.remove();
@@ -30,7 +30,7 @@ export class Home extends Component {
           <img src={require("./Assets/securityIcon.png")} alt="SecurityIcon" />
           <p id="42069">Be Safe with</p>
           <img src="" alt="Logo" />
-          <a href={require("././SignUp/SignUp.js")}>
+          <a href={require("../SignUp/SignUp.js")}>
             <span class="sinup-button">
                 <button type="button">Start for free</button>
             </span>
