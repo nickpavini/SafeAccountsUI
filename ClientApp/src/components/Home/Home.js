@@ -24,14 +24,17 @@ export class Home extends Component {
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         </MetaTags>
         <ReactTitle title="Home" />
+        <link rel="stylesheet" type="text/css" href="Home.css"/>
         <body>
-          <p>Never worry about passwords, we got you covered</p>
+          <p className="slogan">Never worry about passwords, we got you covered</p>
           <img src={require("./Assets/securityIcon.png")} alt="SecurityIcon" />
-          <p>Be Safe with</p>
+          <p id="42069">Be Safe with</p>
           <img src="" alt="Logo" />
-          <span class="sinup-button">
-            <button type="button">Start for free</button>
-          </span>
+          <a href={require("././SignUp/SignUp.js")}>
+            <span class="sinup-button">
+                <button type="button">Start for free</button>
+            </span>
+          </a>
           <div class="cookies-window">
             <pre>[cookies policy go here]</pre>
             <span>
