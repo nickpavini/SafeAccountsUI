@@ -8,7 +8,7 @@ export class Home extends Component {
       <div>
         <body>
           <p>Never worry about passwords, we got you covered</p>
-          <img src="Assets/securityIcon.png" alt="SecurityIcon"></img>
+          <img src={require("./Assets/securityIcon.png")} alt="SecurityIcon"></img>
           <p>Be Safe with</p>
           <img src="" alt="Logo"></img>
           <span class="sinup-button">
