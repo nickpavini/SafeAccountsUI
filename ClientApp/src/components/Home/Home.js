@@ -17,7 +17,7 @@ export class Home extends Component {
           <div class="cookies-window">
             <pre>[cookies policy go here]</pre>
             <span>
-              <button type="button"><img src="Assets/closeIcon.png" alt="close-icon"></img></button>
+              <button type="button"><img src={require("./Assets/closeIcon.png")} alt="close-icon"></img></button>
             </span> 
           </div>
         </body>
