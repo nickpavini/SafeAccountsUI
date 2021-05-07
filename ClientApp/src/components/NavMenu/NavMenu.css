@@ -3,9 +3,19 @@
     width: 100%;
     text-align: right;
 }
+.menu_icon_bar {
+    width: 25px;
+    height: 4px;
+    background-color: black;
+    margin: 6px 0;
+}
+.div_sidebar_menu_icon {
+    float: left;
+}
 
 .navbar-brand {
     float: left;
+    margin-left: 8px;
 }
 
 #ul_navbar_links, #navlink_acccount {

@@ -17,6 +17,7 @@ export class NavMenu extends Component {
         // function bindings
         this.navbarLoggedOut = this.navbarLoggedOut.bind(this);
         this.navbarLoggedIn = this.navbarLoggedIn.bind(this);
+        this.openSideMenu = this.openSideMenu.bind(this);
     }
 
     toggleNavbar () {
@@ -50,15 +51,33 @@ export class NavMenu extends Component {
 
     // html for a basic navbar when loggedIn
     navbarLoggedIn() {
+        // only render the searchbar in this component on desktop
+        const RenderOpenSideBar = () => {
+            if (this.props.device_mode == localStorage.getItem("MOBILE_MODE"))
+                return (
+                    <div class="div_sidebar_menu_icon" onClick={ this.openSideMenu }>
+                        <div class="menu_icon_bar"></div>
+                        <div class="menu_icon_bar"></div>
+                        <div class="menu_icon_bar"></div>
+                    </div>
+                );
+        }
+
         return (
             <header>
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
                     <div class="div_navbar_items">
-                        <NavbarBrand tag={Link} to="/">SafeAccountsUI</NavbarBrand>
+                        {RenderOpenSideBar()}<NavbarBrand tag={Link} to="/">SafeAccountsUI</NavbarBrand>
                         <NavLink id="navlinks" tag={Link} className="text-dark" to="/account">Account</NavLink>
                     </div>
                 </Navbar>
             </header>
         );
+    }
+
+    // closes side menu on mobile... 
+    openSideMenu() {
+        document.getElementById("div_SafeSideBar").style.border = "1px solid black"; // make it not invisible to add back the border
+        document.getElementById("div_SafeSideBar").style.width = "250px"; // this makes it open from the right
     }
 }

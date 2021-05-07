@@ -5,6 +5,7 @@
     overflow: auto;
     margin-top: 2%;
     background-color: #FFF;
+    transition: 0.3s;
 }
 
 .div_safesidebar_navigation {
@@ -29,24 +30,23 @@
     margin-top: 10%;
 }
 
-#btn_delete_folder, #btn_add_folder {
+#btn_add_folder, #btn_close_sidebar {
     background: none !important;
     border: none;
     padding: 0 !important;
     /*input has OS specific font-family*/
     color: grey;
     cursor: pointer;
+}
+
+#btn_close_sidebar {
+    margin-right: 3%;
     float: right;
 }
 
-#btn_delete_folder {
-    margin-top: 12.75%;
-    font-size: 14px;
-}
-
 #btn_add_folder {
-    margin-top: 8%;
-    margin-right: 5%;
+    margin-top: 9%;
+    margin-left: 5%;
     font-weight: 900;
     font-size: 24px;
 }
@@ -78,7 +78,7 @@
         position: fixed;
         z-index: 1;
         height: 100%;
-        width: 225px;
-        display: none;
+        width: 0;
+        border: none; /*start our sidebar off not being seen in mobile*/
     }
 }
