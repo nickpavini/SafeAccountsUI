@@ -16,7 +16,12 @@ body {
     text-shadow: 0em 0.33em 0.33em rgba(0, 0, 0, 0.25);
 }
 
-#42069 {
+.security-icon {
+    width: 60%;
+
+}
+
+.be-safe {
     position: absolute;
     font-family: Roboto;
     font-style: normal;
@@ -24,7 +29,6 @@ body {
     font-size: 12px;
     line-height: 1.16em;
     color: #633535;
-<<<<<<< HEAD
     text-align: center;
 }
 
@@ -52,27 +56,4 @@ body {
     text-align: center;
     padding-top:0.5em;
     padding-bottom: 0.5em;
-}
-
-.cookies-window {
-    position: absolute;
-    bottom: 0;
-    background-color: #996363;
-    width: 100%;
-    padding-top: 2em;
-    padding-bottom: 2em;
-}
-
-.cookies {
-    position: relative;
-    color: white;
-    text-align: center;
-}
-
-.bi {
-    margin-right: 1em;
-    float: right;
-    position: relative;
-=======
->>>>>>> parent of a586401 (1- Made an html home page file 2- Removed the meta tags and title from Home.js 3- Added the removal of the cookies-window functionality 4- Changed the structure of the cookies-window and it's sub elements 5- Added css code for .security-icon .be-safe .logo .signup-button .cookies-window .close-icon-container .close-icon TODO: -Fix the position of the sign up for free button or remove it because we have two buttons that do the same thing now. -Resize the cookies-window to what it appears like on the design)
 }
