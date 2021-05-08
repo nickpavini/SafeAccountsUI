@@ -38,7 +38,7 @@ export class NavMenu extends Component {
     navbarLoggedOut() {
         return (
             <header>
-                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
+                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom mb-3" light>
                     <div class="div_navbar_items">
                         <NavbarBrand tag={Link} to="/">SafeAccountsUI</NavbarBrand>
                         <NavLink id="navlinks" tag={Link} className="text-dark" to="/login">Login</NavLink>
@@ -65,7 +65,7 @@ export class NavMenu extends Component {
 
         return (
             <header>
-                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
+                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom mb-3" light>
                     <div class="div_navbar_items">
                         {RenderOpenSideBar()}<NavbarBrand tag={Link} to="/">SafeAccountsUI</NavbarBrand>
                         <NavLink id="navlinks" tag={Link} className="text-dark" to="/account">Account</NavLink>
