@@ -24,7 +24,7 @@ export class Folder extends Component {
                         var contents;
 
                         // if the current folder we are looking at has the parent that was passed in, we add it to the tree
-                        if (value.ParentID == this.props.ParentID) {
+                        if (value.ParentID === this.props.ParentID) {
                             var fold_id = "summary_" + value.ID; // id for the clickable summary tag
 
                             // if this folder is a parent we need to call a Folder with a new parent.. else we display without the dropdown arrow
