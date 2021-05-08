@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Navbar, NavbarBrand, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 
@@ -38,7 +38,7 @@ export class NavMenu extends Component {
     navbarLoggedOut() {
         return (
             <header>
-                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
+                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom mb-3" light>
                     <div class="div_navbar_items">
                         <NavbarBrand tag={Link} to="/">SafeAccountsUI</NavbarBrand>
                         <NavLink id="navlinks" tag={Link} className="text-dark" to="/login">Login</NavLink>
@@ -53,7 +53,7 @@ export class NavMenu extends Component {
     navbarLoggedIn() {
         // only render the searchbar in this component on desktop
         const RenderOpenSideBar = () => {
-            if (this.props.device_mode == localStorage.getItem("MOBILE_MODE"))
+            if (this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
                 return (
                     <div class="div_sidebar_menu_icon" onClick={ this.openSideMenu }>
                         <div class="menu_icon_bar"></div>
@@ -65,7 +65,7 @@ export class NavMenu extends Component {
 
         return (
             <header>
-                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
+                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom mb-3" light>
                     <div class="div_navbar_items">
                         {RenderOpenSideBar()}<NavbarBrand tag={Link} to="/">SafeAccountsUI</NavbarBrand>
                         <NavLink id="navlinks" tag={Link} className="text-dark" to="/account">Account</NavLink>

@@ -7,7 +7,7 @@ import { SearchBar } from '../SearchBar/SearchBar';
 export class DashBoard extends Component {
     render() {
         const RenderSafeSideBar = () => {
-            if (this.props.device_mode == localStorage.getItem("DESKTOP_MODE"))
+            if (this.props.device_mode === localStorage.getItem("DESKTOP_MODE"))
                 return <SafeSideBar device_mode={this.props.device_mode} SetSearchString={this.props.SetSearchString} Folders={this.props.folders} SetSelectedFolder={this.props.SetSelectedFolder} />;
             else
                 return <SearchBar SetSearchString={this.props.SetSearchString} />;

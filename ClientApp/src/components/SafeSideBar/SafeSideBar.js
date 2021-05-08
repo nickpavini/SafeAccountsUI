@@ -17,13 +17,13 @@ export class SafeSideBar extends Component {
     render() {
         // only render the searchbar in this component on desktop
         const RenderSearchBar = () => {
-            if (this.props.device_mode == localStorage.getItem("DESKTOP_MODE"))
+            if (this.props.device_mode === localStorage.getItem("DESKTOP_MODE"))
                 return <SearchBar SetSearchString={this.props.SetSearchString} />;
         }
 
         // add a close option to the menu on mobile
         const RenderCloseButton = () => {
-            if (this.props.device_mode == localStorage.getItem("MOBILE_MODE"))
+            if (this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
                 return <button id="btn_close_sidebar" onClick={this.closeSideMenu}>X</button>;
         }
 
