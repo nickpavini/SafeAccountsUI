@@ -53,7 +53,7 @@ export class NavMenu extends Component {
     navbarLoggedIn() {
         // only render the searchbar in this component on desktop
         const RenderOpenSideBar = () => {
-            if (this.props.device_mode == localStorage.getItem("MOBILE_MODE"))
+            if (this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
                 return (
                     <div class="div_sidebar_menu_icon" onClick={ this.openSideMenu }>
                         <div class="menu_icon_bar"></div>
