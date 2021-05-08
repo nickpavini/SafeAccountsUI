@@ -1,16 +1,17 @@
 ﻿.div_navbar_items {
     height: 35px;
     width: 100%;
-    text-align: right;
 }
+
+.div_sidebar_menu_icon {
+    float: left;
+}
+
 .menu_icon_bar {
     width: 25px;
     height: 4px;
     background-color: black;
     margin: 6px 0;
-}
-.div_sidebar_menu_icon {
-    float: left;
 }
 
 .navbar-brand {
@@ -18,7 +19,7 @@
     margin-left: 8px;
 }
 
-#ul_navbar_links, #navlink_acccount {
+#navlinks {
     float: right;
 }
 
