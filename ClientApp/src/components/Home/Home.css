@@ -1,34 +1,37 @@
 /* For future styling for the Home page of the website */
-body {
-    background-color: white;
+.wrapper {
+    padding-top: 5em;
+    padding-bottom: 7.1em;
 }
 
 .slogan {
-    position: absolute;
+    position: relative;
     font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 1.25em;
+    font-size: 1rem;
     color: #5B3434;
-    mix-blend-mode: darken;
-    border: 0.016em solid #BC8A4E;
-    text-shadow: 0em 0.33em 0.33em rgba(0, 0, 0, 0.25);
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 .security-icon {
-    width: 60%;
-
+    display: block;
+    margin-top: 1.5em;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
 }
 
 .be-safe {
-    position: absolute;
+    margin-top: 1em;
+    position: relative;
     font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
+    font-size: 1rem;
     line-height: 1.16em;
     color: #633535;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
     text-align: center;
 }
 
@@ -37,23 +40,31 @@ body {
     margin-right: auto;
     display: block;
     text-align: center;
-    padding-bottom: 1em;
+    margin-top: 0em;
 }
 
 .signup-button-container {
+    position: relative;
+    display: block;
     color: black;
-    position: absolute;
-    width: 93px;
-    height: 33px;
-    left: 134px;
-    top: 432px;
     background: #EDA1A1;
     border-radius: 5px;
+    width: 106.25px;
+    padding: 0.5em 1em 0.5em 1em;
+    color: #275947;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1.5em;
 }
 
-.signup-button {
-    display: block;
-    text-align: center;
-    padding-top:0.5em;
-    padding-bottom: 0.5em;
+@media (min-width: 800px) {
+    .signup-button-container {
+        width: 121px;
+    }
+}
+
+:hover .signup-button-container {
+    color: #275947;
+    text-decoration: none;
 }

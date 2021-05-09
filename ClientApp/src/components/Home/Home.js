@@ -10,7 +10,6 @@ export class Home extends Component {
     static displayName = Home.name;
 
     render() {
-        var pathToSignup = window.location.protocol + '//' + window.location.host + '/signup';
       return (
           <div className="wrapper">
               <MetaTags>
@@ -25,11 +24,8 @@ export class Home extends Component {
               <p className="be-safe">Be Safe with</p>
               <img src="" alt="Logo" className="logo" />
               <NavLink to="/signup" className="signup-button-container">
-                  <span className="signup-button">
                       Start for free
-                  </span>
               </NavLink>
-              <CookiesPolicy />
           </div>
       );
   }
