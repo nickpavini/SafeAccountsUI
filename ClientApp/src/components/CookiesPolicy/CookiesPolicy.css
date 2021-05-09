@@ -1,0 +1,20 @@
+.cookies-window {
+    position: absolute;
+    bottom: 0;
+    background-color: #996363;
+    width: 100%;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.cookies {
+    position: relative;
+    color: white;
+    text-align: center;
+}
+
+.bi {
+    margin-right: 1em;
+    float: right;
+    position: relative;
+}
