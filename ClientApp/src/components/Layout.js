@@ -10,7 +10,7 @@ export class Layout extends Component {
         // include props from app.js to let navmenu know if it needed to update
         return (
             <div>
-                <NavMenu device_mode={this.props.device_mode} loggedIn={this.props.loggedIn} />
+                <NavMenu device_mode={this.props.device_mode} loggedIn={this.props.loggedIn} UpdateUserLoggedOut={this.props.UpdateUserLoggedOut}/>
                 <div class="div_main_container">
                     {this.props.children}
                 </div>

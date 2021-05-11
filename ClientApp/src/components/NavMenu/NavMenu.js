@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Navbar, NavbarBrand, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
+import { Button } from 'bootstrap';
 
 export class NavMenu extends Component {
     static displayName = NavMenu.name;
@@ -18,6 +19,7 @@ export class NavMenu extends Component {
         this.navbarLoggedOut = this.navbarLoggedOut.bind(this);
         this.navbarLoggedIn = this.navbarLoggedIn.bind(this);
         this.openSideMenu = this.openSideMenu.bind(this);
+        this.Logout = this.Logout.bind(this);
     }
 
     toggleNavbar () {
@@ -41,8 +43,8 @@ export class NavMenu extends Component {
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom mb-3" light>
                     <div class="div_navbar_items">
                         <NavbarBrand tag={Link} to="/">SafeAccountsUI</NavbarBrand>
-                        <NavLink id="navlinks" tag={Link} className="text-dark" to="/login">Login</NavLink>
-                        <NavLink id="navlinks" tag={Link} className="text-dark" to="/signup">Sign Up</NavLink>
+                        <NavLink id="navlinks" tag={Link} to="/login">Login</NavLink>
+                        <NavLink id="navlinks" tag={Link} to="/signup">Sign Up</NavLink>
                     </div>
                 </Navbar>
             </header>
@@ -68,7 +70,8 @@ export class NavMenu extends Component {
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom mb-3" light>
                     <div class="div_navbar_items">
                         {RenderOpenSideBar()}<NavbarBrand tag={Link} to="/">SafeAccountsUI</NavbarBrand>
-                        <NavLink id="navlinks" tag={Link} className="text-dark" to="/account">Account</NavLink>
+                        <button id="btn_sign_out" onClick={this.props.UpdateUserLoggedOut}>Sign Out</button>
+                        <NavLink id="navlinks" tag={Link} to="/account">Account</NavLink>
                     </div>
                 </Navbar>
             </header>
@@ -79,5 +82,10 @@ export class NavMenu extends Component {
     openSideMenu() {
         document.getElementById("div_SafeSideBar").style.border = "1px solid black"; // make it not invisible to add back the border
         document.getElementById("div_SafeSideBar").style.width = "250px"; // this makes it open from the right
+    }
+
+    // logs user out
+    Logout() {
+        this.props.UpdateUserLoggedOut();
     }
 }

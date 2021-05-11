@@ -55,6 +55,7 @@ class AppComponent extends Component {
         //function bindings
         this.attemptRefresh = this.attemptRefresh.bind(this);
         this.updateUserLoggedIn = this.updateUserLoggedIn.bind(this);
+        this.UpdateUserLoggedOut = this.UpdateUserLoggedOut.bind(this);
         this.FetchSafe = this.FetchSafe.bind(this);
         this.FetchUserFolders = this.FetchUserFolders.bind(this);
         this.FetchUserInfo = this.FetchUserInfo.bind(this);
@@ -84,7 +85,7 @@ class AppComponent extends Component {
                 return (
                     <div>
                         {RenderSafeSideBar()}
-                        <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} SetSearchString={this.SetSearchString}>
+                        <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} UpdateUserLoggedOut={this.UpdateUserLoggedOut} SetSearchString={this.SetSearchString}>
                             <Route exact path='/' render={() => (
                                 this.state.loggedIn ? (
                                     <Redirect to="/dashboard" />
@@ -125,7 +126,7 @@ class AppComponent extends Component {
                 );
             else // desktop
                 return (
-                    <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn}>
+                    <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} UpdateUserLoggedOut={this.UpdateUserLoggedOut}>
                         <Route exact path='/' render={() => (
                             this.state.loggedIn ? (
                                 <Redirect to="/dashboard" />
@@ -177,9 +178,28 @@ class AppComponent extends Component {
         this.setState({ loading: false });
     }
 
-    // call back function for app to set user logged out... NOTE: here we will want to clear all user info
-    updateUserLoggedOut() {
-        this.setState({ loggedIn: false, uid: null });
+    // call back function for app to set user logged out... NOTE: here we will make a call to the server which removes the cookies in the returning response
+    async UpdateUserLoggedOut() {
+        // http request options
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        };
+
+        const reqURI = 'https://eus-safeaccounts-test.azurewebsites.net/users/logout';
+        const response = await fetch(reqURI, requestOptions); // this request will remove users cookies
+        if (response.ok) {
+            // reset state after removing cookies.. this will cause re-render and should make app be not logged in
+            this.setState({
+                loggedIn: false, loading: false, // user is now logged out.. login page will render
+                uid: null, account_info: null, safe: null, folders: null,
+                searchString: null, selectedFolderID: null
+            });
+        }
+        else {
+            /* Not sure what would be appropriate here, but eventually we could add a fail safe here*/
+        }
     }
 
     // attempt to retrieve a new access token with the existing cookies.. Note that cookies are http only and contain JWT tokens and refresh tokens
