@@ -62,7 +62,7 @@ export class Login extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: '"{\\"email\\":\\"' + email + '\\", \\"password\\":\\"' + password + '\\"}"',
+            body: JSON.stringify({email: email, password: password}),
             credentials: 'include'
         };
 
