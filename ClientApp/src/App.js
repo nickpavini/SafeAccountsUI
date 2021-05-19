@@ -183,7 +183,7 @@ class AppComponent extends Component {
         // http request options
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
             credentials: 'include'
         };
 
