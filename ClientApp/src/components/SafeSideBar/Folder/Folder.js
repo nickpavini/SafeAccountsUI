@@ -24,22 +24,22 @@ export class Folder extends Component {
                         var contents;
 
                         // if the current folder we are looking at has the parent that was passed in, we add it to the tree
-                        if (value.ParentID === this.props.ParentID) {
-                            var fold_id = "summary_" + value.ID; // id for the clickable summary tag
+                        if (value.parentID === this.props.ParentID) {
+                            var fold_id = "summary_" + value.id; // id for the clickable summary tag
 
                             // if this folder is a parent we need to call a Folder with a new parent.. else we display without the dropdown arrow
-                            if (value.HasChild) {
+                            if (value.hasChild) {
                                 contents = (
                                     <details>
-                                        <summary id={fold_id} onClick={this.SelectFolder}>{value.FolderName}</summary>
+                                        <summary id={fold_id} onClick={this.SelectFolder}>{value.folderName}</summary>
                                         <div class="div_folder_child">
-                                            <Folder Folders={this.props.Folders} ParentID={value.ID} SetSelectedFolder={this.props.SetSelectedFolder} />
+                                            <Folder Folders={this.props.Folders} ParentID={value.id} SetSelectedFolder={this.props.SetSelectedFolder} />
                                         </div>
                                     </details>
                                 );
                             }
                             else {
-                                contents = <summary class="summary_without_marker" id={fold_id} onClick={this.SelectFolder}>{value.FolderName}</summary>;
+                                contents = <summary class="summary_without_marker" id={fold_id} onClick={this.SelectFolder}>{value.folderName}</summary>;
                             }
                         }
 

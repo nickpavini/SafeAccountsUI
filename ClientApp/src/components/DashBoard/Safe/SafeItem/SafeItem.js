@@ -22,8 +22,8 @@ export class SafeItem extends Component {
                 </div>
 
                 <div class="div_safeitem_info">
-                    <a class="safeitem_info" id="a_safeitem_title" href="javascript:;" onClick="">{this.props.info.Title}</a><br />
-                    <p class="safeitem_info" id="p_safeitem_login">{this.props.info.Login}</p>
+                    <a class="safeitem_info" id="a_safeitem_title" href="javascript:;" onClick="">{this.props.info.title}</a><br />
+                    <p class="safeitem_info" id="p_safeitem_login">{this.props.info.login}</p>
                 </div>
             </div>
         );
