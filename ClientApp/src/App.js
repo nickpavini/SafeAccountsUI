@@ -241,7 +241,7 @@ class AppComponent extends Component {
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
-            this.setState({ safe: JSON.parse(responseText).accounts })
+            this.setState({ safe: JSON.parse(responseText) })
         }
     }
 
@@ -258,7 +258,7 @@ class AppComponent extends Component {
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
-            this.setState({ folders: JSON.parse(responseText).folders })
+            this.setState({ folders: JSON.parse(responseText) })
         }
     }
 
