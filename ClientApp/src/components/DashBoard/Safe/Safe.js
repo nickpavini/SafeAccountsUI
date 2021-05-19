@@ -30,7 +30,7 @@ export class Safe extends Component {
                     this.props.safe.map((value, index) => {
                         // display the account if its folder matches, or the selected folder is null  or empty then we display all
                         if (value.FolderID === this.props.selectedFolderID || this.props.selectedFolderID === null) {
-                            if (value.Title.includes(this.props.searchString) || this.props.searchString === null)
+                            if (value.title.includes(this.props.searchString) || this.props.searchString === null)
                                 return (
                                     <SafeItem info={value} UpdateSelectedItems={this.UpdateSelectedItems}/>
                                 );
