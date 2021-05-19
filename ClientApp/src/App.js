@@ -187,7 +187,7 @@ class AppComponent extends Component {
             credentials: 'include'
         };
 
-        const reqURI = 'https://eus-safeaccounts-test.azurewebsites.net/users/logout';
+        const reqURI = 'https://localhost:44366/users/logout';
         const response = await fetch(reqURI, requestOptions); // this request will remove users cookies
         if (response.ok) {
             // reset state after removing cookies.. this will cause re-render and should make app be not logged in
@@ -208,12 +208,12 @@ class AppComponent extends Component {
         // http request options
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
             credentials: 'include'
         };
 
         // make a call to the refresh and if the result is ok, then we are logged in
-        const reqURI = 'https://eus-safeaccounts-test.azurewebsites.net/refresh';
+        const reqURI = 'https://localhost:44366/refresh';
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
@@ -233,11 +233,11 @@ class AppComponent extends Component {
 
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
             credentials: 'include'
         };
 
-        const reqURI = 'https://eus-safeaccounts-test.azurewebsites.net/users/' + this.state.uid + '/accounts';
+        const reqURI = 'https://localhost:44366/users/' + this.state.uid + '/accounts';
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
@@ -250,11 +250,11 @@ class AppComponent extends Component {
 
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
             credentials: 'include'
         };
 
-        const reqURI = 'https://eus-safeaccounts-test.azurewebsites.net/users/' + this.state.uid + '/folders';
+        const reqURI = 'https://localhost:44366/users/' + this.state.uid + '/folders';
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
@@ -267,11 +267,11 @@ class AppComponent extends Component {
 
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
             credentials: 'include'
         };
 
-        const reqURI = 'https://eus-safeaccounts-test.azurewebsites.net/users/' + this.state.uid;
+        const reqURI = 'https://localhost:44366/users/' + this.state.uid;
 
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
