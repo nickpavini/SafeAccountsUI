@@ -8,6 +8,7 @@ import { Login } from './components/Login/Login';
 import { DashBoard } from './components/DashBoard/DashBoard.js';
 import { Account } from './components/Account/Account';
 import { SafeSideBar } from './components/SafeSideBar/SafeSideBar';
+import { AddSafeItem } from './components/AddSafeItem/AddSafeItem';
 
 import './custom.css'
 
@@ -114,6 +115,13 @@ class AppComponent extends Component {
                                         <Redirect to="/login" />
                                     )
                             )} />
+                            <Route path='/addsafeitem' render={() => (
+                                this.state.loggedIn ? (
+                                    <AddSafeItem />
+                                ) : (
+                                        <Redirect to="/login" />
+                                    )
+                            )} />
                             <Route path='/account' render={() => (
                                 this.state.loggedIn ? (
                                     <Account uid={this.state.uid} account_info={this.state.account_info}/>
@@ -151,6 +159,13 @@ class AppComponent extends Component {
                         <Route path='/dashboard' render={() => (
                             this.state.loggedIn ? (
                                 <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} folders={this.state.folders} selectedFolderID={this.state.selectedFolderID} searchString={this.state.searchString} SetSearchString={this.SetSearchString} SetSelectedFolder={this.SetSelectedFolder} />
+                            ) : (
+                                    <Redirect to="/login" />
+                                )
+                        )} />
+                        <Route path='/addsafeitem' render={() => (
+                            this.state.loggedIn ? (
+                                <AddSafeItem />
                             ) : (
                                     <Redirect to="/login" />
                                 )

@@ -1,4 +1,6 @@
 ﻿import React, { Component } from 'react';
+import { NavLink } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import './Safe.css';
 import { SafeItem } from './SafeItem/SafeItem';
 
@@ -23,7 +25,7 @@ export class Safe extends Component {
             <div class="div_safe">
                 <div class="div_safe_options">
                     <label id="lbl_safe">Safe</label>
-                    <button id="btn_add_account"><b>+</b>Add Item</button>
+                    <NavLink id="navlink_add_safe_item" tag={Link} to="/addsafeitem">+Add Item</NavLink>
                     <button id="btn_item_settings">&#9881;</button>
                 </div>
                 {
