@@ -35,7 +35,27 @@ export class AddSafeItem extends Component {
         );
     }
 
-    AddSafeItem(event) {
+    async AddSafeItem(event) {
         event.preventDefault(); //prevent page refresh
+        var title = event.target.text_input_safe_item_title.value;
+        var login = event.target.text_input_safe_item_login.value;
+        var password = event.target.text_input_safe_item_password.value;
+        var description = event.target.text_input_safe_item_description.value;
+
+        // HTTP request options
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
+            body: JSON.stringify({ title: title, login: login, password: password, description: description }),
+            credentials: 'include'
+        };
+
+        //make request and get response
+        const response = await fetch('https://localhost:44366/users/' + this.props.uid + '/accounts', requestOptions);
+        if (response.ok) {
+            /*
+             *  Here we need to do something if it finishes successfully, like go back to dashboard
+             */
+        }
     }
 }

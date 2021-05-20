@@ -117,7 +117,7 @@ class AppComponent extends Component {
                             )} />
                             <Route path='/addsafeitem' render={() => (
                                 this.state.loggedIn ? (
-                                    <AddSafeItem />
+                                    <AddSafeItem device_mode={this.props.device_mode} uid={this.state.uid}/>
                                 ) : (
                                         <Redirect to="/login" />
                                     )
@@ -165,7 +165,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/addsafeitem' render={() => (
                             this.state.loggedIn ? (
-                                <AddSafeItem />
+                                <AddSafeItem device_mode={this.props.device_mode} uid={this.state.uid}/>
                             ) : (
                                     <Redirect to="/login" />
                                 )
