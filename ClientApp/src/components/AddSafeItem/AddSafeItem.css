@@ -1,0 +1,38 @@
+.div_add_safe_item {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#lbl_safe_item_title, #lbl_safe_item_password, #lbl_safe_item_login, #lbl_safe_item_description {
+    margin-top: 6%;
+}
+
+.text_input_safe_item {
+    resize: none;
+}
+
+#btn_add_safe_item {
+    margin-top: 10%;
+    width: 100%;
+    color: black;
+    cursor: pointer;
+    color: black;
+    background: #EDA1A1;
+    border-radius: 5px;
+}
+
+
+@media (max-width: 800px) {
+    .div_add_safe_item {
+        margin-top: 70px;
+    }
+}
+
+@media (max-width: 500px) {
+    .div_add_safe_item {
+        margin-top: 40px;
+    }
+}

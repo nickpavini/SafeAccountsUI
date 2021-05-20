@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import './Login.css';
-import { Redirect } from 'react-router-dom';
 
 export class Login extends Component {
     static displayName = Login.name;
 
     constructor(props) {
         super(props);
-        this.state = { loginSuccessful: false, rememberMe: false };
+        this.state = { rememberMe: false };
 
         // function bindings
         this.OnChangeRemeberMe = this.OnChangeRemeberMe.bind(this);
@@ -15,17 +14,6 @@ export class Login extends Component {
     }
 
     render() {
-        // set redirect when login is successful
-        if (this.state.redirect) {
-            return (<Redirect to={{
-                pathname: '/dashboard'
-            }} />);
-        }
-
-        // let user know we are redirecting upon login
-        if (this.state.loginSuccessful)
-            return (<p id="p_login_successful">Login successful... Redirecting Page</p>);
-
         return (
             <div class="div_login">
                 <form id="form_login" onSubmit={this.Login}>
@@ -62,20 +50,18 @@ export class Login extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: '"{\\"email\\":\\"' + email + '\\", \\"password\\":\\"' + password + '\\"}"',
+            body: JSON.stringify({email: email, password: password}),
             credentials: 'include'
         };
 
         //make request and get response
-        const response = await fetch('https://eus-safeaccounts-test.azurewebsites.net/users/login', requestOptions);
+        const response = await fetch('https://localhost:44366/users/login', requestOptions);
         if (response.ok) {
             const responseText = await response.text();
             var obj = JSON.parse(responseText);
 
-            // we need to store this id in local storage for us to use
-            this.setState({ loginSuccessful: true });
+            // update and cause re-render
             this.props.updateUserLoggedIn(obj.id);
-            this.timeout = setTimeout(() => this.setState({ redirect: true }), 3000); // set redirect to true after some seconds
         }
     }
 }

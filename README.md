@@ -8,19 +8,8 @@ ASP.Net Core ReactJS UI For the SafeAccountAPI<br/>
 
 &nbsp;
 
-### <ins>Current Progress:</ins>
-* Super basic pages for Login and Signup.
-* Login/SignUp functionality working.
-* Session management working. (CORS Cookies)
-* Dashboard for user's safe management is in progress
-
-&nbsp;
-
-### <ins>To Do:</ins>
-* Logout functionality.
-* Functionality for adding and managing existing saved items.
-* Fucntionality for adding and managing existing folders.
-* Account page for managing user info, preferences, etc.
-* Email verification upon signup for identity purposes.
-* OVERALL STYLING!!! We need to make this thing prettier lol
-* ... Probably a bit more than I am remembering of at this moment, but basic v1 release is the goal.
+### <ins>Build:</ins>
+* First you need to setup the local api. Follow the steps <a href="https://github.com/nickpavini/SafeAccountsAPI">here</a>.
+* Next, open the SafeAccountsUI.sln project file from this repo with visual. 
+* Make sure the API is running locally, and then you can simply run this project in visual studio with IISExpress.
+    * NOTE: If you have npm issues, go into the ClientApp directory and run `npm install`

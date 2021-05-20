@@ -21,16 +21,19 @@
 
 #navlinks {
     float: right;
+    color: black;
 }
 
-/*#ul_navbar_links {
-    margin-top: 2px;
-    padding-right: 4px;
-    background-color: white;
-    width: 100px;
+#btn_sign_out {
     float: right;
-    border: 1px solid black;
-}*/
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*input has OS specific font-family*/
+    color: black;
+    cursor: pointer;
+    margin-top: 7.5px;
+}
 
 a.navbar-brand {
     white-space: normal;

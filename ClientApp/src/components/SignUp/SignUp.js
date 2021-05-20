@@ -58,10 +58,10 @@ export class SignUp extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: '"{\\"firstname\\":\\"' + firstname + '\\", \\"lastname\\":\\"' + lastname + '\\", \\"email\\":\\"' + email + '\\", \\"password\\":\\"' + password + '\\"}"'
+            body: JSON.stringify({ first_name: firstname, last_name: lastname, email: email, password: password }),
         };
 
-        const response = await fetch('https://eus-safeaccounts-test.azurewebsites.net/users', requestOptions);
+        const response = await fetch('https://localhost:44366/users', requestOptions);
         const responseText = await response.text();
         this.setState({ data: responseText, signedUp: true })
         this.timeout = setTimeout(() => this.setState({ redirect: true }), 5000); // set redirect to true after 5 seconds

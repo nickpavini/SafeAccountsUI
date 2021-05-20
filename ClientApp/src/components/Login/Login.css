@@ -1,5 +1,5 @@
 .div_login {
-    margin-top: 25%;
+    margin-top: 165px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -35,4 +35,16 @@
     /*input has OS specific font-family*/
     color: black;
     cursor: pointer;
+}
+
+@media (max-width: 800px) {
+    .div_login {
+        margin-top: 100px;
+    }
+}
+
+@media (max-width: 500px) {
+    .div_login {
+        margin-top: 50px;
+    }
 }

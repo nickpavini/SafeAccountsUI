@@ -14,7 +14,7 @@
     border-bottom: 1px solid lightgray;
 }
 
-#btn_add_account, #btn_item_settings {
+#btn_item_settings {
     float: right;
     background-color: lightgray;
     border: none;
@@ -22,8 +22,14 @@
     border-radius: 5px;
 }
 
+#navlink_add_safe_item {
+    float: right;
+    margin-top: 2.5%;
+    color: black;
+    font-weight: 500;
+}
+
 #btn_item_settings {
-    margin-right: 3%;
 }
 
 #lbl_safe {

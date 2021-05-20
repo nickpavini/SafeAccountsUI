@@ -8,6 +8,7 @@ import { Login } from './components/Login/Login';
 import { DashBoard } from './components/DashBoard/DashBoard.js';
 import { Account } from './components/Account/Account';
 import { SafeSideBar } from './components/SafeSideBar/SafeSideBar';
+import { AddSafeItem } from './components/AddSafeItem/AddSafeItem';
 
 import './custom.css'
 
@@ -55,6 +56,7 @@ class AppComponent extends Component {
         //function bindings
         this.attemptRefresh = this.attemptRefresh.bind(this);
         this.updateUserLoggedIn = this.updateUserLoggedIn.bind(this);
+        this.UpdateUserLoggedOut = this.UpdateUserLoggedOut.bind(this);
         this.FetchSafe = this.FetchSafe.bind(this);
         this.FetchUserFolders = this.FetchUserFolders.bind(this);
         this.FetchUserInfo = this.FetchUserInfo.bind(this);
@@ -75,57 +77,15 @@ class AppComponent extends Component {
         }
         else {
             const RenderSafeSideBar = () => {
-                if (this.state.loggedIn)
+                if (this.state.loggedIn && this.props.device_mode == localStorage.getItem("MOBILE_MODE"))
                     return <SafeSideBar device_mode={this.props.device_mode} Folders={this.state.folders} SetSelectedFolder={this.SetSelectedFolder} SetSearchString={this.SetSearchString}/>
             }
 
             // set path options based on whether or not the user is logged in and device mode
-            if (this.props.device_mode == localStorage.getItem("MOBILE_MODE")) // mobile
-                return (
-                    <div>
-                        {RenderSafeSideBar()}
-                        <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} SetSearchString={this.SetSearchString}>
-                            <Route exact path='/' render={() => (
-                                this.state.loggedIn ? (
-                                    <Redirect to="/dashboard" />
-                                ) : (
-                                        <Home />
-                                    )
-                            )} />
-                            <Route path='/login' render={() => (
-                                this.state.loggedIn ? (
-                                    <Redirect to="/dashboard" />
-                                ) : (
-                                        <Login updateUserLoggedIn={this.updateUserLoggedIn} />
-                                    )
-                            )} />
-                            <Route path='/signup' render={() => (
-                                this.state.loggedIn ? (
-                                    <Redirect to="/dashboard" />
-                                ) : (
-                                        <SignUp />
-                                    )
-                            )} />
-                            <Route path='/dashboard' render={() => (
-                                this.state.loggedIn ? (
-                                    <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID}/>
-                                ) : (
-                                        <Redirect to="/login" />
-                                    )
-                            )} />
-                            <Route path='/account' render={() => (
-                                this.state.loggedIn ? (
-                                    <Account uid={this.state.uid} account_info={this.state.account_info}/>
-                                ) : (
-                                        <Redirect to="/login" />
-                                    )
-                            )} />
-                        </Layout>
-                    </div>
-                );
-            else // desktop
-                return (
-                    <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn}>
+            contents = (
+                <div>
+                    {RenderSafeSideBar()}
+                    <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} UpdateUserLoggedOut={this.UpdateUserLoggedOut} SetSearchString={this.SetSearchString}>
                         <Route exact path='/' render={() => (
                             this.state.loggedIn ? (
                                 <Redirect to="/dashboard" />
@@ -149,20 +109,28 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/dashboard' render={() => (
                             this.state.loggedIn ? (
-                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} folders={this.state.folders} selectedFolderID={this.state.selectedFolderID} searchString={this.state.searchString} SetSearchString={this.SetSearchString} SetSelectedFolder={this.SetSelectedFolder} />
+                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} folders={this.state.folders} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder}/>
+                            ) : (
+                                    <Redirect to="/login" />
+                                )
+                        )} />
+                        <Route path='/addsafeitem' render={() => (
+                            this.state.loggedIn ? (
+                                <AddSafeItem device_mode={this.props.device_mode} uid={this.state.uid} FetchSafe={this.FetchSafe}/>
                             ) : (
                                     <Redirect to="/login" />
                                 )
                         )} />
                         <Route path='/account' render={() => (
                             this.state.loggedIn ? (
-                                <Account uid={this.state.uid} account_info={this.state.account_info} />
+                                <Account uid={this.state.uid} account_info={this.state.account_info}/>
                             ) : (
                                     <Redirect to="/login" />
                                 )
                         )} />
                     </Layout>
-                );
+                </div>
+            );
         }
 
         return (contents);
@@ -177,9 +145,28 @@ class AppComponent extends Component {
         this.setState({ loading: false });
     }
 
-    // call back function for app to set user logged out... NOTE: here we will want to clear all user info
-    updateUserLoggedOut() {
-        this.setState({ loggedIn: false, uid: null });
+    // call back function for app to set user logged out... NOTE: here we will make a call to the server which removes the cookies in the returning response
+    async UpdateUserLoggedOut() {
+        // http request options
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
+            credentials: 'include'
+        };
+
+        const reqURI = 'https://localhost:44366/users/logout';
+        const response = await fetch(reqURI, requestOptions); // this request will remove users cookies
+        if (response.ok) {
+            // reset state after removing cookies.. this will cause re-render and should make app be not logged in
+            this.setState({
+                loggedIn: false, loading: false, // user is now logged out.. login page will render
+                uid: null, account_info: null, safe: null, folders: null,
+                searchString: null, selectedFolderID: null
+            });
+        }
+        else {
+            /* Not sure what would be appropriate here, but eventually we could add a fail safe here*/
+        }
     }
 
     // attempt to retrieve a new access token with the existing cookies.. Note that cookies are http only and contain JWT tokens and refresh tokens
@@ -188,12 +175,12 @@ class AppComponent extends Component {
         // http request options
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
             credentials: 'include'
         };
 
         // make a call to the refresh and if the result is ok, then we are logged in
-        const reqURI = 'https://eus-safeaccounts-test.azurewebsites.net/refresh';
+        const reqURI = 'https://localhost:44366/refresh';
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
@@ -213,15 +200,15 @@ class AppComponent extends Component {
 
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
             credentials: 'include'
         };
 
-        const reqURI = 'https://eus-safeaccounts-test.azurewebsites.net/users/' + this.state.uid + '/accounts';
+        const reqURI = 'https://localhost:44366/users/' + this.state.uid + '/accounts';
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
-            this.setState({ safe: JSON.parse(responseText).accounts })
+            this.setState({ safe: JSON.parse(responseText) })
         }
     }
 
@@ -230,15 +217,15 @@ class AppComponent extends Component {
 
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
             credentials: 'include'
         };
 
-        const reqURI = 'https://eus-safeaccounts-test.azurewebsites.net/users/' + this.state.uid + '/folders';
+        const reqURI = 'https://localhost:44366/users/' + this.state.uid + '/folders';
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
-            this.setState({ folders: JSON.parse(responseText).folders })
+            this.setState({ folders: JSON.parse(responseText) })
         }
     }
 
@@ -247,11 +234,11 @@ class AppComponent extends Component {
 
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
             credentials: 'include'
         };
 
-        const reqURI = 'https://eus-safeaccounts-test.azurewebsites.net/users/' + this.state.uid;
+        const reqURI = 'https://localhost:44366/users/' + this.state.uid;
 
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
