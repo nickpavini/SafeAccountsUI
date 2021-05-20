@@ -54,6 +54,7 @@ export class SafeSideBar extends Component {
     // closes side menu on mobile... 
     closeSideMenu() {
         document.getElementById("div_SafeSideBar").style.width = "0"; // this makes it slide to the left
+        document.getElementById("btn_close_sidebar").style.display = "none";
 
         // after closing width make border invisible so left side doesnt stick out
         setTimeout(() => {
