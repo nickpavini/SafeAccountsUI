@@ -1,5 +1,5 @@
 .div_signup {
-    margin-top: 18%;
+    margin-top: 135px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,4 +13,16 @@
 #btn_signup {
     margin-top: 15%;
     width: 100%;
+}
+
+@media (max-width: 800px) {
+    .div_signup {
+        margin-top: 80px;
+    }
+}
+
+@media (max-width: 500px) {
+    .div_signup {
+        margin-top: 30px;
+    }
 }
