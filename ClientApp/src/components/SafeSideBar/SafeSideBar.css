@@ -9,19 +9,21 @@
 }
 
 .div_safesidebar_navigation {
-    margin-top: 12%;
+    margin-top: 20px;
     margin-bottom: 8%;
     margin-left: 7%;
     margin-right: 7%;
+    width: 200px;
 }
 
 #lbl_safeaccounts_navigation {
     padding-left: 8%;
-    padding-top: 1.5%;
+    padding-top: 5px;
     padding-bottom: 2.5%;
     color: black;
     font-size: 18px;
     font-weight: 600;
+    height: 35px;
 }
 
 #lbl-folders {
