@@ -4,7 +4,7 @@ ASP.Net Core ReactJS UI For the SafeAccountAPI<br/>
 
 &nbsp;
 
-![image](https://user-images.githubusercontent.com/36856910/116017243-ec002300-a5f3-11eb-803b-5dea2faf6def.png)
+![image](https://user-images.githubusercontent.com/36856910/119060900-037ac380-b988-11eb-8a80-735e6148d58b.png)
 
 &nbsp;
 
