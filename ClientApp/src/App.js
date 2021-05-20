@@ -77,64 +77,15 @@ class AppComponent extends Component {
         }
         else {
             const RenderSafeSideBar = () => {
-                if (this.state.loggedIn)
+                if (this.state.loggedIn && this.props.device_mode == localStorage.getItem("MOBILE_MODE"))
                     return <SafeSideBar device_mode={this.props.device_mode} Folders={this.state.folders} SetSelectedFolder={this.SetSelectedFolder} SetSearchString={this.SetSearchString}/>
             }
 
             // set path options based on whether or not the user is logged in and device mode
-            if (this.props.device_mode == localStorage.getItem("MOBILE_MODE")) // mobile
-                return (
-                    <div>
-                        {RenderSafeSideBar()}
-                        <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} UpdateUserLoggedOut={this.UpdateUserLoggedOut} SetSearchString={this.SetSearchString}>
-                            <Route exact path='/' render={() => (
-                                this.state.loggedIn ? (
-                                    <Redirect to="/dashboard" />
-                                ) : (
-                                        <Home />
-                                    )
-                            )} />
-                            <Route path='/login' render={() => (
-                                this.state.loggedIn ? (
-                                    <Redirect to="/dashboard" />
-                                ) : (
-                                        <Login updateUserLoggedIn={this.updateUserLoggedIn} />
-                                    )
-                            )} />
-                            <Route path='/signup' render={() => (
-                                this.state.loggedIn ? (
-                                    <Redirect to="/dashboard" />
-                                ) : (
-                                        <SignUp />
-                                    )
-                            )} />
-                            <Route path='/dashboard' render={() => (
-                                this.state.loggedIn ? (
-                                    <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID}/>
-                                ) : (
-                                        <Redirect to="/login" />
-                                    )
-                            )} />
-                            <Route path='/addsafeitem' render={() => (
-                                this.state.loggedIn ? (
-                                    <AddSafeItem device_mode={this.props.device_mode} uid={this.state.uid} FetchSafe={this.FetchSafe}/>
-                                ) : (
-                                        <Redirect to="/login" />
-                                    )
-                            )} />
-                            <Route path='/account' render={() => (
-                                this.state.loggedIn ? (
-                                    <Account uid={this.state.uid} account_info={this.state.account_info}/>
-                                ) : (
-                                        <Redirect to="/login" />
-                                    )
-                            )} />
-                        </Layout>
-                    </div>
-                );
-            else // desktop
-                return (
-                    <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} UpdateUserLoggedOut={this.UpdateUserLoggedOut}>
+            contents = (
+                <div>
+                    {RenderSafeSideBar()}
+                    <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} UpdateUserLoggedOut={this.UpdateUserLoggedOut} SetSearchString={this.SetSearchString}>
                         <Route exact path='/' render={() => (
                             this.state.loggedIn ? (
                                 <Redirect to="/dashboard" />
@@ -158,7 +109,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/dashboard' render={() => (
                             this.state.loggedIn ? (
-                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} folders={this.state.folders} selectedFolderID={this.state.selectedFolderID} searchString={this.state.searchString} SetSearchString={this.SetSearchString} SetSelectedFolder={this.SetSelectedFolder} />
+                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} folders={this.state.folders} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder}/>
                             ) : (
                                     <Redirect to="/login" />
                                 )
@@ -172,13 +123,14 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/account' render={() => (
                             this.state.loggedIn ? (
-                                <Account uid={this.state.uid} account_info={this.state.account_info} />
+                                <Account uid={this.state.uid} account_info={this.state.account_info}/>
                             ) : (
                                     <Redirect to="/login" />
                                 )
                         )} />
                     </Layout>
-                );
+                </div>
+            );
         }
 
         return (contents);
