@@ -12,7 +12,7 @@ export class SearchBar extends Component {
     render() {
         return (
             <div class="SearchBar">
-                <textarea maxLength="15" id="input_text_safe_search" onInput={this.SearchStringChanged} rows="1" placeholder="Search Safe"></textarea>
+                <input type="text" maxLength="15" id="input_text_safe_search" onInput={this.SearchStringChanged} placeholder="Search Safe"></input>
             </div>
         );
     }
