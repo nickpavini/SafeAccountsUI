@@ -11,6 +11,7 @@ import { SafeSideBar } from './components/SafeSideBar/SafeSideBar';
 import { AddSafeItem } from './components/AddSafeItem/AddSafeItem';
 
 import './custom.css'
+import { EmailConfirmation } from './components/EmailConfirmation/EmailConfirmation.js';
 
 localStorage.setItem("MOBILE_MODE", "MOBILE");
 localStorage.setItem("DESKTOP_MODE", "DESKTOP");
@@ -105,6 +106,13 @@ class AppComponent extends Component {
                                 <Redirect to="/dashboard" />
                             ) : (
                                     <SignUp />
+                                )
+                        )} />
+                        <Route path='/emailconfirmation' render={() => (
+                            this.state.loggedIn ? (
+                                <Redirect to="/dashboard" />
+                            ) : (
+                                    <EmailConfirmation />
                                 )
                         )} />
                         <Route path='/dashboard' render={() => (
