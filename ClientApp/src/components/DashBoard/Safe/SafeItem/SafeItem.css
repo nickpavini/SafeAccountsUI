@@ -2,28 +2,56 @@
     border-bottom: 1px solid lightgray;
     padding-top: 2%;
     padding-bottom: 2%;
+    cursor: pointer;
 }
 
 .input_chk_safeitem {
     margin-left: 3%;
-    margin-top: 2.6%;
+    margin-top: 1.6%;
     float: left;
 }
 
-.div_safeitem_info {
-    margin-left: 15%;
-}
-
-.safeitem_info {
-    display: inline;
-}
-
-#a_safeitem_title {
+#span_safeitem_title {
     font-size: 20px;
     color: #306b9d;
+    margin-left: 15%;
+    cursor: pointer;
 }
 
-#p_safeitem_login {
-    font-size: 16px;
-    color: grey;
+.div_edit_safe_item {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#lbl_edit_item_title, #lbl_edit_item_password, #lbl_edit_item_login, #lbl_edite_item_description {
+    margin-top: 6%;
+}
+
+.text_input_edit_item {
+    resize: none;
+}
+
+#btn_save_edit {
+    margin-top: 10%;
+    width: 100%;
+    color: black;
+    cursor: pointer;
+    color: black;
+    background: #EDA1A1;
+    border-radius: 5px;
+}
+
+@media (max-width: 800px) {
+    .div_edit_safe_item {
+        margin-top: 70px;
+    }
+}
+
+@media (max-width: 500px) {
+    .div_edit_safe_item {
+        margin-top: 40px;
+    }
 }
