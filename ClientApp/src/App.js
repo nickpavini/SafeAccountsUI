@@ -10,7 +10,7 @@ import { Account } from './components/Account/Account';
 import { SafeSideBar } from './components/SafeSideBar/SafeSideBar';
 import { AddSafeItem } from './components/AddSafeItem/AddSafeItem';
 import { EmailConfirmation } from './components/EmailConfirmation/EmailConfirmation.js';
-import { SafeItem } from './components/DashBoard/Safe/SafeItem/SafeItem.js';
+import { EditSafeItem } from './components/EditSafeItem/EditSafeItem.js';
 import './custom.css'
 
 localStorage.setItem("MOBILE_MODE", "MOBILE");
@@ -124,7 +124,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/safeitems/:item_id' render={(props) => (
                             this.state.loggedIn ? (
-                                <SafeItem info={this.state.safe.find(e => e.id.toString() === props.location.pathname.split("/").pop())} uid={this.state.uid} FetchSafe={this.FetchSafe} />
+                                <EditSafeItem info={this.state.safe.find(e => e.id.toString() === props.location.pathname.split("/").pop())} uid={this.state.uid} FetchSafe={this.FetchSafe} />
                             ) : (
                                     <Redirect to="/login" />
                                 )
