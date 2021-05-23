@@ -11,7 +11,7 @@ export class Layout extends Component {
         return (
             <div>
                 <NavMenu device_mode={this.props.device_mode} loggedIn={this.props.loggedIn} UpdateUserLoggedOut={this.props.UpdateUserLoggedOut}/>
-                <div class="div_main_container">
+                <div className="div_main_container">
                     {this.props.children}
                 </div>
                 <Footer device_mode={this.props.device_mode} loggedIn={this.props.loggedIn} />

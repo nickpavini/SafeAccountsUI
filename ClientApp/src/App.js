@@ -78,7 +78,7 @@ class AppComponent extends Component {
         }
         else {
             const RenderSafeSideBar = () => {
-                if (this.state.loggedIn && this.props.device_mode == localStorage.getItem("MOBILE_MODE"))
+                if (this.state.loggedIn && this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
                     return <SafeSideBar device_mode={this.props.device_mode} Folders={this.state.folders} SetSelectedFolder={this.SetSelectedFolder} SetSearchString={this.SetSearchString}/>
             }
 

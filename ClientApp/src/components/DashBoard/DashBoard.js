@@ -14,7 +14,7 @@ export class DashBoard extends Component {
         }
 
         return (
-            <div class="div_dashboard">
+            <div className="div_dashboard">
                 {RenderSafeSideBar()}
                 <Safe safe={this.props.safe} searchString={this.props.searchString} selectedFolderID={this.props.selectedFolderID} />
             </div>

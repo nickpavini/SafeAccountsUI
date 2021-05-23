@@ -15,16 +15,16 @@ export class Login extends Component {
 
     render() {
         return (
-            <div class="div_login">
+            <div className="div_login">
                 <form id="form_login" onSubmit={this.Login}>
-                    <div class="container">
+                    <div className="container">
                         <label id="lbl_login_email" htmlFor="text_input_login_email"><b>Email</b></label><br />
-                        <input class="text_input_login_email" type="text" placeholder="" id="text_input_login_email" size="35" required></input>
+                        <input className="text_input_login_email" type="text" placeholder="" id="text_input_login_email" size="35" required></input>
                         <br />
                         <label id="lbl_login_password" htmlFor="text_input_login_password"><b>Password</b></label><br />
-                        <input class="text_input_login_password" type="password" placeholder="" id="text_input_login_password" size="35" required></input>
+                        <input className="text_input_login_password" type="password" placeholder="" id="text_input_login_password" size="35" required></input>
                         <br />
-                        <div class="div_login_buttons">
+                        <div className="div_login_buttons">
                             <input type="checkbox" defaultChecked={false} onClick={this.OnChangeRemeberMe} id="input_chk_login_remember"></input>
                             <label id="lbl-login-remember">Remember me</label>
                             <button id="btn_login" type="submit">Login</button>

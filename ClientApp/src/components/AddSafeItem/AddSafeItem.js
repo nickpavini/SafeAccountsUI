@@ -19,20 +19,20 @@ export class AddSafeItem extends Component {
             : this.state.loading
                 ? <p>loading...</p>
                 : (
-                    <div class="div_add_safe_item">
+                    <div className="div_add_safe_item">
                         <form id="form_add_safe_item" onSubmit={this.AddSafeItem}>
-                            <div class="container">
+                            <div className="container">
                                 <label id="lbl_safe_item_title" htmlFor="text_input_safe_item_title"><b>Title</b></label><br />
-                                <textarea class="text_input_safe_item" placeholder="" id="text_input_safe_item_title" rows="1" cols="38" required></textarea>
+                                <textarea className="text_input_safe_item" placeholder="" id="text_input_safe_item_title" rows="1" cols="38" required></textarea>
                                 <br />
                                 <label id="lbl_safe_item_login" htmlFor="text_input_safe_item_login"><b>Login</b></label><br />
-                                <textarea class="text_input_safe_item" placeholder="" id="text_input_safe_item_login" rows="1" cols="38" required></textarea>
+                                <textarea className="text_input_safe_item" placeholder="" id="text_input_safe_item_login" rows="1" cols="38" required></textarea>
                                 <br />
                                 <label id="lbl_safe_item_password" htmlFor="text_input_safe_item_password"><b>Password</b></label><br />
-                                <textarea class="text_input_safe_item" placeholder="" id="text_input_safe_item_password" rows="1" cols="38" required></textarea>
+                                <textarea className="text_input_safe_item" placeholder="" id="text_input_safe_item_password" rows="1" cols="38" required></textarea>
                                 <br />
                                 <label id="lbl_safe_item_description" htmlFor="text_input_safe_item_description"><b>Description</b></label><br />
-                                <textarea class="text_input_safe_item" placeholder="" id="text_input_safe_item_description" rows="4" cols="38" required></textarea>
+                                <textarea className="text_input_safe_item" placeholder="" id="text_input_safe_item_description" rows="4" cols="38" required></textarea>
                                 <br />
                                 <button id="btn_add_safe_item" type="submit"><b>Store in Safe</b></button>
                             </div>

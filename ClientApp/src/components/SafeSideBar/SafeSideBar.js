@@ -29,14 +29,14 @@ export class SafeSideBar extends Component {
 
         // top folder so parent is null.. we list folders with parents=null and call a Folder for each folder that is a parent
         return (
-            <div class="div_SafeSideBar" id="div_SafeSideBar">
+            <div className="div_SafeSideBar" id="div_SafeSideBar">
                 <label id="lbl_safeaccounts_navigation">Navigation{RenderCloseButton()}</label>
-                <div class="div_safesidebar_navigation">
+                <div className="div_safesidebar_navigation">
                     {RenderSearchBar()}
                     <li><button id="btn_safesidebar_all" onClick={this.ResetFilters}>All Entries</button></li>
                     <label id="lbl-folders"><b>Folders</b></label><button id="btn_add_folder">&#x2b;</button>
                     <div id="folder_top_level">
-                        <Folder Folders={this.props.Folders} ParentID={null} SetSelectedFolder={this.props.SetSelectedFolder} />
+                        <Folder key={null} Folders={this.props.Folders} ParentID={null} SetSelectedFolder={this.props.SetSelectedFolder} />
                     </div>
                 </div>
 

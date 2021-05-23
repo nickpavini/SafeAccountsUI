@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Navbar, NavbarBrand, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
-import { Button } from 'bootstrap';
 
 export class NavMenu extends Component {
     static displayName = NavMenu.name;
@@ -41,7 +40,7 @@ export class NavMenu extends Component {
         return (
             <header>
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom mb-3" light>
-                    <div class="div_navbar_items">
+                    <div className="div_navbar_items">
                         <NavbarBrand tag={Link} to="/">SafeAccountsUI</NavbarBrand>
                         <NavLink id="navlinks" tag={Link} to="/login">Login</NavLink>
                         <NavLink id="navlinks" tag={Link} to="/signup">Sign Up</NavLink>
@@ -57,10 +56,10 @@ export class NavMenu extends Component {
         const RenderOpenSideBar = () => {
             if (this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
                 return (
-                    <div class="div_sidebar_menu_icon" onClick={ this.openSideMenu }>
-                        <div class="menu_icon_bar"></div>
-                        <div class="menu_icon_bar"></div>
-                        <div class="menu_icon_bar"></div>
+                    <div className="div_sidebar_menu_icon" onClick={ this.openSideMenu }>
+                        <div className="menu_icon_bar"></div>
+                        <div className="menu_icon_bar"></div>
+                        <div className="menu_icon_bar"></div>
                     </div>
                 );
         }
@@ -68,7 +67,7 @@ export class NavMenu extends Component {
         return (
             <header>
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom mb-3" light>
-                    <div class="div_navbar_items">
+                    <div className="div_navbar_items">
                         {RenderOpenSideBar()}<NavbarBrand tag={Link} to="/">SafeAccountsUI</NavbarBrand>
                         <button id="btn_sign_out" onClick={this.props.UpdateUserLoggedOut}>Sign Out</button>
                         <NavLink id="navlinks" tag={Link} to="/account">Account</NavLink>

@@ -22,8 +22,8 @@ export class Safe extends Component {
 
     render() {
         return (
-            <div class="div_safe">
-                <div class="div_safe_options">
+            <div className="div_safe">
+                <div className="div_safe_options">
                     <label id="lbl_safe">Safe</label>
                     <NavLink id="navlink_add_safe_item" tag={Link} to="/addsafeitem">+Add Item</NavLink>
                     <button id="btn_item_settings">&#9881;</button>
@@ -34,9 +34,11 @@ export class Safe extends Component {
                         if (value.FolderID === this.props.selectedFolderID || this.props.selectedFolderID === null) {
                             if (this.props.searchString === null || value.title.toLowerCase().includes(this.props.searchString.toLowerCase()))
                                 return (
-                                    <SafeItem info={value} UpdateSelectedItems={this.UpdateSelectedItems}/>
+                                    <SafeItem key={value.id} info={value} UpdateSelectedItems={this.UpdateSelectedItems}/>
                                 );
                         }
+
+                        return null; // retun null if nothing
                     }
                 )}
             </div>

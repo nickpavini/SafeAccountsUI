@@ -17,7 +17,7 @@ export class Folder extends Component {
 
     render() {
         return (
-            <div class="div_folder">
+            <div className="div_folder">
                 {
                     // go through each folder
                     this.props.Folders.map((value, index) => {
@@ -30,16 +30,16 @@ export class Folder extends Component {
                             // if this folder is a parent we need to call a Folder with a new parent.. else we display without the dropdown arrow
                             if (value.hasChild) {
                                 contents = (
-                                    <details>
+                                    <details key={value.id}>
                                         <summary id={fold_id} onClick={this.SelectFolder}>{value.folderName}</summary>
-                                        <div class="div_folder_child">
-                                            <Folder Folders={this.props.Folders} ParentID={value.id} SetSelectedFolder={this.props.SetSelectedFolder} />
+                                        <div className="div_folder_child">
+                                            <Folder key={value.id} Folders={this.props.Folders} ParentID={value.id} SetSelectedFolder={this.props.SetSelectedFolder} />
                                         </div>
                                     </details>
                                 );
                             }
                             else {
-                                contents = <summary class="summary_without_marker" id={fold_id} onClick={this.SelectFolder}>{value.folderName}</summary>;
+                                contents = <summary key={value.id} className="summary_without_marker" id={fold_id} onClick={this.SelectFolder}>{value.folderName}</summary>;
                             }
                         }
 
