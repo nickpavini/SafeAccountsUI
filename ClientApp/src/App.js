@@ -124,7 +124,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/safeitems/:item_id' render={(props) => (
                             this.state.loggedIn ? (
-                                <SafeItem info={this.state.safe.find(e => e.id.toString() === props.location.pathname.split("/").pop())} />
+                                <SafeItem info={this.state.safe.find(e => e.id.toString() === props.location.pathname.split("/").pop())} uid={this.state.uid} />
                             ) : (
                                     <Redirect to="/login" />
                                 )
