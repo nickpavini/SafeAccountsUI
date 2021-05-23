@@ -9,9 +9,9 @@ import { DashBoard } from './components/DashBoard/DashBoard.js';
 import { Account } from './components/Account/Account';
 import { SafeSideBar } from './components/SafeSideBar/SafeSideBar';
 import { AddSafeItem } from './components/AddSafeItem/AddSafeItem';
-
-import './custom.css'
 import { EmailConfirmation } from './components/EmailConfirmation/EmailConfirmation.js';
+import { SafeItem } from './components/DashBoard/Safe/SafeItem/SafeItem.js';
+import './custom.css'
 
 localStorage.setItem("MOBILE_MODE", "MOBILE");
 localStorage.setItem("DESKTOP_MODE", "DESKTOP");
@@ -118,6 +118,13 @@ class AppComponent extends Component {
                         <Route path='/dashboard' render={() => (
                             this.state.loggedIn ? (
                                 <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} folders={this.state.folders} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder}/>
+                            ) : (
+                                    <Redirect to="/login" />
+                                )
+                        )} />
+                        <Route path='/safeitems/:item_id' render={(props) => (
+                            this.state.loggedIn ? (
+                                <SafeItem info={this.state.safe.find(e => e.id.toString() === props.location.pathname.split("/").pop())} />
                             ) : (
                                     <Redirect to="/login" />
                                 )
