@@ -16,6 +16,7 @@ export class SafeItem extends Component {
         // function bindings
         this.SetItemSelected = this.SetItemSelected.bind(this);
         this.ViewSafeItem = this.ViewSafeItem.bind(this);
+        this.SaveItemEdit = this.SaveItemEdit.bind(this);
     }
 
     render() {
@@ -34,7 +35,27 @@ export class SafeItem extends Component {
             );
         }
         else { // in this case we are viewing a single account as a whole page in edit mode
-            return <p>"Hello World!" {this.props.info.id}</p>;
+            return (
+                <div class="div_edit_safe_item">
+                    <form id="form_edit_safe_item" onSubmit={this.SaveItemEdit}>
+                        <div class="container">
+                            <label id="lbl_edit_item_title" htmlFor="text_input_edit_item_title"><b>Title</b></label><br />
+                            <textarea class="text_input_edit_item" placeholder="" id="text_input_edit_item_title" rows="1" cols="38" defaultValue={this.props.info.title} required></textarea>
+                            <br />
+                            <label id="lbl_edit_item_login" htmlFor="text_input_edit_item_login"><b>Login</b></label><br />
+                            <textarea class="text_input_edit_item" placeholder="" id="text_input_edit_item_login" rows="1" cols="38" defaultValue={this.props.info.login} required></textarea>
+                            <br />
+                            <label id="lbl_edit_item_password" htmlFor="text_input_edit_item_password"><b>Password</b></label><br />
+                            <textarea class="text_input_edit_item" placeholder="" id="text_input_edit_item_password" rows="1" cols="38" defaultValue={this.props.info.password} required></textarea>
+                            <br />
+                            <label id="lbl_edit_item_description" htmlFor="text_input_edit_item_description"><b>Description</b></label><br />
+                            <textarea class="text_input_edit_item" placeholder="" id="text_input_edit_item_description" rows="4" cols="38" defaultValue={this.props.info.description} required></textarea>
+                            <br />
+                            <button id="btn_save_edit" type="submit"><b>Save</b></button>
+                        </div>
+                    </form>
+                </div>
+            );
         }
     }
 
@@ -49,5 +70,9 @@ export class SafeItem extends Component {
             return;
 
         this.setState({ redirect: true, toUrl: "/safeitems/" + this.props.info.id.toString() });
+    }
+
+    async SaveItemEdit(event) {
+        event.preventDefault(); //prevent page refresh
     }
 }
