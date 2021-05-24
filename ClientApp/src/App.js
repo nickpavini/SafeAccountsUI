@@ -39,6 +39,13 @@ const useViewport = () => {
 // layer the app with a hooked component
 const App = () => {
     var mode = useViewport();
+
+    // prevent default context menu all around
+    document.addEventListener('contextmenu', e => {
+        e.preventDefault();
+    });
+
+    // return app in the correct device mode
     return <AppComponent device_mode={mode} />;
 }
 export { App };
