@@ -39,6 +39,13 @@ const useViewport = () => {
 // layer the app with a hooked component
 const App = () => {
     var mode = useViewport();
+
+    // prevent default context menu all around
+    document.addEventListener('contextmenu', e => {
+        e.preventDefault();
+    });
+
+    // return app in the correct device mode
     return <AppComponent device_mode={mode} />;
 }
 export { App };
@@ -117,7 +124,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/dashboard' render={() => (
                             this.state.loggedIn ? (
-                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} folders={this.state.folders} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder}/>
+                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} FetchSafe={this.FetchSafe} folders={this.state.folders} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder}/>
                             ) : (
                                     <Redirect to="/login" />
                                 )

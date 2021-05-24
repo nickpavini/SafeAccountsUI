@@ -3,6 +3,7 @@ import { NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './Safe.css';
 import { SafeItem } from './SafeItem/SafeItem';
+import { SafeItemContextMenu } from './SafeItem/SafeItemContextMenu/SafeItemContextMenu';
 
 export class Safe extends Component {
     static displayName = Safe.name;
@@ -10,10 +11,16 @@ export class Safe extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { selectedItems: new Set() }; // set to hold the ids of which items are currently selected
+         // set to hold the ids of which items are currently selected
+        this.state = {
+            selectedItems: new Set(), openContextMenu: false,
+            menu_top: "0px", menu_left: "0px", menu_item_id: null
+        }; 
 
         // function binding
         this.UpdateSelectedItems = this.UpdateSelectedItems.bind(this);
+        this.OpenContextMenu = this.OpenContextMenu.bind(this);
+        this.CloseContextMenu = this.CloseContextMenu.bind(this);
     }
 
     componentDidMount() {
@@ -21,8 +28,14 @@ export class Safe extends Component {
     }
 
     render() {
+        const RenderSafeItemContextMenu = () => {
+            if (this.state.openContextMenu)
+                return <SafeItemContextMenu uid={this.props.uid} item={this.props.safe.find(e => e.id === this.state.menu_item_id)} FetchSafe={this.props.FetchSafe} top={this.state.menu_top} left={this.state.menu_left} CloseContextMenu={this.CloseContextMenu}/>;
+        }
+
         return (
             <div className="div_safe">
+                {RenderSafeItemContextMenu()}
                 <div className="div_safe_options">
                     <label id="lbl_safe">Safe</label>
                     <NavLink id="navlink_add_safe_item" tag={Link} to="/addsafeitem">+Add Item</NavLink>
@@ -34,7 +47,7 @@ export class Safe extends Component {
                         if (value.FolderID === this.props.selectedFolderID || this.props.selectedFolderID === null) {
                             if (this.props.searchString === null || value.title.toLowerCase().includes(this.props.searchString.toLowerCase()))
                                 return (
-                                    <SafeItem key={value.id} info={value} UpdateSelectedItems={this.UpdateSelectedItems}/>
+                                    <SafeItem key={value.id} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu}/>
                                 );
                         }
 
@@ -56,5 +69,13 @@ export class Safe extends Component {
 
         // update state
         this.setState({ selectedItems: items });
+    }
+
+    async OpenContextMenu(item_id, left, top) {
+        this.setState({ openContextMenu: true, menu_top: top, menu_left: left, menu_item_id: item_id })
+    }
+
+    async CloseContextMenu() {
+        this.setState({ openContextMenu: false });
     }
 }
