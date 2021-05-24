@@ -67,7 +67,8 @@ export class AddSafeItem extends Component {
             await this.props.FetchSafe();
             setTimeout(() => this.setState({ redirect: true }), 4000)
         }
-        else {
+        // unauthorized could need new access token, so we attempt refresh
+        else if (response.status === 401 || response.status === 403) {
             var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
 
             // dont recall if the refresh didnt succeed
@@ -75,6 +76,10 @@ export class AddSafeItem extends Component {
                 return;
 
             this.AddSafeItem(event); // call again
+        }
+        // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
+        else {
+
         }
     }
 }
