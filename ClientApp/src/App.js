@@ -131,7 +131,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/safeitems/:item_id' render={(props) => (
                             this.state.loggedIn ? (
-                                <EditSafeItem info={this.state.safe.find(e => e.id.toString() === props.location.pathname.split("/").pop())} uid={this.state.uid} FetchSafe={this.FetchSafe} />
+                                <EditSafeItem info={this.state.safe.find(e => e.id.toString() === props.location.pathname.split("/").pop())} uid={this.state.uid} FetchSafe={this.FetchSafe} attemptRefresh={this.attemptRefresh} />
                             ) : (
                                     <Redirect to="/login" />
                                 )
