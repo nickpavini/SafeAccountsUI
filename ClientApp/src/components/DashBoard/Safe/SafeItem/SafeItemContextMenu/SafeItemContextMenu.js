@@ -73,6 +73,20 @@ export class SafeItemContextMenu extends Component {
         if (response.ok) {
             this.props.FetchSafe();
         }
+        // unauthorized could need new access token, so we attempt refresh
+        else if (response.status === 401 || response.status === 403) {
+            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+
+            // dont recall if the refresh didnt succeed
+            if (!refreshSucceeded)
+                return;
+
+            this.DeleteSafeItem(); // call again
+        }
+        // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
+        else {
+            
+        }
     }
 
     // copies password to the clipboard
