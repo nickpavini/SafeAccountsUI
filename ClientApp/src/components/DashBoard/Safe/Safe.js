@@ -19,7 +19,7 @@ export class Safe extends Component {
 
         // function binding
         this.UpdateSelectedItems = this.UpdateSelectedItems.bind(this);
-        this.OpenContenxtMenu = this.OpenContenxtMenu.bind(this);
+        this.OpenContextMenu = this.OpenContextMenu.bind(this);
         this.CloseContextMenu = this.CloseContextMenu.bind(this);
     }
 
@@ -47,7 +47,7 @@ export class Safe extends Component {
                         if (value.FolderID === this.props.selectedFolderID || this.props.selectedFolderID === null) {
                             if (this.props.searchString === null || value.title.toLowerCase().includes(this.props.searchString.toLowerCase()))
                                 return (
-                                    <SafeItem key={value.id} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContenxtMenu}/>
+                                    <SafeItem key={value.id} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu}/>
                                 );
                         }
 
@@ -71,7 +71,7 @@ export class Safe extends Component {
         this.setState({ selectedItems: items });
     }
 
-    async OpenContenxtMenu(item_id, left, top) {
+    async OpenContextMenu(item_id, left, top) {
         this.setState({ openContextMenu: true, menu_top: top, menu_left: left, menu_item_id: item_id })
     }
 
