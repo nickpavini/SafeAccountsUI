@@ -138,7 +138,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/addsafeitem' render={() => (
                             this.state.loggedIn ? (
-                                <AddSafeItem device_mode={this.props.device_mode} uid={this.state.uid} FetchSafe={this.FetchSafe}/>
+                                <AddSafeItem device_mode={this.props.device_mode} uid={this.state.uid} FetchSafe={this.FetchSafe} attemptRefresh={this.attemptRefresh}/>
                             ) : (
                                     <Redirect to="/login" />
                                 )
@@ -211,10 +211,13 @@ class AppComponent extends Component {
             await this.FetchSafe(); // get accounts
             await this.FetchUserFolders(); // get users folders
             await this.FetchUserInfo();
-            this.setState({loading: false}); // done loading
+            this.setState({ loading: false }); // done loading
+            return true;
         }
-        else
-            this.setState({ loading: false, loggedIn: false});
+        else {
+            this.setState({ loading: false, loggedIn: false });
+            return false;
+        }
     }
 
     //fetch all the users accounts.. may move this to safe, but for now we have it here to easily know whether to display loading or not
