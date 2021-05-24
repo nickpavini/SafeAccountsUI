@@ -13,6 +13,7 @@ export class SafeItemContextMenu extends Component {
         // function bindings
         this.handleClick = this.handleClick.bind(this);
         this.AddItem = this.AddItem.bind(this);
+        this.EditSafeItem = this.EditSafeItem.bind(this);
     }
 
     componentDidMount() {
@@ -37,6 +38,7 @@ export class SafeItemContextMenu extends Component {
         return (
             <div id="menu_safeitem" style={{ top: this.props.top, left: this.props.left }}>
                 <span className="menu_safeitem" id="menu_safeitem_add_item" onClick={this.AddItem}>Add Item</span><br />
+                <span className="menu_safeitem" id="menu_safeitem_edit_item" onClick={this.EditSafeItem}>Edit Item</span><br />
             </div>
         );
     }
@@ -44,5 +46,10 @@ export class SafeItemContextMenu extends Component {
     // redirect to page for adding an item to the safe
     AddItem() {
         this.setState({ redirect: true, toUrl: '/addsafeitem' })
+    }
+
+    // set redirect and go to safeitems path and render in edit mode
+    EditSafeItem() {
+        this.setState({ redirect: true, toUrl: "/safeitems/" + this.props.item.id.toString() });
     }
 }
