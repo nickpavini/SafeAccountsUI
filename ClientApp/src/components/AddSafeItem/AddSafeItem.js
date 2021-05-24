@@ -64,15 +64,17 @@ export class AddSafeItem extends Component {
         //make request and get response
         const response = await fetch('https://localhost:44366/users/' + this.props.uid + '/accounts', requestOptions);
         if (response.ok) {
-            /*
-             *  Here we need to do something if it finishes successfully, like go back to dashboard
-             *  We also need to update the persons acconut list as we head back to dashboard
-             */
-
             await this.props.FetchSafe();
             setTimeout(() => this.setState({ redirect: true }), 4000)
         }
-        else
-            this.setState({ loading: true }); // no longer loading, we had an issue
+        else {
+            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+
+            // dont recall if the refresh didnt succeed
+            if (!refreshSucceeded)
+                return;
+
+            this.AddSafeItem(event); // call again
+        }
     }
 }
