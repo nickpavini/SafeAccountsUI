@@ -16,6 +16,7 @@ export class SafeItemContextMenu extends Component {
         this.EditSafeItem = this.EditSafeItem.bind(this);
         this.DeleteSafeItem = this.DeleteSafeItem.bind(this);
         this.CopyItemPassword = this.CopyItemPassword.bind(this);
+        this.CopyItemUsername = this.CopyItemUsername.bind(this);
     }
 
     componentDidMount() {
@@ -42,6 +43,7 @@ export class SafeItemContextMenu extends Component {
                 <span className="menu_safeitem" id="menu_safeitem_add_item" onClick={this.AddItem}>Add Item</span><br />
                 <span className="menu_safeitem" id="menu_safeitem_edit_item" onClick={this.EditSafeItem}>Edit Item</span><br />
                 <span className="menu_safeitem" id="menu_safeitem_delete_item" onClick={this.DeleteSafeItem}>Delete Item</span><br />
+                <span className="menu_safeitem" id="menu_safeitem_copy_username" onClick={this.CopyItemUsername}>Copy Username</span><br />
                 <span className="menu_safeitem" id="menu_safeitem_copy_password" onClick={this.CopyItemPassword}>Copy Password</span><br />
             </div>
         );
@@ -71,6 +73,11 @@ export class SafeItemContextMenu extends Component {
         if (response.ok) {
             this.props.FetchSafe();
         }
+    }
+
+    // copies password to the clipboard
+    CopyItemUsername() {
+        navigator.clipboard.writeText(this.props.item.login);
     }
 
     // copies password to the clipboard
