@@ -81,6 +81,17 @@ export class EditSafeItem extends Component {
             this.setState({ titleDone: true });
             this.CheckIfSaveFinished();
         }
+        // unauthorized could be needed new access token, so we attempt refresh
+        else if (response.status === 401 || response.status === 403) {
+            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+
+            // dont recall if the refresh didnt succeed
+            if (!refreshSucceeded)
+                return;
+
+            this.UpdateTitle(value); // call again
+        }
+        // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
         else {
             this.setState({ titleDone: true, error: true, loading: false });
         }
@@ -92,6 +103,17 @@ export class EditSafeItem extends Component {
             this.setState({ loginDone: true });
             this.CheckIfSaveFinished();
         }
+        // unauthorized could be needed new access token, so we attempt refresh
+        else if (response.status === 401 || response.status === 403) {
+            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+
+            // dont recall if the refresh didnt succeed
+            if (!refreshSucceeded)
+                return;
+
+            this.UpdateLogin(value); // call again
+        }
+        // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
         else {
             this.setState({ loginDone: true, error: true, loading: false });
         }
@@ -103,6 +125,17 @@ export class EditSafeItem extends Component {
             this.setState({ passwordDone: true });
             this.CheckIfSaveFinished();
         }
+        // unauthorized could be needed new access token, so we attempt refresh
+        else if (response.status === 401 || response.status === 403) {
+            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+
+            // dont recall if the refresh didnt succeed
+            if (!refreshSucceeded)
+                return;
+
+            this.UpdatePassword(value); // call again
+        }
+        // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
         else {
             this.setState({ passwordDone: true, error: true, loading: false });
         }
@@ -114,6 +147,17 @@ export class EditSafeItem extends Component {
             this.setState({ descriptionDone: true });
             this.CheckIfSaveFinished();
         }
+        // unauthorized could be needed new access token, so we attempt refresh
+        else if (response.status === 401 || response.status === 403) {
+            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+
+            // dont recall if the refresh didnt succeed
+            if (!refreshSucceeded)
+                return;
+
+            this.UpdateDescription(value); // call again
+        }
+        // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
         else {
             this.setState({ descriptionDone: true, error: true, loading: false });
         }
