@@ -1,38 +1,35 @@
-﻿.div_navbar_items {
-    height: 35px;
-    width: 100%;
-}
-
-.div_sidebar_menu_icon {
-    float: left;
-}
-
-.menu_icon_bar {
-    width: 25px;
-    height: 4px;
+﻿#div_navbar {
     background-color: black;
-    margin: 6px 0;
+    color: white;
+    height: 55px;
+}
+
+.div_navbar_items {
+    height: 35px;
+    margin-right: 45px;
+    margin-left: 45px;
 }
 
 .navbar-brand {
     float: left;
-    margin-left: 8px;
+    margin-top: 3px;
+    font-size: 25px !important;
 }
 
 #navlinks {
     float: right;
-    color: black;
+    color: white;
+    margin-top: 8px;
 }
 
-#btn_sign_out {
+#icon_user {
     float: right;
-    background: none !important;
-    border: none;
-    padding: 0 !important;
-    /*input has OS specific font-family*/
-    color: black;
-    cursor: pointer;
-    margin-top: 7.5px;
+    margin-top: 16px;
+    font-size: 22px !important;
+}
+
+#sidebar_menu_icon {
+    float: left;
 }
 
 a.navbar-brand {
@@ -42,12 +39,17 @@ a.navbar-brand {
 }
 
 html {
-  font-size: 14px;
+  font-size: 16px;
 }
-@media (min-width: 800px) {
-  html {
-    font-size: 16px;
-  }
+@media (max-width: 800px) {
+    html {
+        font-size: 16px;
+    }
+
+    .div_navbar_items {
+        margin-left: 2.5%;
+        margin-right: 2.5%;
+    }
 }
 
 .box-shadow {
