@@ -30,7 +30,7 @@ export class SafeSideBar extends Component {
         // top folder so parent is null.. we list folders with parents=null and call a Folder for each folder that is a parent
         return (
             <div className="div_SafeSideBar" id="div_SafeSideBar">
-                <label id="lbl_safeaccounts_navigation">Navigation{RenderCloseButton()}</label>
+                {RenderCloseButton()}
                 <div className="div_safesidebar_navigation">
                     {RenderSearchBar()}
                     <li><button id="btn_safesidebar_all" onClick={this.ResetFilters}>All Entries</button></li>

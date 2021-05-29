@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import './Safe.css';
 import { SafeItem } from './SafeItem/SafeItem';
 import { SafeItemContextMenu } from './SafeItem/SafeItemContextMenu/SafeItemContextMenu';
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export class Safe extends Component {
     static displayName = Safe.name;
@@ -38,8 +40,9 @@ export class Safe extends Component {
                 {RenderSafeItemContextMenu()}
                 <div className="div_safe_options">
                     <label id="lbl_safe">Safe</label>
-                    <NavLink id="navlink_add_safe_item" tag={Link} to="/addsafeitem">+Add Item</NavLink>
-                    <button id="btn_item_settings">&#9881;</button>
+                    <NavLink id="navlink_add_safe_item" tag={Link} to="/addsafeitem">
+                        <FontAwesomeIcon icon={faPlus} style={{color: "#000"}}/>
+                    </NavLink>
                 </div>
                 {
                     this.props.safe.map((value, index) => {
