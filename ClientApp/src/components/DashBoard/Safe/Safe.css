@@ -1,6 +1,30 @@
 .div_safe {
     float: left;
-    width: 80%;
+    width: 83%;
+    height: 100%;
+    border-top: .5px solid lightgray;
+    color: white;
+}
+
+.div_safeitems {
+    width: 100%;
+    background-color: rgba(40, 40, 43, 0.75);
+    height: 100%;
+}
+
+#lbl_passwordlist {
+    width: 100%;
+    background-color: #28282B;
+    margin-bottom: 0px;
+    padding-left: 2px;
+}
+
+#tr_safeitem_labels {
+    background-color: rgba(40, 40, 43, 0.55) ;
+}
+
+#icon_safeitem_star {
+    font-size: 14px;
 }
 
 @media screen and (max-width: 1150px) {
@@ -18,22 +42,4 @@
 
 .div_safe_options {
     border-bottom: 1px solid lightgray;
-}
-
-#navlink_add_safe_item {
-    float: right;
-    margin-top: 2.5%;
-    color: black;
-    font-weight: 500;
-}
-
-#btn_item_settings {
-}
-
-#lbl_safe {
-    border: none;
-    color: black;
-    font-size: 40px;
-    font-weight: 400;
-    display: inline;
 }

@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import './SafeItem.css';
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export class SafeItem extends Component {
     static displayName = SafeItem.name;
@@ -18,7 +20,7 @@ export class SafeItem extends Component {
     }
 
     componentDidMount() {
-        document.getElementById("div_safeitem_" + this.props.info.id.toString()).addEventListener('contextmenu', e => {
+        document.getElementById("tr_safeitem_" + this.props.info.id.toString()).addEventListener('contextmenu', e => {
             e.preventDefault();
             this.props.OpenContextMenu(this.props.info.id, e.pageX + "px", e.pageY + "px");
         });
@@ -30,12 +32,17 @@ export class SafeItem extends Component {
             return <Redirect to={this.state.toUrl} />;
 
         var input_id = "input_chk_safeitem_" + this.props.info.id.toString();
-        var div_id = "div_safeitem_" + this.props.info.id.toString();
+        var tr_id = "tr_safeitem_" + this.props.info.id.toString();
         return (
-            <div id={div_id} className="div_safeitem" onClick={this.ViewSafeItem}>
-                <input type="checkbox" defaultChecked={false} onClick={this.SetItemSelected} id={input_id} className="input_chk_safeitem" ></input>
-                <span id="span_safeitem_title" onClick={this.ViewSafeItem}>{this.props.info.title}</span><br />
-            </div>
+            <tr id={tr_id} className="tr_safeitem" onClick={this.ViewSafeItem}>
+                <td><input type="checkbox" defaultChecked={false} onClick={this.SetItemSelected} id={input_id} className="input_chk_safeitem" ></input></td>
+                <td><FontAwesomeIcon id="icon_safeitem_star" icon={faStar} /></td>
+                <td><span id="span_safeitem_title" >{this.props.info.title}</span></td>
+                <td><span id="span_safeitem_login" >{this.props.info.login}</span></td>
+                <td><span id="span_safeitem_password" >*********</span></td>
+                <td><span id="span_safeitem_url" >{this.props.info.url}</span></td>
+                <td><span id="span_safeitem_last_modified" >{this.props.info.lastModified.split(' ')[0]}</span></td>
+            </tr>
         );
     }
 

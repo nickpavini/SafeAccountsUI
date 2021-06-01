@@ -1,8 +1,8 @@
 .div_SafeSideBar {
     color: white;
-    background-color: black;
-    border-top: 0.5px solid white;
-    border-right: 0.5px solid white;
+    background-color: #28282B;
+    border-top: 0.5px solid lightgray;
+    border-right: 0.5px solid lightgray;
     width: 17%;
     overflow: auto;
     transition: 0.3s;
