@@ -43,8 +43,8 @@ export class Safe extends Component {
                     <table style={{width: "100%"}}>
                         <thead>
                             <tr id="tr_safeitem_labels">
-                                <td><FontAwesomeIcon id="icon_safeitem_star" icon={faSquare} style={{ color: "white" }} /></td>
-                                <td><FontAwesomeIcon id="icon_safeitem_star" icon={faStar} style={{ color: "white" }} /></td>
+                                <td><FontAwesomeIcon id="icon_safeitem_square" icon={faSquare} style={{ color: "white" }} /></td>
+                                <td><FontAwesomeIcon className="icon_safeitem_star" id="icon_safeitem_star" icon={faStar} style={{ color: "white" }} /></td>
                                 <td>Title</td>
                                 <td>Username</td>
                                 <td>Password</td>
@@ -59,7 +59,7 @@ export class Safe extends Component {
                                     if (value.FolderID === this.props.selectedFolderID || this.props.selectedFolderID === null) {
                                         if (this.props.searchString === null || value.title.toLowerCase().includes(this.props.searchString.toLowerCase()))
                                             return (
-                                                <SafeItem key={value.id} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />
+                                                <SafeItem key={value.id} uid={this.props.uid} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />
                                             );
                                     }
 
