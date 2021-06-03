@@ -1,7 +1,8 @@
 .div_dashboard {
-    width: 800px;
+    width: 100%;
     margin: 0 auto;
-    margin-top: 3%;
+    height: 100%;
+    position: fixed;
 }
 
 @media (max-width: 800px) {

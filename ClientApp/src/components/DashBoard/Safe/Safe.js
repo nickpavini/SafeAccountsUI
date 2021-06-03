@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import './Safe.css';
 import { SafeItem } from './SafeItem/SafeItem';
 import { SafeItemContextMenu } from './SafeItem/SafeItemContextMenu/SafeItemContextMenu';
+import { faSquare, faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export class Safe extends Component {
     static displayName = Safe.name;
@@ -36,24 +38,37 @@ export class Safe extends Component {
         return (
             <div className="div_safe">
                 {RenderSafeItemContextMenu()}
-                <div className="div_safe_options">
-                    <label id="lbl_safe">Safe</label>
-                    <NavLink id="navlink_add_safe_item" tag={Link} to="/addsafeitem">+Add Item</NavLink>
-                    <button id="btn_item_settings">&#9881;</button>
-                </div>
-                {
-                    this.props.safe.map((value, index) => {
-                        // display the account if its folder matches, or the selected folder is null  or empty then we display all
-                        if (value.FolderID === this.props.selectedFolderID || this.props.selectedFolderID === null) {
-                            if (this.props.searchString === null || value.title.toLowerCase().includes(this.props.searchString.toLowerCase()))
-                                return (
-                                    <SafeItem key={value.id} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu}/>
-                                );
-                        }
+                <label id="lbl_passwordlist">Password List</label>
+                <div className="div_safeitems">
+                    <table style={{width: "100%"}}>
+                        <thead>
+                            <tr id="tr_safeitem_labels">
+                                <td><FontAwesomeIcon id="icon_safeitem_square" icon={faSquare} style={{ color: "white" }} /></td>
+                                <td><FontAwesomeIcon className="icon_safeitem_star" id="icon_safeitem_star" icon={faStar} style={{ color: "white" }} /></td>
+                                <td>Title</td>
+                                <td>Username</td>
+                                <td>Password</td>
+                                <td>URL</td>
+                                <td>Last Modified</td>
+                            </tr>
+                        </thead>
+                        <tbody id="tb_safeitems">
+                            {
+                                this.props.safe.map((value, index) => {
+                                    // display the account if its folder matches, or the selected folder is null  or empty then we display all
+                                    if (value.FolderID === this.props.selectedFolderID || this.props.selectedFolderID === null) {
+                                        if (this.props.searchString === null || value.title.toLowerCase().includes(this.props.searchString.toLowerCase()))
+                                            return (
+                                                <SafeItem key={value.id} uid={this.props.uid} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />
+                                            );
+                                    }
 
-                        return null; // retun null if nothing
-                    }
-                )}
+                                    return null; // retun null if nothing
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }

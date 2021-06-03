@@ -1,29 +1,20 @@
 .div_SafeSideBar {
-    float: left;
-    border: 1px solid black;
-    width: 250px;
+    color: white;
+    background-color: #28282B;
+    border-top: 0.5px solid lightgray;
+    border-right: 0.5px solid lightgray;
+    width: 17%;
     overflow: auto;
-    margin-top: 2%;
-    background-color: #FFF;
     transition: 0.3s;
+    float: left;
+    height: 100%;
 }
 
 .div_safesidebar_navigation {
     margin-top: 20px;
-    margin-bottom: 8%;
-    margin-left: 7%;
-    margin-right: 7%;
-    width: 200px;
-}
-
-#lbl_safeaccounts_navigation {
-    padding-left: 8%;
-    padding-top: 5px;
-    padding-bottom: 2.5%;
-    color: black;
-    font-size: 18px;
-    font-weight: 600;
-    height: 35px;
+    padding-left: 7%;
+    padding-right: 7%;
+    width: 100%;
 }
 
 #lbl-folders {
@@ -37,7 +28,7 @@
     border: none;
     padding: 0 !important;
     /*input has OS specific font-family*/
-    color: grey;
+    color: white;
     cursor: pointer;
 }
 
@@ -53,24 +44,24 @@
     font-size: 24px;
 }
 
-#lbl_safeaccounts_navigation {
-    color: black;
-    background-color: lightgray;
-    width: 100%;
-}
-
 #btn_safesidebar_all {
     margin-top: 11%;
     background: none !important;
     border: none;
     padding: 0 !important;
     /*input has OS specific font-family*/
-    color: black;
+    color: white;
     cursor: pointer;
 }
 
 #folder_top_level {
     margin-left: 1.5%;
+}
+
+@media screen and (max-width: 1150px) {
+    .div_SafeSideBar {
+        width: 30%;
+    }
 }
 
 @media screen and (max-width: 800px) {
