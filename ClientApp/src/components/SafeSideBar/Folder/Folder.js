@@ -30,13 +30,13 @@ export class Folder extends Component {
 
     // function to set selected folder and update what the safe is displaying
     async SelectFolder(event) {
-        var fold_id = event.target.id.replace("div_folder_", "");
+        var fold_id = event.currentTarget.id.replace("div_folder_", "");
 
         // show or hide children as needed
         if (this.props.folder.hasChild) {
             document.getElementById("div_folder_" + this.props.folder.id + "_child").style.display = document.getElementById("div_folder_" + this.props.folder.id + "_child").style.display === "block" ? "none" : "block";
         }
 
-        this.props.SetSelectedFolder(fold_id);
+        this.props.SetSelectedFolder(parseInt(fold_id));
     }
 }
