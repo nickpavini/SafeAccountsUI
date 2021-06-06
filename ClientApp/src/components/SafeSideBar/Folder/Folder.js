@@ -22,7 +22,7 @@ export class Folder extends Component {
 
         return (
             <div key={this.props.folder.id} id={fold_id} onClick={this.SelectFolder}>
-                <FontAwesomeIcon icon={faFolder} style={{ color: "white" }} />
+                <FontAwesomeIcon icon={this.props.selectedFolderID === this.props.folder.id ? faFolderOpen : faFolder} style={{ color: "white" }} />
                 <span className="span_folder_name">{this.props.folder.folderName}</span>
             </div>
         );
@@ -32,7 +32,7 @@ export class Folder extends Component {
     async SelectFolder(event) {
         var fold_id = event.currentTarget.id.replace("div_folder_", "");
 
-        // show or hide children as needed
+        // show or hide children as needed.. logic is opposite because the state is changed after the function call.
         if (this.props.folder.hasChild) {
             document.getElementById("div_folder_" + this.props.folder.id + "_child").style.display = document.getElementById("div_folder_" + this.props.folder.id + "_child").style.display === "block" ? "none" : "block";
         }
