@@ -1,12 +1,3 @@
-summary {
-    color: white;
-    font-size: 15px;
-}
-
-.summary_without_marker {
-    list-style-type: none; /* Remove bullets */
-}
-
-.div_folder_child {
-    margin-left: 7%;
+.span_folder_name{
+    margin-left: 6px;
 }

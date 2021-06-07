@@ -1,4 +1,6 @@
 ﻿import React, { Component } from 'react';
+import { faFolder, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './Folder.css';
 
 export class Folder extends Component {
@@ -16,43 +18,25 @@ export class Folder extends Component {
     }
 
     render() {
+        var fold_id = "div_folder_" + this.props.folder.id; // id for the clickable div tag
+
         return (
-            <div className="div_folder">
-                {
-                    // go through each folder
-                    this.props.Folders.map((value, index) => {
-                        var contents;
-
-                        // if the current folder we are looking at has the parent that was passed in, we add it to the tree
-                        if (value.parentID === this.props.ParentID) {
-                            var fold_id = "summary_" + value.id; // id for the clickable summary tag
-
-                            // if this folder is a parent we need to call a Folder with a new parent.. else we display without the dropdown arrow
-                            if (value.hasChild) {
-                                contents = (
-                                    <details key={value.id}>
-                                        <summary id={fold_id} onClick={this.SelectFolder}>{value.folderName}</summary>
-                                        <div className="div_folder_child">
-                                            <Folder key={value.id} Folders={this.props.Folders} ParentID={value.id} SetSelectedFolder={this.props.SetSelectedFolder} />
-                                        </div>
-                                    </details>
-                                );
-                            }
-                            else {
-                                contents = <summary key={value.id} className="summary_without_marker" id={fold_id} onClick={this.SelectFolder}>{value.folderName}</summary>;
-                            }
-                        }
-
-                        // return contents in a list tag for indenting.. might change this later because indents are large
-                        return contents;
-                    }
-                    )}
+            <div key={this.props.folder.id} id={fold_id} onClick={this.SelectFolder}>
+                <FontAwesomeIcon icon={this.props.selectedFolderID === this.props.folder.id ? faFolderOpen : faFolder} style={{ color: "white" }} />
+                <span className="span_folder_name">{this.props.folder.folderName}</span>
             </div>
         );
     }
 
     // function to set selected folder and update what the safe is displaying
     async SelectFolder(event) {
-        this.props.SetSelectedFolder(event.target.id.replace("summary_", ""));
+        var fold_id = event.currentTarget.id.replace("div_folder_", "");
+
+        // show or hide children as needed.. logic is opposite because the state is changed after the function call.
+        if (this.props.folder.hasChild) {
+            document.getElementById("div_folder_" + this.props.folder.id + "_child").style.display = document.getElementById("div_folder_" + this.props.folder.id + "_child").style.display === "block" ? "none" : "block";
+        }
+
+        this.props.SetSelectedFolder(parseInt(fold_id));
     }
 }

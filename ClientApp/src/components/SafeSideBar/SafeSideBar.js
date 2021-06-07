@@ -35,11 +35,47 @@ export class SafeSideBar extends Component {
                     {RenderSearchBar()}
                     <li><button id="btn_safesidebar_all" onClick={this.ResetFilters}>All Entries</button></li>
                     <label id="lbl-folders"><b>Folders</b></label><button id="btn_add_folder">&#x2b;</button>
-                    <div id="folder_top_level">
-                        <Folder key={null} Folders={this.props.Folders} ParentID={null} SetSelectedFolder={this.props.SetSelectedFolder} />
-                    </div>
+                    {this.ParseFolders(null)}
                 </div>
 
+            </div>
+        );
+    }
+
+    // parses folders and returns the needed html
+    ParseFolders(parentID) {
+        return (
+            <div id="div_folders" >
+                {
+                    // go through each folder
+                    this.props.Folders.map((value, index) => {
+                        var contents;
+
+                        // if the current folder we are looking at has the parent that was passed in, we add it to the tree
+                        if (value.parentID === parentID) {
+                            // if the current folder is a child of the parent we list, then we display the folder
+                            contents = <Folder key={value.id} folder={value} selectedFolderID={this.props.selectedFolderID} SetSelectedFolder={this.props.SetSelectedFolder} />;
+
+                            // if this folder is a parent we need to parse it children into a new div with a slight margin
+                            if (value.hasChild) {
+                                var childID = "div_folder_" + value.id + "_child";
+                                var key = "div_folder_" + value.id + "_key"; // not sure what this should be
+
+                                contents = (
+                                    <div key={key}>
+                                        {contents}
+                                        <div id={childID} style={{ marginLeft: "8px", display: "none" }}>
+                                            {this.ParseFolders(value.id)}
+                                        </div>
+                                    </div>
+                                );
+                            }
+                        }
+
+                        // return contents
+                        return contents;
+                    })
+                }
             </div>
         );
     }
