@@ -20,7 +20,6 @@ export class NavMenu extends Component {
         this.navbarLoggedOut = this.navbarLoggedOut.bind(this);
         this.navbarLoggedIn = this.navbarLoggedIn.bind(this);
         this.openSideMenu = this.openSideMenu.bind(this);
-        this.Logout = this.Logout.bind(this);
     }
 
     toggleNavbar () {
@@ -68,7 +67,7 @@ export class NavMenu extends Component {
                     <div className="div_navbar_items">
                         {RenderOpenSideBar()}
                         <NavbarBrand tag={Link} to="/" style={{ color: "#FFF" }}>Safe Accounts</NavbarBrand>
-                        <FontAwesomeIcon id="icon_user" icon={faUser} />
+                        <FontAwesomeIcon id="icon_user" icon={faUser} onClick={this.props.OpenNavbarAccountMenu}/>
                     </div>
                 </div>
             </header>
@@ -80,10 +79,5 @@ export class NavMenu extends Component {
         document.getElementById("btn_close_sidebar").style.display = "block";
         document.getElementById("div_SafeSideBar").style.border = "1px solid black"; // make it not invisible to add back the border
         document.getElementById("div_SafeSideBar").style.width = "250px"; // this makes it open from the right
-    }
-
-    // logs user out
-    Logout() {
-        this.props.UpdateUserLoggedOut();
     }
 }
