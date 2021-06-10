@@ -21,7 +21,7 @@ export class Folder extends Component {
         var fold_id = "div_folder_" + this.props.folder.id; // id for the clickable div tag
 
         return (
-            <div key={this.props.folder.id} id={fold_id} onClick={this.SelectFolder}>
+            <div key={this.props.folder.id} id={fold_id} onClick={this.SelectFolder} className="div_folder">
                 <FontAwesomeIcon icon={this.props.selectedFolderID === this.props.folder.id ? faFolderOpen : faFolder} style={{ color: "white" }} />
                 <span className="span_folder_name">{this.props.folder.folderName}</span>
             </div>

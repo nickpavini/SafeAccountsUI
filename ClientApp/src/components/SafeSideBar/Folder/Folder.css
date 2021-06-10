@@ -1,3 +1,7 @@
 .span_folder_name{
     margin-left: 6px;
 }
+
+.div_folder {
+    cursor: pointer;
+}
