@@ -2,6 +2,8 @@
 import './SafeSideBar.css';
 import { Folder } from './Folder/Folder';
 import { SearchBar } from '../SearchBar/SearchBar';
+import { faThLarge } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export class SafeSideBar extends Component {
     static displayName = SafeSideBar.name;
@@ -33,7 +35,7 @@ export class SafeSideBar extends Component {
                 {RenderCloseButton()}
                 <div className="div_safesidebar_navigation">
                     {RenderSearchBar()}
-                    <li><button id="btn_safesidebar_all" onClick={this.ResetFilters}>All Entries</button></li>
+                    <div id="div_sidebar_all_entries" onClick={this.ResetFilters}><FontAwesomeIcon id="icon_all_entries" icon={faThLarge} /><span id="span_sidebar_all_entries">All Entries</span></div>
                     <label id="lbl-folders"><b>Folders</b></label><button id="btn_add_folder">&#x2b;</button>
                     {this.ParseFolders(null)}
                 </div>

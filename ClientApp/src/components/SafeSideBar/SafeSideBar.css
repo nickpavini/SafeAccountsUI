@@ -17,6 +17,15 @@
     width: 100%;
 }
 
+#div_sidebar_all_entries {
+    margin-top: 15%;
+    cursor: pointer;
+}
+
+#span_sidebar_all_entries {
+    margin-left: 5px;
+}
+
 #lbl-folders {
     font-size: 22px;
     font-weight: 300;
@@ -42,16 +51,6 @@
     margin-left: 5%;
     font-weight: 900;
     font-size: 24px;
-}
-
-#btn_safesidebar_all {
-    margin-top: 11%;
-    background: none !important;
-    border: none;
-    padding: 0 !important;
-    /*input has OS specific font-family*/
-    color: white;
-    cursor: pointer;
 }
 
 #folder_top_level {
