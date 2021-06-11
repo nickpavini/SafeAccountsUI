@@ -41,9 +41,9 @@
 }
 
 #icon_close_sidebar {
-    margin-right: 6px;
-    margin-top: 4px;
-    font-size: 18px;
+    margin-right: 8px;
+    margin-top: 6px;
+    font-size: 22px;
     float: right;
 }
 
@@ -62,5 +62,9 @@
         height: 100%;
         width: 0;
         border: none; /*start our sidebar off not being seen in mobile*/
+    }
+
+    #div_sidebar_all_entries {
+        margin-top: 55px;
     }
 }

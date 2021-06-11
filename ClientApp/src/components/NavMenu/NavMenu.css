@@ -13,6 +13,7 @@
 .navbar-brand {
     float: left;
     margin-top: 3px;
+    margin-left: 8px;
     font-size: 25px !important;
 }
 
@@ -29,6 +30,8 @@
 }
 
 #sidebar_menu_icon {
+    font-size: 22px;
+    margin-top: 16px;
     float: left;
 }
 
