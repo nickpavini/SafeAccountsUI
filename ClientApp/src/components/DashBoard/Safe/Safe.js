@@ -1,11 +1,10 @@
 ﻿import React, { Component } from 'react';
-import { NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
 import './Safe.css';
 import { SafeItem } from './SafeItem/SafeItem';
 import { SafeItemContextMenu } from './SafeItem/SafeItemContextMenu/SafeItemContextMenu';
 import { faSquare, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SearchBar } from '../../SearchBar/SearchBar';
 
 export class Safe extends Component {
     static displayName = Safe.name;
@@ -35,10 +34,15 @@ export class Safe extends Component {
                 return <SafeItemContextMenu uid={this.props.uid} item={this.props.safe.find(e => e.id === this.state.menu_item_id)} FetchSafe={this.props.FetchSafe} top={this.state.menu_top} left={this.state.menu_left} CloseContextMenu={this.CloseContextMenu} attemptRefresh={this.props.attemptRefresh}/>;
         }
 
+        const RenderSearchBar = () => {
+            if (this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
+                return <SearchBar SetSearchString={this.props.SetSearchString} />;
+        }
+
         return (
             <div className="div_safe">
                 {RenderSafeItemContextMenu()}
-                <label id="lbl_passwordlist">Password List</label>
+                <div id="title_and_options"><span id="span_safe_title">Password List</span>{RenderSearchBar()}</div>
                 <div className="div_safeitems">
                     <table style={{width: "100%"}}>
                         <thead>

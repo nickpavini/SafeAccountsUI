@@ -12,15 +12,17 @@
     height: 100%;
 }
 
-#lbl_passwordlist {
+#title_and_options {
     width: 100%;
     background-color: #28282B;
     margin-bottom: 0px;
     padding-left: 2px;
+    padding-top: 2px;
+    padding-bottom: 3px;
 }
 
 #tr_safeitem_labels {
-    background-color: rgba(40, 40, 43, 0.55) ;
+    background-color: rgba(40, 40, 43, 0.55);
 }
 
 .icon_safeitem_star {
@@ -37,6 +39,10 @@
     .div_safe {
         margin-left: 0px;
         width: 100%;
+    }
+
+    #span_safe_title {
+        float: left;
     }
 }
 

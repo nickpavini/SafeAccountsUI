@@ -5,6 +5,20 @@
 
 @media (max-width: 800px) {
     #input_text_safe_search {
-        resize: horizontal;
+        width: 100px;
+        font-size: 12px;
+        border: none;
+        margin-left: 15px;
+        background-color: grey !important;
+        border-radius: 5px;
+    }
+
+    #input_text_safe_search::-webkit-input-placeholder {
+        color: black
+    }
+
+    #input_text_safe_search:focus {
+        outline: none;
+        border: none;
     }
 }
