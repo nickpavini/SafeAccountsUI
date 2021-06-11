@@ -59,12 +59,16 @@ export class Safe extends Component {
                         <tbody id="tb_safeitems">
                             {
                                 this.props.safe.map((value, index) => {
+                                    // if favorites are selected, we dont worry about the folders or the search string
+                                    if (this.props.showFavorites) {
+                                        if (value.isFavorite)
+                                            return <SafeItem key={value.id} uid={this.props.uid} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />;
+                                    }
                                     // display the account if its folder matches, or the selected folder is null  or empty then we display all
-                                    if (value.folderID === this.props.selectedFolderID || this.props.selectedFolderID === null) {
+                                    else if (value.folderID === this.props.selectedFolderID || this.props.selectedFolderID === null) {
+                                        // match search string
                                         if (this.props.searchString === null || value.title.toLowerCase().includes(this.props.searchString.toLowerCase()))
-                                            return (
-                                                <SafeItem key={value.id} uid={this.props.uid} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />
-                                            );
+                                            return <SafeItem key={value.id} uid={this.props.uid} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />;
                                     }
 
                                     return null; // retun null if nothing

@@ -22,7 +22,16 @@
     cursor: pointer;
 }
 
+#div_sidebar_favorites {
+    margin-top: 5%;
+    cursor: pointer;
+}
+
 #span_sidebar_all_entries {
+    margin-left: 5px;
+}
+
+#span_sidebar_favorites {
     margin-left: 5px;
 }
 

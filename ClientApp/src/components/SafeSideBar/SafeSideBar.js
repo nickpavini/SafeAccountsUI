@@ -2,7 +2,7 @@
 import './SafeSideBar.css';
 import { Folder } from './Folder/Folder';
 import { SearchBar } from '../SearchBar/SearchBar';
-import { faThLarge, faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faThLarge, faPlus, faTimes, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export class SafeSideBar extends Component {
@@ -36,6 +36,7 @@ export class SafeSideBar extends Component {
                 <div className="div_safesidebar_navigation">
                     {RenderSearchBar()}
                     <div id="div_sidebar_all_entries" onClick={this.ResetFilters}><FontAwesomeIcon id="icon_all_entries" icon={faThLarge} /><span id="span_sidebar_all_entries">All Entries</span></div>
+                    <div id="div_sidebar_favorites" onClick={this.props.ShowFavorites}><FontAwesomeIcon id="icon_favorites" icon={faStar} /><span id="span_sidebar_favorites">Favorites</span></div>
                     <div id="div_Folders_Options" ><span id="span_safesidebar_folders">Folders</span><FontAwesomeIcon id="icon_add_folder" icon={faPlus} /></div>
                     {this.ParseFolders(null)}
                 </div>

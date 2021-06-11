@@ -58,7 +58,8 @@ class AppComponent extends Component {
         this.state = {
             loggedIn: null, loading: true,// loggedIn and loading flag
             uid: null, account_info: null, safe: null, folders: null, // store important userinfo
-            searchString: null, selectedFolderID: null // what the user is searching for and what they have selected within the safe
+            searchString: null, selectedFolderID: null, // what the user is searching for and what they have selected within the safe
+            showFavorites: false
         };
 
         //function bindings
@@ -70,6 +71,7 @@ class AppComponent extends Component {
         this.FetchUserInfo = this.FetchUserInfo.bind(this);
         this.SetSearchString = this.SetSearchString.bind(this);
         this.SetSelectedFolder = this.SetSelectedFolder.bind(this);
+        this.ShowFavorites = this.ShowFavorites.bind(this);
     }
 
     componentDidMount() {
@@ -86,7 +88,7 @@ class AppComponent extends Component {
         else {
             const RenderSafeSideBar = () => {
                 if (this.state.loggedIn && this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
-                    return <SafeSideBar device_mode={this.props.device_mode} Folders={this.state.folders} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} SetSearchString={this.SetSearchString}/>
+                    return <SafeSideBar device_mode={this.props.device_mode} Folders={this.state.folders} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} SetSearchString={this.SetSearchString} ShowFavorites={this.ShowFavorites}/>
             }
 
             // set path options based on whether or not the user is logged in and device mode
@@ -124,7 +126,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/dashboard' render={() => (
                             this.state.loggedIn ? (
-                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} FetchSafe={this.FetchSafe} folders={this.state.folders} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} attemptRefresh={this.attemptRefresh}/>
+                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} FetchSafe={this.FetchSafe} folders={this.state.folders} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} showFavorites={this.state.showFavorites} SetSelectedFolder={this.SetSelectedFolder} attemptRefresh={this.attemptRefresh} ShowFavorites={this.ShowFavorites}/>
                             ) : (
                                     <Redirect to="/login" />
                                 )
@@ -272,13 +274,19 @@ class AppComponent extends Component {
         }
     }
 
-    // call back for the sidebar to set search params for the safe
+    // call back for the sidebar to set search params for the safe.. If a folder, or favorites category is selected, search string will search within the additional specs
     SetSearchString(str) {
-        this.setState({ searchString: str });
+        this.setState({ searchString: str, showFavorites: false });
     }
 
-    // call back for the Folder component to set selected for the safe
+    // call back for the Folder component to set selected for the safe.. if a new folder was chosen, then we update showFavorites to false. This also happens when All entries is selected
     SetSelectedFolder(id) {
-        this.setState({ selectedFolderID: id });
+        this.setState({ selectedFolderID: id, showFavorites: false });
+    }
+
+    // sets the showFavorites attribute to true, and resets the searchstring and folder
+    ShowFavorites() {
+        document.getElementById("input_text_safe_search").value = "";
+        this.setState({ showFavorites: true, searchString: "", selectedFolderID: null });
     }
 }
