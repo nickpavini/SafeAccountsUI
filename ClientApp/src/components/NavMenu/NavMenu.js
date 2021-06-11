@@ -76,7 +76,8 @@ export class NavMenu extends Component {
 
     // closes side menu on mobile... 
     openSideMenu() {
-        document.getElementById("btn_close_sidebar").style.display = "block";
+        document.getElementById("icon_close_sidebar").style.display = "block";
+        document.getElementById("icon_add_folder").style.display = "inline";
         document.getElementById("div_SafeSideBar").style.border = "1px solid black"; // make it not invisible to add back the border
         document.getElementById("div_SafeSideBar").style.width = "250px"; // this makes it open from the right
     }

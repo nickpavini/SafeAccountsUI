@@ -2,7 +2,7 @@
 import './SafeSideBar.css';
 import { Folder } from './Folder/Folder';
 import { SearchBar } from '../SearchBar/SearchBar';
-import { faThLarge } from "@fortawesome/free-solid-svg-icons";
+import { faThLarge, faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export class SafeSideBar extends Component {
@@ -26,7 +26,7 @@ export class SafeSideBar extends Component {
         // add a close option to the menu on mobile
         const RenderCloseButton = () => {
             if (this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
-                return <button id="btn_close_sidebar" onClick={this.closeSideMenu}>X</button>;
+                return <FontAwesomeIcon id="icon_close_sidebar" icon={faTimes} onClick={this.closeSideMenu} />;
         }
 
         // top folder so parent is null.. we list folders with parents=null and call a Folder for each folder that is a parent
@@ -36,7 +36,7 @@ export class SafeSideBar extends Component {
                 <div className="div_safesidebar_navigation">
                     {RenderSearchBar()}
                     <div id="div_sidebar_all_entries" onClick={this.ResetFilters}><FontAwesomeIcon id="icon_all_entries" icon={faThLarge} /><span id="span_sidebar_all_entries">All Entries</span></div>
-                    <label id="lbl-folders"><b>Folders</b></label><button id="btn_add_folder">&#x2b;</button>
+                    <div id="div_Folders_Options" ><span id="span_safesidebar_folders">Folders</span><FontAwesomeIcon id="icon_add_folder" icon={faPlus} /></div>
                     {this.ParseFolders(null)}
                 </div>
 
@@ -92,7 +92,8 @@ export class SafeSideBar extends Component {
     // closes side menu on mobile... 
     closeSideMenu() {
         document.getElementById("div_SafeSideBar").style.width = "0"; // this makes it slide to the left
-        document.getElementById("btn_close_sidebar").style.display = "none";
+        document.getElementById("icon_close_sidebar").style.display = "none";
+        document.getElementById("icon_add_folder").style.display = "none";
 
         // after closing width make border invisible so left side doesnt stick out
         setTimeout(() => {
