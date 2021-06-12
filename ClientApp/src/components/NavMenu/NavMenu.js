@@ -39,15 +39,13 @@ export class NavMenu extends Component {
     // html for a basic navbar when logged out
     navbarLoggedOut() {
         return (
-            <header>
-                <div id="div_navbar">
-                    <div className="div_navbar_items">
-                        <NavbarBrand tag={Link} to="/" style={{color: "#FFF"}}>Safe Accounts</NavbarBrand>
-                        <NavLink id="navlinks" tag={Link} to="/login">Login</NavLink>
-                        <NavLink id="navlinks" tag={Link} to="/signup">Sign Up</NavLink>
-                    </div>
+            <div id="div_navbar">
+                <div className="div_navbar_items">
+                    <NavbarBrand tag={Link} to="/" style={{color: "#FFF"}}>Safe Accounts</NavbarBrand>
+                    <NavLink id="navlinks" tag={Link} to="/login">Login</NavLink>
+                    <NavLink id="navlinks" tag={Link} to="/signup">Sign Up</NavLink>
                 </div>
-            </header>
+            </div>
         );
     }
 
@@ -62,15 +60,13 @@ export class NavMenu extends Component {
         }
 
         return (
-            <header>
-                <div id="div_navbar">
-                    <div className="div_navbar_items">
-                        {RenderOpenSideBar()}
-                        <NavbarBrand tag={Link} to="/" style={{ color: "#FFF" }}>Safe Accounts</NavbarBrand>
-                        <FontAwesomeIcon id="icon_user" icon={faUser} onClick={this.props.OpenNavbarAccountMenu}/>
-                    </div>
+            <div id="div_navbar">
+                <div className="div_navbar_items">
+                    {RenderOpenSideBar()}
+                    <NavbarBrand tag={Link} to="/" style={{ color: "#FFF" }}>Safe Accounts</NavbarBrand>
+                    <FontAwesomeIcon id="icon_user" icon={faUser} onClick={this.props.OpenNavbarAccountMenu}/>
                 </div>
-            </header>
+            </div>
         );
     }
 
