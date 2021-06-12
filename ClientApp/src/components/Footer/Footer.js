@@ -3,6 +3,6 @@ import './Footer.css';
 
 export class Footer extends Component {
     render() {
-        return <div className="div_footer">Inside Footer Component</div>
+        return <div className="div_footer" style={{ height: this.props.height }} >Inside Footer Component</div>
     }
 }

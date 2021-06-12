@@ -39,7 +39,7 @@ export class NavMenu extends Component {
     // html for a basic navbar when logged out
     navbarLoggedOut() {
         return (
-            <div id="div_navbar">
+            <div id="div_navbar" style={{ height: this.props.height }}>
                 <div className="div_navbar_items">
                     <NavbarBrand tag={Link} to="/" style={{color: "#FFF"}}>Safe Accounts</NavbarBrand>
                     <NavLink id="navlinks" tag={Link} to="/login">Login</NavLink>
@@ -60,7 +60,7 @@ export class NavMenu extends Component {
         }
 
         return (
-            <div id="div_navbar">
+            <div id="div_navbar" style={{ height: this.props.height }}>
                 <div className="div_navbar_items">
                     {RenderOpenSideBar()}
                     <NavbarBrand tag={Link} to="/" style={{ color: "#FFF" }}>Safe Accounts</NavbarBrand>

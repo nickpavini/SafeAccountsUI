@@ -2,14 +2,14 @@
     float: left;
     width: 83%;
     height: 100%;
+    overflow: auto;
+    background-color: rgba(40, 40, 43, 0.75);
     border-top: .5px solid lightgray;
     color: white;
 }
 
 .div_safeitems {
     width: 100%;
-    background-color: rgba(40, 40, 43, 0.75);
-    height: 100%;
 }
 
 #title_and_options {

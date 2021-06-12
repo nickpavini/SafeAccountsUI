@@ -18,27 +18,29 @@ localStorage.setItem("DESKTOP_MODE", "DESKTOP");
 
 // hook for returning device mode based on width
 const useViewport = () => {
-    const [width, setWidth] = React.useState(window.innerWidth);
+    const [windowDimensions, setDimensions] = React.useState({ width: window.innerWidth, height: window.innerHeight });
 
     React.useEffect(() => {
-        const handleWindowResize = () => setWidth(window.innerWidth);
+        const handleWindowResize = () => {
+            setDimensions({ width: window.innerWidth, height: window.innerHeight });
+        }
         window.addEventListener("resize", handleWindowResize);
         return () => window.removeEventListener("resize", handleWindowResize);
     }, []);
 
     // these numbers will likely change
     var mode;
-    if (width < 800)
+    if (windowDimensions.width < 800)
         mode = localStorage.getItem("MOBILE_MODE"); // mobile
     else
         mode = localStorage.getItem("DESKTOP_MODE"); // desktop
 
-    return mode;
+    return [mode, windowDimensions];
 }
 
 // layer the app with a hooked component
 const App = () => {
-    var mode = useViewport();
+    var modeAndDimensions = useViewport();
 
     // prevent default context menu all around
     document.addEventListener('contextmenu', e => {
@@ -46,7 +48,7 @@ const App = () => {
     });
 
     // return app in the correct device mode
-    return <AppComponent device_mode={mode} />;
+    return <AppComponent device_mode={modeAndDimensions[0]} windowDimensions={modeAndDimensions[1]} />;
 }
 export { App };
 
@@ -95,7 +97,7 @@ class AppComponent extends Component {
             contents = (
                 <div>
                     {RenderSafeSideBar()}
-                    <Layout device_mode={this.props.device_mode} loggedIn={this.state.loggedIn} UpdateUserLoggedOut={this.UpdateUserLoggedOut} SetSearchString={this.SetSearchString}>
+                    <Layout device_mode={this.props.device_mode} windowDimensions={this.props.windowDimensions} loggedIn={this.state.loggedIn} UpdateUserLoggedOut={this.UpdateUserLoggedOut} SetSearchString={this.SetSearchString}>
                         <Route exact path='/' render={() => (
                             this.state.loggedIn ? (
                                 <Redirect to="/dashboard" />
