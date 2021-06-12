@@ -2,7 +2,7 @@
 import './SafeSideBar.css';
 import { Folder } from './Folder/Folder';
 import { SearchBar } from '../SearchBar/SearchBar';
-import { faThLarge, faPlus, faTimes, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faThLarge, faFolderPlus, faTimes, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export class SafeSideBar extends Component {
@@ -14,6 +14,7 @@ export class SafeSideBar extends Component {
         //bind functions
         this.ResetFilters = this.ResetFilters.bind(this);
         this.closeSideMenu = this.closeSideMenu.bind(this);
+        this.AddFolder = this.AddFolder.bind(this);
     }
 
     render() {
@@ -37,7 +38,7 @@ export class SafeSideBar extends Component {
                     {RenderSearchBar()}
                     <div id="div_sidebar_all_entries" onClick={this.ResetFilters}><FontAwesomeIcon id="icon_all_entries" icon={faThLarge} /><span id="span_sidebar_all_entries">All Entries</span></div>
                     <div id="div_sidebar_favorites" onClick={this.props.ShowFavorites}><FontAwesomeIcon id="icon_favorites" icon={faStar} /><span id="span_sidebar_favorites">Favorites</span></div>
-                    <div id="div_Folders_Options" ><span id="span_safesidebar_folders">Folders</span><FontAwesomeIcon id="icon_add_folder" icon={faPlus} /></div>
+                    <div id="div_Folders_Options" ><span id="span_safesidebar_folders">Folders</span><FontAwesomeIcon id="icon_add_folder" icon={faFolderPlus} onClick={this.AddFolder}/></div>
                     {this.ParseFolders(null)}
                 </div>
 
@@ -81,6 +82,45 @@ export class SafeSideBar extends Component {
                 }
             </div>
         );
+    }
+
+    // adds a new folder to the props, and updates the db remotely
+    async AddFolder(firstTry = true) {
+        // append to the props only if this isnt a retry after a potentially fixable error
+        if (firstTry) {
+            this.props.Folders.push({ id: -1, folderName: "New Folder", parentID: null });
+            this.forceUpdate(); // Force a render without state change...
+        }
+
+        // HTTP request options
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
+            body: JSON.stringify({ folder_name: "New Folder" }),
+            credentials: 'include'
+        };
+
+        //make request and get response
+        const response = await fetch('https://localhost:44366/users/' + this.props.uid + '/folders', requestOptions);
+        if (response.ok) {
+            this.props.FetchUserFolders(); // legit update folders, first one was just visual
+        }
+        // unauthorized could need new access token, so we attempt refresh
+        else if (response.status === 401 || response.status === 403) {
+            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+
+            // dont recall if the refresh didnt succeed
+            if (!refreshSucceeded)
+                return;
+
+            this.AddFolder(false); // call again
+        }
+        // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
+        else {
+            // if it didnt work then lets make sure to remove the visual new folder
+            this.props.Folders.pop();
+            this.forceUpdate(); // Force a render without state change...
+        }
     }
 
     // reset the selected folder and searchstring

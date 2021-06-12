@@ -90,7 +90,7 @@ class AppComponent extends Component {
         else {
             const RenderSafeSideBar = () => {
                 if (this.state.loggedIn && this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
-                    return <SafeSideBar device_mode={this.props.device_mode} Folders={this.state.folders} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} SetSearchString={this.SetSearchString} ShowFavorites={this.ShowFavorites}/>
+                    return <SafeSideBar device_mode={this.props.device_mode} uid={this.state.uid} Folders={this.state.folders} FetchUserFolders={this.FetchUserFolders} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} SetSearchString={this.SetSearchString} ShowFavorites={this.ShowFavorites}/>
             }
 
             // set path options based on whether or not the user is logged in and device mode
@@ -128,7 +128,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/dashboard' render={() => (
                             this.state.loggedIn ? (
-                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} FetchSafe={this.FetchSafe} folders={this.state.folders} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} showFavorites={this.state.showFavorites} SetSelectedFolder={this.SetSelectedFolder} attemptRefresh={this.attemptRefresh} ShowFavorites={this.ShowFavorites}/>
+                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} FetchSafe={this.FetchSafe} folders={this.state.folders} FetchUserFolders={this.FetchUserFolders} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} showFavorites={this.state.showFavorites} SetSelectedFolder={this.SetSelectedFolder} attemptRefresh={this.attemptRefresh} ShowFavorites={this.ShowFavorites}/>
                             ) : (
                                     <Redirect to="/login" />
                                 )

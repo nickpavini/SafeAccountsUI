@@ -45,7 +45,8 @@
 }
 
 #icon_add_folder {
-    margin-left: 10%;
+    margin-left: 20px;
+    font-size: 18px;
     cursor: pointer;
 }
 
