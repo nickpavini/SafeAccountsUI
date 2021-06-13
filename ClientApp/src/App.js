@@ -90,7 +90,7 @@ class AppComponent extends Component {
         else {
             const RenderSafeSideBar = () => {
                 if (this.state.loggedIn && this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
-                    return <SafeSideBar device_mode={this.props.device_mode} uid={this.state.uid} Folders={this.state.folders} FetchUserFolders={this.FetchUserFolders} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} SetSearchString={this.SetSearchString} ShowFavorites={this.ShowFavorites}/>
+                    return <SafeSideBar device_mode={this.props.device_mode} uid={this.state.uid} Folders={this.state.folders} FetchUserFolders={this.FetchUserFolders} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} SetSearchString={this.SetSearchString} ShowFavorites={this.ShowFavorites} attemptRefresh={this.attemptRefresh}/>
             }
 
             // set path options based on whether or not the user is logged in and device mode
