@@ -22,6 +22,6 @@ Discord: https://discord.gg/9gvH9YweJe
 
 #### Dashboard
 
-![image](https://user-images.githubusercontent.com/36856910/120589618-fb8e3b00-c3ed-11eb-9244-7d1e1fe991bc.png)
+![image](https://user-images.githubusercontent.com/36856910/121924300-9f31f200-ccf0-11eb-9bfe-2a616c4e81a7.png)
 
 
