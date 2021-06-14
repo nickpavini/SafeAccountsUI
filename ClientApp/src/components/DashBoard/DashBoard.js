@@ -7,7 +7,7 @@ export class DashBoard extends Component {
     render() {
         const RenderSafeSideBar = () => {
             if (this.props.device_mode === localStorage.getItem("DESKTOP_MODE"))
-                return <SafeSideBar device_mode={this.props.device_mode} uid={this.props.uid} SetSearchString={this.props.SetSearchString} Folders={this.props.folders} FetchUserFolders={this.props.FetchUserFolders} selectedFolderID={this.props.selectedFolderID} SetSelectedFolder={this.props.SetSelectedFolder} ShowFavorites={this.props.ShowFavorites} UpdateSafeItem={this.props.UpdateSafeItem} attemptRefresh={this.props.attemptRefresh} />;
+                return <SafeSideBar device_mode={this.props.device_mode} uid={this.props.uid} SetSearchString={this.props.SetSearchString} Folders={this.props.folders} FetchUserFolders={this.props.FetchUserFolders} selectedFolderID={this.props.selectedFolderID} SetSelectedFolder={this.props.SetSelectedFolder} UpdateFolders={this.props.UpdateFolders} ShowFavorites={this.props.ShowFavorites} UpdateSafeItem={this.props.UpdateSafeItem} attemptRefresh={this.props.attemptRefresh} />;
         }
 
         return (

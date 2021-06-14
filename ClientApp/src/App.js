@@ -75,6 +75,8 @@ class AppComponent extends Component {
         this.SetSelectedFolder = this.SetSelectedFolder.bind(this);
         this.ShowFavorites = this.ShowFavorites.bind(this);
         this.UpdateSafeItem = this.UpdateSafeItem.bind(this);
+        this.UpdateSingleFolder = this.UpdateSingleFolder.bind(this);
+        this.UpdateFolders = this.UpdateFolders.bind(this);
     }
 
     componentDidMount() {
@@ -91,7 +93,10 @@ class AppComponent extends Component {
         else {
             const RenderSafeSideBar = () => {
                 if (this.state.loggedIn && this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
-                    return <SafeSideBar device_mode={this.props.device_mode} uid={this.state.uid} Folders={this.state.folders} FetchUserFolders={this.FetchUserFolders} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} SetSearchString={this.SetSearchString} ShowFavorites={this.ShowFavorites} UpdateSafeItem={this.UpdateSafeItem} attemptRefresh={this.attemptRefresh}/>
+                    return <SafeSideBar device_mode={this.props.device_mode} uid={this.state.uid} Folders={this.state.folders} FetchUserFolders={this.FetchUserFolders}
+                        selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} UpdateFolders={this.UpdateFolders}
+                        SetSearchString={this.SetSearchString} ShowFavorites={this.ShowFavorites} UpdateSafeItem={this.UpdateSafeItem} attemptRefresh={this.attemptRefresh}
+                    />
             }
 
             // set path options based on whether or not the user is logged in and device mode
@@ -129,7 +134,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/dashboard' render={() => (
                             this.state.loggedIn ? (
-                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} FetchSafe={this.FetchSafe} folders={this.state.folders} FetchUserFolders={this.FetchUserFolders} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} showFavorites={this.state.showFavorites} UpdateSafeItem={this.UpdateSafeItem} attemptRefresh={this.attemptRefresh} ShowFavorites={this.ShowFavorites}/>
+                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} FetchSafe={this.FetchSafe} folders={this.state.folders} FetchUserFolders={this.FetchUserFolders} UpdateFolders={this.UpdateFolders} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} showFavorites={this.state.showFavorites} UpdateSafeItem={this.UpdateSafeItem} attemptRefresh={this.attemptRefresh} ShowFavorites={this.ShowFavorites}/>
                             ) : (
                                     <Redirect to="/login" />
                                 )
@@ -309,5 +314,27 @@ class AppComponent extends Component {
 
 
         this.setState({ safe: updatedSafe }); // update state for re-render
+    }
+
+    // add or edit a folder
+    UpdateSingleFolder(folder) {
+        var updatedFolders = this.state.folders; // copy current folders
+        var itemIndex = this.state.folders.findIndex(e => e.id === folder.id); // get index of folder passed in
+
+        // if the folder already exists, this is a modification
+        if (itemIndex !== -1) {
+            updatedFolders[itemIndex] = folder; // modify
+        }
+        // if the folder does not exist, we are adding it
+        else {
+            updatedFolders.push(folder);
+        }
+
+        this.setState({ folders: updatedFolders }); // update state for re-render
+    }
+
+    // update all folders at once
+    UpdateFolders(updatedFolders) {
+        this.setState({folders: updatedFolders});
     }
 }

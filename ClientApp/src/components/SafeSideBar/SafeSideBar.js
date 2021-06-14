@@ -60,7 +60,7 @@ export class SafeSideBar extends Component {
                             // if the current folder is a child of the parent we list, then we display the folder
                             contents = <Folder key={value.id} uid={this.props.uid} folder={value}
                                 selectedFolderID={this.props.selectedFolderID} SetSelectedFolder={this.props.SetSelectedFolder}
-                                UpdateSafeItem={this.props.UpdateSafeItem} attemptRefresh={this.props.attemptRefresh}
+                                UpdateFolders={this.props.UpdateFolders} UpdateSafeItem={this.props.UpdateSafeItem} attemptRefresh={this.props.attemptRefresh}
                             />;
 
                             // if this folder is a parent we need to parse it children into a new div with a slight margin
