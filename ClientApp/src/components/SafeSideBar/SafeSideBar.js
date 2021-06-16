@@ -2,8 +2,9 @@
 import './SafeSideBar.css';
 import { Folder } from './Folder/Folder';
 import { SearchBar } from '../SearchBar/SearchBar';
-import { faThLarge, faPlus, faTimes, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faThLarge, faFolderPlus, faTimes, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FolderContextMenu } from './Folder/FolderContextMenu/FolderContextMenu';
 
 export class SafeSideBar extends Component {
     static displayName = SafeSideBar.name;
@@ -11,12 +12,30 @@ export class SafeSideBar extends Component {
     constructor(props) {
         super(props);
 
+        // set to hold the ids of which items are currently selected
+        this.state = {
+            openContextMenu: false, menu_top: "0px",
+            menu_left: "0px", menu_folder_id: null
+        };
+
         //bind functions
         this.ResetFilters = this.ResetFilters.bind(this);
         this.closeSideMenu = this.closeSideMenu.bind(this);
+        this.AddFolder = this.AddFolder.bind(this);
+        this.OpenContextMenu = this.OpenContextMenu.bind(this); // functions for the folder context menu
+        this.CloseContextMenu = this.CloseContextMenu.bind(this);
     }
 
     render() {
+        // conditional rendering of the context menu
+        const RenderFolderContextMenu = () => {
+            if (this.state.openContextMenu)
+                return <FolderContextMenu uid={this.props.uid} folder={this.props.Folders.find(e => e.id === this.state.menu_folder_id)} AddFolder={this.AddFolder}
+                    top={this.state.menu_top} left={this.state.menu_left} CloseContextMenu={this.CloseContextMenu} attemptRefresh={this.props.attemptRefresh}
+                    UpdateFolders={this.props.UpdateFolders} UpdateSafe={this.props.UpdateSafe}
+                />;
+        }
+
         // only render the searchbar in this component on desktop
         const RenderSearchBar = () => {
             if (this.props.device_mode === localStorage.getItem("DESKTOP_MODE"))
@@ -32,12 +51,13 @@ export class SafeSideBar extends Component {
         // top folder so parent is null.. we list folders with parents=null and call a Folder for each folder that is a parent
         return (
             <div className="div_SafeSideBar" id="div_SafeSideBar">
+                {RenderFolderContextMenu()}
                 {RenderCloseButton()}
                 <div className="div_safesidebar_navigation">
                     {RenderSearchBar()}
                     <div id="div_sidebar_all_entries" onClick={this.ResetFilters}><FontAwesomeIcon id="icon_all_entries" icon={faThLarge} /><span id="span_sidebar_all_entries">All Entries</span></div>
                     <div id="div_sidebar_favorites" onClick={this.props.ShowFavorites}><FontAwesomeIcon id="icon_favorites" icon={faStar} /><span id="span_sidebar_favorites">Favorites</span></div>
-                    <div id="div_Folders_Options" ><span id="span_safesidebar_folders">Folders</span><FontAwesomeIcon id="icon_add_folder" icon={faPlus} /></div>
+                    <div id="div_Folders_Options" ><span id="span_safesidebar_folders">Folders</span><FontAwesomeIcon id="icon_add_folder" icon={faFolderPlus} onClick={this.AddFolder}/></div>
                     {this.ParseFolders(null)}
                 </div>
 
@@ -57,7 +77,10 @@ export class SafeSideBar extends Component {
                         // if the current folder we are looking at has the parent that was passed in, we add it to the tree
                         if (value.parentID === parentID) {
                             // if the current folder is a child of the parent we list, then we display the folder
-                            contents = <Folder key={value.id} folder={value} selectedFolderID={this.props.selectedFolderID} SetSelectedFolder={this.props.SetSelectedFolder} />;
+                            contents = <Folder key={value.id} uid={this.props.uid} folder={value} OpenContextMenu={this.OpenContextMenu}
+                                selectedFolderID={this.props.selectedFolderID} SetSelectedFolder={this.props.SetSelectedFolder} UpdateFolders={this.props.UpdateFolders}
+                                UpdateSingleFolder={this.props.UpdateSingleFolder} UpdateSafeItem={this.props.UpdateSafeItem} attemptRefresh={this.props.attemptRefresh}
+                            />;
 
                             // if this folder is a parent we need to parse it children into a new div with a slight margin
                             if (value.hasChild) {
@@ -83,6 +106,45 @@ export class SafeSideBar extends Component {
         );
     }
 
+    // adds a new folder to the props, and updates the db remotely
+    async AddFolder(firstTry = true) {
+        // append to the props only if this isnt a retry after a potentially fixable error
+        if (firstTry) {
+            this.props.Folders.push({ id: -1, folderName: "New Folder", parentID: null });
+            this.forceUpdate(); // Force a render without state change...
+        }
+
+        // HTTP request options
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
+            body: JSON.stringify({ folder_name: "New Folder" }),
+            credentials: 'include'
+        };
+
+        //make request and get response
+        const response = await fetch('https://localhost:44366/users/' + this.props.uid + '/folders', requestOptions);
+        if (response.ok) {
+            this.props.FetchUserFolders(); // legit update folders, first one was just visual
+        }
+        // unauthorized could need new access token, so we attempt refresh
+        else if (response.status === 401 || response.status === 403) {
+            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+
+            // dont recall if the refresh didnt succeed
+            if (!refreshSucceeded)
+                return;
+
+            this.AddFolder(false); // call again
+        }
+        // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
+        else {
+            // if it didnt work then lets make sure to remove the visual new folder
+            this.props.Folders.pop();
+            this.forceUpdate(); // Force a render without state change...
+        }
+    }
+
     // reset the selected folder and searchstring
     async ResetFilters() {
         document.getElementById("input_text_safe_search").value = "";
@@ -100,5 +162,13 @@ export class SafeSideBar extends Component {
         setTimeout(() => {
             document.getElementById("div_SafeSideBar").style.border = "none"; // make it invisible so there isnt a small bar off to the left
         }, 500);
+    }
+
+    async OpenContextMenu(folder_id, left, top) {
+        this.setState({ openContextMenu: true, menu_top: top, menu_left: left, menu_folder_id: folder_id })
+    }
+
+    async CloseContextMenu() {
+        this.setState({ openContextMenu: false });
     }
 }

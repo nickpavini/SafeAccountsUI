@@ -18,6 +18,7 @@ export class SafeItem extends Component {
         this.SetItemSelected = this.SetItemSelected.bind(this);
         this.ViewSafeItem = this.ViewSafeItem.bind(this);
         this.SetItemIsFavorite = this.SetItemIsFavorite.bind(this);
+        this.Drag = this.Drag.bind(this);
     }
 
     componentDidMount() {
@@ -37,7 +38,7 @@ export class SafeItem extends Component {
         var icon_id = "icon_safeitem_star_" + this.props.info.id.toString();
         var icon_color = this.props.info.isFavorite ? "yellow" : "white";
         return (
-            <tr id={tr_id} className="tr_safeitem" onClick={this.ViewSafeItem}>
+            <tr id={tr_id} draggable="true" onDragStart={this.Drag} className="tr_safeitem" onClick={this.ViewSafeItem}>
                 <td><input type="checkbox" defaultChecked={false} onClick={this.SetItemSelected} id={input_id} className="input_chk_safeitem" ></input></td>
                 <td><FontAwesomeIcon className="icon_safeitem_star" id={icon_id} onClick={this.SetItemIsFavorite} icon={faStar} style={{ color: icon_color }} /></td>
                 <td><span id="span_safeitem_title" >{this.props.info.title}</span></td>
@@ -47,6 +48,10 @@ export class SafeItem extends Component {
                 <td><span id="span_safeitem_last_modified" >{this.props.info.lastModified.split(' ')[0]}</span></td>
             </tr>
         );
+    }
+
+    Drag(event) {
+        event.dataTransfer.setData("safeitem", JSON.stringify(this.props.info)); // send the entire safeitem
     }
 
     async SetItemSelected(event) {
