@@ -4,6 +4,7 @@ import { Folder } from './Folder/Folder';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { faThLarge, faFolderPlus, faTimes, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FolderContextMenu } from './Folder/FolderContextMenu/FolderContextMenu';
 
 export class SafeSideBar extends Component {
     static displayName = SafeSideBar.name;
@@ -11,13 +12,30 @@ export class SafeSideBar extends Component {
     constructor(props) {
         super(props);
 
+        // set to hold the ids of which items are currently selected
+        this.state = {
+            openContextMenu: false, menu_top: "0px",
+            menu_left: "0px", menu_folder_id: null
+        };
+
         //bind functions
         this.ResetFilters = this.ResetFilters.bind(this);
         this.closeSideMenu = this.closeSideMenu.bind(this);
         this.AddFolder = this.AddFolder.bind(this);
+        this.OpenContextMenu = this.OpenContextMenu.bind(this); // functions for the folder context menu
+        this.CloseContextMenu = this.CloseContextMenu.bind(this);
     }
 
     render() {
+        // conditional rendering of the context menu
+        const RenderFolderContextMenu = () => {
+            if (this.state.openContextMenu)
+                return <FolderContextMenu uid={this.props.uid} folder={this.props.Folders.find(e => e.id === this.state.menu_folder_id)} AddFolder={this.AddFolder}
+                    top={this.state.menu_top} left={this.state.menu_left} CloseContextMenu={this.CloseContextMenu} attemptRefresh={this.props.attemptRefresh}
+                    UpdateFolders={this.props.UpdateFolders} UpdateSafe={this.props.UpdateSafe}
+                />;
+        }
+
         // only render the searchbar in this component on desktop
         const RenderSearchBar = () => {
             if (this.props.device_mode === localStorage.getItem("DESKTOP_MODE"))
@@ -33,6 +51,7 @@ export class SafeSideBar extends Component {
         // top folder so parent is null.. we list folders with parents=null and call a Folder for each folder that is a parent
         return (
             <div className="div_SafeSideBar" id="div_SafeSideBar">
+                {RenderFolderContextMenu()}
                 {RenderCloseButton()}
                 <div className="div_safesidebar_navigation">
                     {RenderSearchBar()}
@@ -58,9 +77,9 @@ export class SafeSideBar extends Component {
                         // if the current folder we are looking at has the parent that was passed in, we add it to the tree
                         if (value.parentID === parentID) {
                             // if the current folder is a child of the parent we list, then we display the folder
-                            contents = <Folder key={value.id} uid={this.props.uid} folder={value}
-                                selectedFolderID={this.props.selectedFolderID} SetSelectedFolder={this.props.SetSelectedFolder}
-                                UpdateFolders={this.props.UpdateFolders} UpdateSafeItem={this.props.UpdateSafeItem} attemptRefresh={this.props.attemptRefresh}
+                            contents = <Folder key={value.id} uid={this.props.uid} folder={value} OpenContextMenu={this.OpenContextMenu}
+                                selectedFolderID={this.props.selectedFolderID} SetSelectedFolder={this.props.SetSelectedFolder} UpdateFolders={this.props.UpdateFolders}
+                                UpdateSingleFolder={this.props.UpdateSingleFolder} UpdateSafeItem={this.props.UpdateSafeItem} attemptRefresh={this.props.attemptRefresh}
                             />;
 
                             // if this folder is a parent we need to parse it children into a new div with a slight margin
@@ -143,5 +162,13 @@ export class SafeSideBar extends Component {
         setTimeout(() => {
             document.getElementById("div_SafeSideBar").style.border = "none"; // make it invisible so there isnt a small bar off to the left
         }, 500);
+    }
+
+    async OpenContextMenu(folder_id, left, top) {
+        this.setState({ openContextMenu: true, menu_top: top, menu_left: left, menu_folder_id: folder_id })
+    }
+
+    async CloseContextMenu() {
+        this.setState({ openContextMenu: false });
     }
 }

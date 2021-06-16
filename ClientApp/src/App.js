@@ -74,6 +74,7 @@ class AppComponent extends Component {
         this.SetSearchString = this.SetSearchString.bind(this);
         this.SetSelectedFolder = this.SetSelectedFolder.bind(this);
         this.ShowFavorites = this.ShowFavorites.bind(this);
+        this.UpdateSafe = this.UpdateSafe.bind(this);
         this.UpdateSafeItem = this.UpdateSafeItem.bind(this);
         this.UpdateSingleFolder = this.UpdateSingleFolder.bind(this);
         this.UpdateFolders = this.UpdateFolders.bind(this);
@@ -93,8 +94,8 @@ class AppComponent extends Component {
         else {
             const RenderSafeSideBar = () => {
                 if (this.state.loggedIn && this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
-                    return <SafeSideBar device_mode={this.props.device_mode} uid={this.state.uid} Folders={this.state.folders} FetchUserFolders={this.FetchUserFolders}
-                        selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} UpdateFolders={this.UpdateFolders}
+                    return <SafeSideBar device_mode={this.props.device_mode} uid={this.state.uid} Folders={this.state.folders} FetchUserFolders={this.FetchUserFolders} UpdateSafe={this.UpdateSafe}
+                        selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} UpdateFolders={this.UpdateFolders} UpdateSingleFolder={this.UpdateSingleFolder}
                         SetSearchString={this.SetSearchString} ShowFavorites={this.ShowFavorites} UpdateSafeItem={this.UpdateSafeItem} attemptRefresh={this.attemptRefresh}
                     />
             }
@@ -134,7 +135,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/dashboard' render={() => (
                             this.state.loggedIn ? (
-                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} FetchSafe={this.FetchSafe} folders={this.state.folders} FetchUserFolders={this.FetchUserFolders} UpdateFolders={this.UpdateFolders} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} showFavorites={this.state.showFavorites} UpdateSafeItem={this.UpdateSafeItem} attemptRefresh={this.attemptRefresh} ShowFavorites={this.ShowFavorites}/>
+                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} FetchSafe={this.FetchSafe} UpdateSafe={this.UpdateSafe} folders={this.state.folders} FetchUserFolders={this.FetchUserFolders} UpdateFolders={this.UpdateFolders} UpdateSingleFolder={this.UpdateSingleFolder} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} showFavorites={this.state.showFavorites} UpdateSafeItem={this.UpdateSafeItem} attemptRefresh={this.attemptRefresh} ShowFavorites={this.ShowFavorites}/>
                             ) : (
                                     <Redirect to="/login" />
                                 )
@@ -296,6 +297,10 @@ class AppComponent extends Component {
     ShowFavorites() {
         document.getElementById("input_text_safe_search").value = "";
         this.setState({ showFavorites: true, searchString: "", selectedFolderID: null });
+    }
+
+    UpdateSafe(updatedSafe) {
+        this.setState({ safe: updatedSafe });
     }
 
     // add or edit an item in the safe
