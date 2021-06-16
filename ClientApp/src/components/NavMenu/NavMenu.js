@@ -11,21 +11,10 @@ export class NavMenu extends Component {
     constructor (props) {
         super(props);
 
-        this.toggleNavbar = this.toggleNavbar.bind(this);
-        this.state = {
-            collapsed: true
-        };
-
         // function bindings
         this.navbarLoggedOut = this.navbarLoggedOut.bind(this);
         this.navbarLoggedIn = this.navbarLoggedIn.bind(this);
         this.openSideMenu = this.openSideMenu.bind(this);
-    }
-
-    toggleNavbar () {
-        this.setState({
-            collapsed: !this.state.collapsed
-        });
     }
 
     render() {
