@@ -25,19 +25,19 @@ export class SignUp extends Component {
 
         return (
             <div className="div_signup">
+                <div id="div_signup_welcome">
+                    <label id="lbl_signup_welcome">Create Account!</label>
+                    <p id="p_signup_welcome_message">"Security used to be an inconvenience sometimes, but now it's a necessity all the time." - Martina Navratilova</p>
+                </div>
                 <form id="form_signup" onSubmit={this.SignUp}>
-                    <div className="container">
-                        <label id="lbl_signup_firstname" htmlFor="text_input_signup_firstname"><b>First Name</b></label><br />
-                        <input className="text_input_signup_name" type="text" placeholder="" id="text_input_signup_firstname" size="35" required></input>
+                    <div id="div_signup_container">
+                        <input className="text_input_signup" type="text" placeholder="First Name" id="text_input_signup_firstname" size="35" required></input>
                         <br />
-                        <label id="lbl_signup_lastname" htmlFor="text_input_signup_lastname"><b>Last Name</b></label><br />
-                        <input className="text_input_signup_name" type="text" placeholder="" id="text_input_signup_lastname" size="35" required></input>
+                        <input className="text_input_signup" type="text" placeholder="Last Name" id="text_input_signup_lastname" size="35" required></input>
                         <br />
-                        <label id="lbl_signup_email" htmlFor="text_input_signup_email"><b>Email</b></label><br/>
-                        <input type="email" placeholder="" id="text_input_signup_email" size="35" required></input>
+                        <input className="text_input_signup" type="email" placeholder="Email" id="text_input_signup_email" size="35" required></input>
                         <br />
-                        <label id="lbl_signup_pass" htmlFor="text_input_signup_pass"><b>Password</b></label><br/>
-                        <input type="password" placeholder="" id="text_input_signup_pass" size="35" required></input>
+                        <input className="text_input_signup" type="password" placeholder="Password" id="text_input_signup_pass" size="35" required></input>
                         <br />
                         <button id="btn_signup" type="submit">Sign Up</button>
                     </div>
