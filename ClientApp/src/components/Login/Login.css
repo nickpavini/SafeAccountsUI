@@ -1,9 +1,57 @@
 .div_login {
-    margin-top: 165px;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#div_login_welcome {
+    width: 300px;
+    margin-top: -50px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+#lbl_login_welcome {
+    font-size: 36px;
+    font-weight: 400;
+}
+
+.text_input_login {
+    background: rgba(229, 229, 229, 0.4);
+    border: none;
+    border-radius: 2px;
+}
+
+#text_input_login_email {
+    padding: 9px 0 7px 8px;
+    margin-bottom: 15px;
+}
+
+#text_input_login_password {
+    padding: 9px 0 7px 8px;
+}
+
+.div_login_buttons {
+    margin-top: 20px;
+}
+
+#lbl-login-remember {
+    margin-left: 3%;
+}
+
+#btn_login {
+    float: right;
+    background: none !important;
+    border: 1px solid black;
+    border-radius: 15px;
+    /*input has OS specific font-family*/
+    color: black;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #p_login_successful {
@@ -13,38 +61,8 @@
     justify-content: center;
     align-items: center;
 }
-
-.div_login_buttons {
-    margin-top: 10%;
-}
-
-#lbl_login_password {
-    margin-top: 10%;
-}
-
-#lbl-login-remember {
-    margin-left: 3%;
-}
-
-#btn_login {
-    float: right;
-    width: 25%;
-    background: none !important;
-    border: none;
-    padding: 0 !important;
-    /*input has OS specific font-family*/
-    color: black;
-    cursor: pointer;
-}
-
 @media (max-width: 800px) {
-    .div_login {
-        margin-top: 100px;
-    }
 }
 
 @media (max-width: 500px) {
-    .div_login {
-        margin-top: 50px;
-    }
 }
