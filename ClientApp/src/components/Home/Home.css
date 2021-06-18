@@ -1,38 +1,20 @@
 /* For future styling for the Home page of the website */
-.wrapper {
-    padding-top: 5em;
-    padding-bottom: 7.1em;
-}
-
-.slogan {
-    position: relative;
-    font-family: Roboto;
-    font-size: 1rem;
-    color: #5B3434;
-    margin-left: auto;
-    margin-right: auto;
+.div_home {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    font-size: 18px;
 }
 
-.security-icon {
-    display: block;
-    margin-top: 1.5em;
-    margin-left: auto;
-    margin-right: auto;
-    width: 200px;
-}
-
-.be-safe {
-    margin-top: 1em;
-    position: relative;
-    font-family: Roboto;
-    font-size: 1rem;
-    line-height: 1.16em;
-    color: #633535;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
+#svg_home_logo {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    height: 300px;
+    width: 300px;
 }
 
 .logo {
@@ -44,27 +26,24 @@
 }
 
 .signup-button-container {
-    position: relative;
-    display: block;
     color: black;
-    background: #EDA1A1;
-    border-radius: 5px;
-    width: 106.25px;
+    background: none;
+    border: 1px solid black;
+    border-radius: 25px;
     padding: 0.5em 1em 0.5em 1em;
-    color: #275947;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
     margin-top: 1.5em;
 }
 
-@media (min-width: 800px) {
-    .signup-button-container {
-        width: 121px;
-    }
+.signup-button-container:hover {
+    color: #000;
+    text-decoration: none;
 }
 
-:hover .signup-button-container {
-    color: #275947;
-    text-decoration: none;
+@media (max-width: 500px) {
+    #svg_home_logo {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        height: 220px;
+        width: 220px;
+    }
 }
