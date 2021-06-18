@@ -3,6 +3,7 @@ import { NavbarBrand, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { faAlignLeft, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ReactComponent as LogoSvg } from '../../Assets/logo.svg';
 import './NavMenu.css';
 
 export class NavMenu extends Component {
@@ -25,12 +26,21 @@ export class NavMenu extends Component {
         return contents;
     }
 
+    // whether we return the name or logo
+    RenderNameOrIcon(marginLeft="0px") {
+        if (this.props.device_mode === localStorage.getItem("DESKTOP_MODE"))
+            return <NavbarBrand tag={Link} to="/" style={{ color: "#FFF" }}>Safe Accounts</NavbarBrand>;
+        else
+            return <NavbarBrand tag={Link} to="/" style={{ marginLeft: marginLeft }}><LogoSvg id="svg_navmenu_logo" fill="#000" /></NavbarBrand>;
+    }
+
     // html for a basic navbar when logged out
     navbarLoggedOut() {
+
         return (
             <div id="div_navbar" style={{ height: this.props.height }}>
                 <div className="div_navbar_items">
-                    <NavbarBrand tag={Link} to="/" style={{color: "#FFF"}}>Safe Accounts</NavbarBrand>
+                    {this.RenderNameOrIcon()}
                     <NavLink id="navlinks" tag={Link} to="/login">Login</NavLink>
                     <NavLink id="navlinks" tag={Link} to="/signup">Sign Up</NavLink>
                 </div>
@@ -52,7 +62,7 @@ export class NavMenu extends Component {
             <div id="div_navbar" style={{ height: this.props.height }}>
                 <div className="div_navbar_items">
                     {RenderOpenSideBar()}
-                    <NavbarBrand tag={Link} to="/" style={{ color: "#FFF" }}>Safe Accounts</NavbarBrand>
+                    {this.RenderNameOrIcon("10px")}
                     <FontAwesomeIcon id="icon_user" icon={faUser} onClick={this.props.OpenNavbarAccountMenu}/>
                 </div>
             </div>
