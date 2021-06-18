@@ -44,8 +44,8 @@ export class SafeItem extends Component {
                 <td><span id="span_safeitem_title" >{this.props.info.title}</span></td>
                 <td><span id="span_safeitem_login" >{this.props.info.login}</span></td>
                 <td><span id="span_safeitem_password" >*********</span></td>
-                <td><span id="span_safeitem_url" >{this.props.info.url}</span></td>
-                <td><span id="span_safeitem_last_modified" >{this.props.info.lastModified.split(' ')[0]}</span></td>
+                {this.props.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td><span id="span_safeitem_url" >{this.props.info.url}</span></td> : null}
+                {this.props.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td><span id="span_safeitem_last_modified" >{this.props.info.lastModified.split(' ')[0]}</span></td> : null}
             </tr>
         );
     }

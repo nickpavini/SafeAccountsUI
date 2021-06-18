@@ -11,7 +11,7 @@ export class SearchBar extends Component {
 
     render() {
         return (
-            <div className="SearchBar">
+            <div id="div_searchbar">
                 <input type="text" maxLength="15" id="input_text_safe_search" onInput={this.SearchStringChanged} placeholder="Search Safe"></input>
             </div>
         );

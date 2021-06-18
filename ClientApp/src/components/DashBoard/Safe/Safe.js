@@ -5,6 +5,8 @@ import { SafeItemContextMenu } from './SafeItem/SafeItemContextMenu/SafeItemCont
 import { faSquare, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SearchBar } from '../../SearchBar/SearchBar';
+import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
+import { Redirect } from 'react-router-dom';
 
 export class Safe extends Component {
     static displayName = Safe.name;
@@ -15,13 +17,15 @@ export class Safe extends Component {
          // set to hold the ids of which items are currently selected
         this.state = {
             selectedItems: new Set(), openContextMenu: false,
-            menu_top: "0px", menu_left: "0px", menu_item_id: null
+            menu_top: "0px", menu_left: "0px", menu_item_id: null,
+            redirect: false, toUrl: null
         }; 
 
         // function binding
         this.UpdateSelectedItems = this.UpdateSelectedItems.bind(this);
         this.OpenContextMenu = this.OpenContextMenu.bind(this);
         this.CloseContextMenu = this.CloseContextMenu.bind(this);
+        this.AddSafeItem = this.AddSafeItem.bind(this);
     }
 
     componentDidMount() {
@@ -29,6 +33,11 @@ export class Safe extends Component {
     }
 
     render() {
+
+        //check for redirect
+        if (this.state.redirect)
+            return <Redirect to={this.state.toUrl} />
+
         const RenderSafeItemContextMenu = () => {
             if (this.state.openContextMenu)
                 return <SafeItemContextMenu uid={this.props.uid} item={this.props.safe.find(e => e.id === this.state.menu_item_id)} FetchSafe={this.props.FetchSafe} top={this.state.menu_top} left={this.state.menu_left} CloseContextMenu={this.CloseContextMenu} attemptRefresh={this.props.attemptRefresh}/>;
@@ -42,7 +51,11 @@ export class Safe extends Component {
         return (
             <div className="div_safe">
                 {RenderSafeItemContextMenu()}
-                <div id="title_and_options"><span id="span_safe_title">Password List</span>{RenderSearchBar()}</div>
+                <div id="title_and_options">
+                    <span id="span_safe_title">Password List</span>
+                    {RenderSearchBar()}
+                    <FontAwesomeIcon id="icon_safeitem_plus" icon={faPlusSquare} style={{ color: "white" }} onClick={this.AddSafeItem}/>
+                </div>
                 <div className="div_safeitems">
                     <table style={{width: "100%"}}>
                         <thead>
@@ -52,8 +65,8 @@ export class Safe extends Component {
                                 <td>Title</td>
                                 <td>Username</td>
                                 <td>Password</td>
-                                <td>URL</td>
-                                <td>Last Modified</td>
+                                {this.props.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td>URL</td> : null}
+                                {this.props.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td>Last Modified</td> : null}
                             </tr>
                         </thead>
                         <tbody id="tb_safeitems">
@@ -68,7 +81,7 @@ export class Safe extends Component {
                                     else if (value.folderID === this.props.selectedFolderID || this.props.selectedFolderID === null) {
                                         // match search string
                                         if (this.props.searchString === null || value.title.toLowerCase().includes(this.props.searchString.toLowerCase()))
-                                            return <SafeItem key={value.id} uid={this.props.uid} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />;
+                                            return <SafeItem key={value.id} uid={this.props.uid} device_mode={this.props.device_mode} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />;
                                     }
 
                                     return null; // retun null if nothing
@@ -100,5 +113,9 @@ export class Safe extends Component {
 
     async CloseContextMenu() {
         this.setState({ openContextMenu: false });
+    }
+
+    AddSafeItem() {
+        this.setState({ redirect: true, toUrl: '/addsafeitem' })
     }
 }

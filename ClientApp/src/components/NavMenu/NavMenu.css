@@ -13,7 +13,7 @@
     float: left;
     margin-top: 3px;
     margin-left: 8px;
-    font-size: 25px !important;
+    font-size: 26px !important;
 }
 
 #navlinks {
@@ -24,12 +24,12 @@
 
 #icon_user {
     float: right;
-    margin-top: 16px;
-    font-size: 22px !important;
+    margin-top: 14px;
+    font-size: 26px !important;
 }
 
 #sidebar_menu_icon {
-    font-size: 22px;
+    font-size: 26px;
     margin-top: 16px;
     float: left;
 }

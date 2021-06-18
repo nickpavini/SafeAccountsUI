@@ -10,15 +10,24 @@
 
 .div_safeitems {
     width: 100%;
+    text-align: center;
 }
 
 #title_and_options {
     width: 100%;
     background-color: #28282B;
     margin-bottom: 0px;
-    padding-left: 2px;
+    padding-left: 10px;
     padding-top: 2px;
     padding-bottom: 3px;
+}
+
+#icon_safeitem_plus {
+    float: right;
+    font-size: 18px;
+    margin-right: 48px;
+    margin-top: 3px;
+    cursor: pointer;
 }
 
 #tr_safeitem_labels {
@@ -43,6 +52,10 @@
 
     #span_safe_title {
         float: left;
+    }
+
+    #icon_safeitem_plus {
+        margin-right: 12px;
     }
 }
 
