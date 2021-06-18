@@ -180,6 +180,7 @@ class AppComponent extends Component {
 
     // call back function for app to set user logged out... NOTE: here we will make a call to the server which removes the cookies in the returning response
     async UpdateUserLoggedOut() {
+
         // http request options
         const requestOptions = {
             method: 'POST',
@@ -197,8 +198,19 @@ class AppComponent extends Component {
                 searchString: null, selectedFolderID: null
             });
         }
+        // unauthorized could need new access token, so we attempt refresh
+        else if (response.status === 401 || response.status === 403) {
+            var refreshSucceeded = await this.attemptRefresh(); // try to refresh
+
+            // dont recall if the refresh didnt succeed
+            if (!refreshSucceeded)
+                return;
+
+            this.UpdateUserLoggedOut(); // call again
+        }
+        // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
         else {
-            /* Not sure what would be appropriate here, but eventually we could add a fail safe here*/
+
         }
     }
 
