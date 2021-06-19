@@ -116,6 +116,6 @@ export class Safe extends Component {
     }
 
     AddSafeItem() {
-        this.setState({ redirect: true, toUrl: '/addsafeitem' })
+        this.setState({ redirect: true, toUrl: '/safeitems/add' })
     }
 }

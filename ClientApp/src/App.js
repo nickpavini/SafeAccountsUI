@@ -8,9 +8,8 @@ import { Login } from './components/Login/Login';
 import { DashBoard } from './components/DashBoard/DashBoard.js';
 import { Account } from './components/Account/Account';
 import { SafeSideBar } from './components/SafeSideBar/SafeSideBar';
-import { AddSafeItem } from './components/AddSafeItem/AddSafeItem';
+import { AddEditSafeItem } from './components/AddEditSafeItem/AddEditSafeItem';
 import { EmailConfirmation } from './components/EmailConfirmation/EmailConfirmation.js';
-import { EditSafeItem } from './components/EditSafeItem/EditSafeItem.js';
 import './custom.css'
 
 localStorage.setItem("MOBILE_MODE", "MOBILE");
@@ -142,14 +141,7 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/safeitems/:item_id' render={(props) => (
                             this.state.loggedIn ? (
-                                <EditSafeItem info={this.state.safe.find(e => e.id.toString() === props.location.pathname.split("/").pop())} uid={this.state.uid} FetchSafe={this.FetchSafe} attemptRefresh={this.attemptRefresh} />
-                            ) : (
-                                    <Redirect to="/login" />
-                                )
-                        )} />
-                        <Route path='/addsafeitem' render={() => (
-                            this.state.loggedIn ? (
-                                <AddSafeItem device_mode={this.props.device_mode} uid={this.state.uid} FetchSafe={this.FetchSafe} attemptRefresh={this.attemptRefresh}/>
+                                <AddEditSafeItem device_mode={this.props.device_mode} uid={this.state.uid} info={this.state.safe.find(e => e.id.toString() === props.location.pathname.split("/").pop())} UpdateSafeItem={this.UpdateSafeItem} attemptRefresh={this.attemptRefresh} />
                             ) : (
                                     <Redirect to="/login" />
                                 )

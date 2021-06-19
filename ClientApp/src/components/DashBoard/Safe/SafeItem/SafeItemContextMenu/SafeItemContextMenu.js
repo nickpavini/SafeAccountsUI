@@ -51,7 +51,7 @@ export class SafeItemContextMenu extends Component {
 
     // redirect to page for adding an item to the safe
     AddItem() {
-        this.setState({ redirect: true, toUrl: '/addsafeitem' })
+        this.setState({ redirect: true, toUrl: '/safeitems/add' })
     }
 
     // set redirect and go to safeitems path and render in edit mode
