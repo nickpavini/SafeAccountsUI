@@ -61,7 +61,7 @@ export class Safe extends Component {
                         <thead>
                             <tr id="tr_safeitem_labels">
                                 <td><FontAwesomeIcon id="icon_safeitem_square" icon={faSquare} style={{ color: "white" }} /></td>
-                                <td><FontAwesomeIcon className="icon_safeitem_star" id="icon_safeitem_star" icon={faStar} style={{ color: "white" }} /></td>
+                                <td><FontAwesomeIcon id="icon_safeitem_title_star" icon={faStar} style={{ color: "white" }} /></td>
                                 <td>Title</td>
                                 <td>Username</td>
                                 <td>Password</td>

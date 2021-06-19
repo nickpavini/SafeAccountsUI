@@ -6,3 +6,8 @@
 td {
     padding-left: 3px;
 }
+
+.icon_safeitem_star, .input_chk_safeitem {
+    cursor: pointer;
+    font-size: 14px;
+}
