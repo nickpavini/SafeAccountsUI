@@ -5,21 +5,46 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: auto;
+}
+
+#lbl_add_edit_item {
+    font-size: 36px;
+    font-weight: 400;
+    margin-top: -35px;
+    margin-bottom: 35px;
 }
 
 .text_input_safe_item {
+    padding: 8px 0px 5px 8px;
+    box-sizing: border-box;
+    background: rgba(229, 229, 229, 0.4);
+    border: none;
+    border-radius: 2px;
     resize: none;
+    color: black;
+    margin-bottom: 4px;
 }
 
 #btn_modify_safe_item {
-    margin-top: 10%;
+    margin-top: 30px;
     width: 100%;
     color: black;
     cursor: pointer;
-    color: black;
-    background: #EDA1A1;
-    border-radius: 5px;
+    background: none !important;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 2px 0px 4px 0px;
 }
 
 @media (max-width: 500px) {
+
+    #lbl_add_edit_item {
+        margin-top: -25px;
+        margin-bottom: 25px;
+    }
+
+    #btn_modify_safe_item {
+        margin-top: 18px;
+    }
 }

@@ -21,6 +21,7 @@ export class AddEditSafeItem extends Component {
                 ? <p>loading...</p>
                 : (
                     <div className="div_modify_safe_item">
+                        <label id="lbl_add_edit_item">{this.props.info !== undefined ? "Edit Safe Item" : "Add Safe Item"}</label>
                         <form id="form_modify_safe_item" onSubmit={this.props.info === undefined ? this.AddSafeItem : this.EditSafeItem}>
                             <div className="container">
                                 <textarea className="text_input_safe_item" placeholder="Title" id="text_input_safe_item_title" rows="1" cols="38" defaultValue={this.props.info !== undefined ? this.props.info.title : ""} ></textarea>
