@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import './Safe.css';
 import { SafeItem } from './SafeItem/SafeItem';
+import { SelectedItemsMenu } from './SelectedItemsMenu/SelectedItemsMenu';
 import { SafeItemContextMenu } from './SafeItem/SafeItemContextMenu/SafeItemContextMenu';
 import { faSquare, faStar, faCaretSquareDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,13 +17,15 @@ export class Safe extends Component {
 
          // set to hold the ids of which items are currently selected
         this.state = {
-            selectedItems: new Set(), openContextMenu: false,
+            selectedItems: new Set(), openSelectedItemsMenu: false, openContextMenu: false,
             menu_top: "0px", menu_left: "0px", menu_item_id: null,
             redirect: false, toUrl: null
         }; 
 
         // function binding
         this.UpdateSelectedItems = this.UpdateSelectedItems.bind(this);
+        this.OpenSelectedItemsMenu = this.OpenSelectedItemsMenu.bind(this);
+        this.CloseSelectedItemsMenu = this.CloseSelectedItemsMenu.bind(this);
         this.OpenContextMenu = this.OpenContextMenu.bind(this);
         this.CloseContextMenu = this.CloseContextMenu.bind(this);
         this.AddSafeItem = this.AddSafeItem.bind(this);
@@ -53,9 +56,15 @@ export class Safe extends Component {
 
         const RenderTableHeaderSquare = () => {
             if (this.state.selectedItems.size > 0)
-                return <td><FontAwesomeIcon id="icon_safeitem_dropdown" icon={faCaretSquareDown} /></td>
+                return <td><FontAwesomeIcon id="icon_safeitem_dropdown" icon={faCaretSquareDown} onClick={this.OpenSelectedItemsMenu}/></td>
             else
                 return <td><FontAwesomeIcon id="icon_safeitem_square" icon={faSquare} style={{ color: "white" }} /></td>
+        }
+
+        // drop down menu for when 1 or more items have been selected by the checkbox
+        const RenderSelectedItemsMenu = () => {
+            if (this.state.openSelectedItemsMenu)
+                return <SelectedItemsMenu uid={this.props.uid} selectedItems={this.state.selectedItems} top={this.state.menu_top} left={this.state.menu_left} CloseSelectedItemsMenu={this.CloseSelectedItemsMenu} />;
         }
 
         return (
@@ -67,6 +76,7 @@ export class Safe extends Component {
                     <FontAwesomeIcon id="icon_safeitem_plus" icon={faPlusSquare} style={{ color: "white" }} onClick={this.AddSafeItem}/>
                 </div>
                 <div className="div_safeitems">
+                    {RenderSelectedItemsMenu()}
                     <table style={{width: "100%"}}>
                         <thead>
                             <tr id="tr_safeitem_labels">
@@ -115,6 +125,14 @@ export class Safe extends Component {
 
         // update state
         this.setState({ selectedItems: items });
+    }
+
+    async OpenSelectedItemsMenu() {
+        this.setState({ openSelectedItemsMenu: true })
+    }
+
+    async CloseSelectedItemsMenu() {
+        this.setState({ openSelectedItemsMenu: false });
     }
 
     async OpenContextMenu(item_id, left, top) {

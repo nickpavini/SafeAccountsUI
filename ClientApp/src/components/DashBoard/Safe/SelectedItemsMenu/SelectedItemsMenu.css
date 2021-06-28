@@ -1,0 +1,17 @@
+#menu_selected_items {
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    position: fixed;
+    margin-top: 28px;
+    margin-left: 7px;
+    z-index: 1 !important;
+}
+
+.menu_selected_items {
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
