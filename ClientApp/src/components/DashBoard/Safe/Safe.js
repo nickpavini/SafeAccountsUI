@@ -2,7 +2,7 @@
 import './Safe.css';
 import { SafeItem } from './SafeItem/SafeItem';
 import { SafeItemContextMenu } from './SafeItem/SafeItemContextMenu/SafeItemContextMenu';
-import { faSquare, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faSquare, faStar, faCaretSquareDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SearchBar } from '../../SearchBar/SearchBar';
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
@@ -28,8 +28,11 @@ export class Safe extends Component {
         this.AddSafeItem = this.AddSafeItem.bind(this);
     }
 
-    componentDidMount() {
-        
+    // if props have changed, we need to update items selected
+    componentDidUpdate(prevProps) {
+        if (prevProps !== this.props)
+            this.setState({ selectedItems: new Set() });
+        return true;
     }
 
     render() {
@@ -48,6 +51,13 @@ export class Safe extends Component {
                 return <SearchBar SetSearchString={this.props.SetSearchString} />;
         }
 
+        const RenderTableHeaderSquare = () => {
+            if (this.state.selectedItems.size > 0)
+                return <td><FontAwesomeIcon id="icon_safeitem_dropdown" icon={faCaretSquareDown} /></td>
+            else
+                return <td><FontAwesomeIcon id="icon_safeitem_square" icon={faSquare} style={{ color: "white" }} /></td>
+        }
+
         return (
             <div className="div_safe">
                 {RenderSafeItemContextMenu()}
@@ -60,7 +70,7 @@ export class Safe extends Component {
                     <table style={{width: "100%"}}>
                         <thead>
                             <tr id="tr_safeitem_labels">
-                                <td><FontAwesomeIcon id="icon_safeitem_square" icon={faSquare} style={{ color: "white" }} /></td>
+                                {RenderTableHeaderSquare()}
                                 <td><FontAwesomeIcon id="icon_safeitem_title_star" icon={faStar} style={{ color: "white" }} /></td>
                                 <td>Title</td>
                                 <td>Username</td>
@@ -75,13 +85,13 @@ export class Safe extends Component {
                                     // if favorites are selected, we dont worry about the folders or the search string
                                     if (this.props.showFavorites) {
                                         if (value.isFavorite)
-                                            return <SafeItem key={value.id} uid={this.props.uid} device_mode={this.props.device_mode} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />;
+                                            return <SafeItem key={value.id} uid={this.props.uid} device_mode={this.props.device_mode} info={value} checked={this.state.selectedItems.has(value.id.toString())} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />;
                                     }
                                     // display the account if its folder matches, or the selected folder is null  or empty then we display all
                                     else if (value.folderID === this.props.selectedFolderID || this.props.selectedFolderID === null) {
                                         // match search string
                                         if (this.props.searchString === null || value.title.toLowerCase().includes(this.props.searchString.toLowerCase()))
-                                            return <SafeItem key={value.id} uid={this.props.uid} device_mode={this.props.device_mode} info={value} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />;
+                                            return <SafeItem key={value.id} uid={this.props.uid} device_mode={this.props.device_mode} info={value} checked={this.state.selectedItems.has(value.id.toString())} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />;
                                     }
 
                                     return null; // retun null if nothing

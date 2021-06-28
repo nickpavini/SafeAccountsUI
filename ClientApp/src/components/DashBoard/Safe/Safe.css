@@ -22,6 +22,11 @@
     padding-bottom: 3px;
 }
 
+#icon_safeitem_dropdown {
+    color: white;
+    cursor: pointer;
+}
+
 #icon_safeitem_plus {
     float: right;
     font-size: 18px;

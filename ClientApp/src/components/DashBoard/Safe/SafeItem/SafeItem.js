@@ -39,7 +39,7 @@ export class SafeItem extends Component {
         var icon_color = this.props.info.isFavorite ? "yellow" : "white";
         return (
             <tr id={tr_id} draggable="true" onDragStart={this.Drag} className="tr_safeitem" onClick={this.ViewSafeItem}>
-                <td><input type="checkbox" defaultChecked={false} onClick={this.SetItemSelected} id={input_id} className="input_chk_safeitem" ></input></td>
+                <td><input type="checkbox" checked={this.props.checked} onChange={this.SetItemSelected} id={input_id} className="input_chk_safeitem" ></input></td>
                 <td><FontAwesomeIcon className="icon_safeitem_star" id={icon_id} onClick={this.SetItemIsFavorite} icon={faStar} style={{ color: icon_color }} /></td>
                 <td><span id="span_safeitem_title" >{this.props.info.title}</span></td>
                 <td><span id="span_safeitem_login" >{this.props.info.login}</span></td>
