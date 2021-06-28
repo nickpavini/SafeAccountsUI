@@ -82,7 +82,7 @@ export class Folder extends Component {
         };
 
         //make request and get response
-        const response = await fetch('https://localhost:44366/users/' + this.props.uid + '/accounts/' + safeitem.id + '/folder', requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/accounts/' + safeitem.id + '/folder', requestOptions);
         if (response.ok) {
             safeitem.folderID = this.props.folder.id;
             this.props.UpdateSafeItem(safeitem); // later we may want to do this before the call, and just re-update if the call fails.. it will speed up responsiveness
@@ -113,7 +113,7 @@ export class Folder extends Component {
         };
 
         //make request and get response
-        const response = await fetch('https://localhost:44366/users/' + this.props.uid + '/folders/' + folder.id + '/parent', requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/folders/' + folder.id + '/parent', requestOptions);
         if (response.ok) {
             const responseText = await response.text();
             this.props.UpdateFolders(JSON.parse(responseText)); // update the folders
@@ -161,7 +161,7 @@ export class Folder extends Component {
         };
 
         //make request and get response
-        const response = await fetch('https://localhost:44366/users/' + this.props.uid + '/folders/' + this.props.folder.id + '/name', requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/folders/' + this.props.folder.id + '/name', requestOptions);
         if (response.ok) {
             this.props.folder.folderName = newName;
             this.props.UpdateSingleFolder(this.props.folder)

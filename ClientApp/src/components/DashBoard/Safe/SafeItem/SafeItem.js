@@ -70,7 +70,7 @@ export class SafeItem extends Component {
         };
 
         //make request and get response
-        const response = await fetch('https://localhost:44366/users/' + this.props.uid + '/accounts/' + this.props.info.id.toString() + '/favorite', requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/accounts/' + this.props.info.id.toString() + '/favorite', requestOptions);
         if (response.ok) {
             this.props.info.isFavorite = !this.props.info.isFavorite; // update local value only after successful call
         }

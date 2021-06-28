@@ -69,7 +69,7 @@ export class SafeItemContextMenu extends Component {
         };
 
         //make request and get response
-        const response = await fetch('https://localhost:44366/users/' + this.props.uid + '/accounts/' + this.props.item.id.toString(), requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/accounts/' + this.props.item.id.toString(), requestOptions);
         if (response.ok) {
             this.props.FetchSafe();
         }

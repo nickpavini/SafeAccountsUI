@@ -49,7 +49,7 @@ export class EmailConfirmation extends Component {
         };
 
         //make request and get response
-        var reqString = 'https://localhost:44366/users/confirm/?token=' + token + '&email=' + email;
+        var reqString = process.env.REACT_APP_WEBSITE_URL + '/users/confirm/?token=' + token + '&email=' + email;
         const response = await fetch(reqString, requestOptions);
         if (response.ok) {
             // done loading and email confirmed, set redirect a few seconds later

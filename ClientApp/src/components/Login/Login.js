@@ -57,7 +57,7 @@ export class Login extends Component {
         };
 
         //make request and get response
-        const response = await fetch('https://localhost:44366/users/login', requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/login', requestOptions);
         if (response.ok) {
             const responseText = await response.text();
             var obj = JSON.parse(responseText);

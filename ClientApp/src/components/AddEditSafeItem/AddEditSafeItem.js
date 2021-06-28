@@ -63,7 +63,7 @@ export class AddEditSafeItem extends Component {
         };
 
         //make request and get response
-        const response = await fetch('https://localhost:44366/users/' + this.props.uid + '/accounts', requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/accounts', requestOptions);
         if (response.ok) {
             var acc = JSON.parse(await response.text());
             this.props.UpdateSafeItem(acc);
@@ -104,7 +104,7 @@ export class AddEditSafeItem extends Component {
         };
 
         //make request and get response
-        const response = await fetch('https://localhost:44366/users/' + this.props.uid + '/accounts/' + this.props.info.id, requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/accounts/' + this.props.info.id, requestOptions);
         if (response.ok) {
             var acc = JSON.parse(await response.text());
             this.props.UpdateSafeItem(acc);

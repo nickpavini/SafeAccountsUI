@@ -123,7 +123,7 @@ export class SafeSideBar extends Component {
         };
 
         //make request and get response
-        const response = await fetch('https://localhost:44366/users/' + this.props.uid + '/folders', requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/folders', requestOptions);
         if (response.ok) {
             this.props.FetchUserFolders(); // legit update folders, first one was just visual
         }

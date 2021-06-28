@@ -180,7 +180,7 @@ class AppComponent extends Component {
             credentials: 'include'
         };
 
-        const reqURI = 'https://localhost:44366/users/logout';
+        const reqURI = process.env.REACT_APP_WEBSITE_URL + '/users/logout';
         const response = await fetch(reqURI, requestOptions); // this request will remove users cookies
         if (response.ok) {
             // reset state after removing cookies.. this will cause re-render and should make app be not logged in
@@ -217,7 +217,7 @@ class AppComponent extends Component {
         };
 
         // make a call to the refresh and if the result is ok, then we are logged in
-        const reqURI = 'https://localhost:44366/refresh';
+        const reqURI = process.env.REACT_APP_WEBSITE_URL + '/refresh';
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
@@ -244,7 +244,7 @@ class AppComponent extends Component {
             credentials: 'include'
         };
 
-        const reqURI = 'https://localhost:44366/users/' + this.state.uid + '/accounts';
+        const reqURI = process.env.REACT_APP_WEBSITE_URL + '/users/' + this.state.uid + '/accounts';
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
@@ -261,7 +261,7 @@ class AppComponent extends Component {
             credentials: 'include'
         };
 
-        const reqURI = 'https://localhost:44366/users/' + this.state.uid + '/folders';
+        const reqURI = process.env.REACT_APP_WEBSITE_URL + '/users/' + this.state.uid + '/folders';
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
@@ -278,7 +278,7 @@ class AppComponent extends Component {
             credentials: 'include'
         };
 
-        const reqURI = 'https://localhost:44366/users/' + this.state.uid;
+        const reqURI = process.env.REACT_APP_WEBSITE_URL + '/users/' + this.state.uid;
 
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {

@@ -57,7 +57,7 @@ export class FolderContextMenu extends Component {
         };
 
         //make request and get response
-        const response = await fetch('https://localhost:44366/users/' + this.props.uid + '/folders/' + this.props.folder.id.toString(), requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/folders/' + this.props.folder.id.toString(), requestOptions);
         if (response.ok) {
             const responseText = await response.text();
             var safeAndFolders = JSON.parse(responseText);
