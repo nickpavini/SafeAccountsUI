@@ -64,7 +64,7 @@ export class Safe extends Component {
         // drop down menu for when 1 or more items have been selected by the checkbox
         const RenderSelectedItemsMenu = () => {
             if (this.state.openSelectedItemsMenu)
-                return <SelectedItemsMenu uid={this.props.uid} selectedItems={this.state.selectedItems} top={this.state.menu_top} left={this.state.menu_left} CloseSelectedItemsMenu={this.CloseSelectedItemsMenu} />;
+                return <SelectedItemsMenu uid={this.props.uid} selectedItems={this.state.selectedItems} safe={this.props.safe} UpdateSafe={this.props.UpdateSafe} CloseSelectedItemsMenu={this.CloseSelectedItemsMenu} attemptRefresh={this.props.attemptRefresh}/>;
         }
 
         return (

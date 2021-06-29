@@ -13,7 +13,7 @@ export class DashBoard extends Component {
         return (
             <div className="div_dashboard">
                 {RenderSafeSideBar()}
-                <Safe uid={this.props.uid} device_mode={this.props.device_mode} safe={this.props.safe} FetchSafe={this.props.FetchSafe} searchString={this.props.searchString} SetSearchString={this.props.SetSearchString} selectedFolderID={this.props.selectedFolderID} showFavorites={this.props.showFavorites} attemptRefresh={this.props.attemptRefresh}/>
+                <Safe uid={this.props.uid} device_mode={this.props.device_mode} safe={this.props.safe} UpdateSafe={this.props.UpdateSafe} FetchSafe={this.props.FetchSafe} searchString={this.props.searchString} SetSearchString={this.props.SetSearchString} selectedFolderID={this.props.selectedFolderID} showFavorites={this.props.showFavorites} attemptRefresh={this.props.attemptRefresh}/>
             </div>
         );
     }
