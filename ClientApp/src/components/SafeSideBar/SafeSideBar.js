@@ -24,6 +24,8 @@ export class SafeSideBar extends Component {
         this.AddFolder = this.AddFolder.bind(this);
         this.OpenContextMenu = this.OpenContextMenu.bind(this); // functions for the folder context menu
         this.CloseContextMenu = this.CloseContextMenu.bind(this);
+        this.DropOnAllEntries = this.DropOnAllEntries.bind(this);
+        this.SetItemFolder = this.SetItemFolder.bind(this);
     }
 
     render() {
@@ -55,7 +57,7 @@ export class SafeSideBar extends Component {
                 {RenderCloseButton()}
                 <div className="div_safesidebar_navigation">
                     {RenderSearchBar()}
-                    <div id="div_sidebar_all_entries" onClick={this.ResetFilters}><FontAwesomeIcon id="icon_all_entries" icon={faThLarge} /><span id="span_sidebar_all_entries">All Entries</span></div>
+                    <div id="div_sidebar_all_entries" onClick={this.ResetFilters} onDrop={this.DropOnAllEntries} onDragOver={this.AllEntriesAllowDrop}><FontAwesomeIcon id="icon_all_entries" icon={faThLarge} /><span id="span_sidebar_all_entries">All Entries</span></div>
                     <div id="div_sidebar_favorites" onClick={this.props.ShowFavorites}><FontAwesomeIcon id="icon_favorites" icon={faStar} /><span id="span_sidebar_favorites">Favorites</span></div>
                     <div id="div_Folders_Options" ><span id="span_safesidebar_folders">Folders</span><FontAwesomeIcon id="icon_add_folder" icon={faFolderPlus} onClick={this.AddFolder}/></div>
                     {this.ParseFolders(null)}
@@ -79,7 +81,8 @@ export class SafeSideBar extends Component {
                             // if the current folder is a child of the parent we list, then we display the folder
                             contents = <Folder key={value.id} uid={this.props.uid} folder={value} OpenContextMenu={this.OpenContextMenu}
                                 selectedFolderID={this.props.selectedFolderID} SetSelectedFolder={this.props.SetSelectedFolder} UpdateFolders={this.props.UpdateFolders}
-                                UpdateSingleFolder={this.props.UpdateSingleFolder} UpdateSafeItem={this.props.UpdateSafeItem} attemptRefresh={this.props.attemptRefresh}
+                                UpdateSingleFolder={this.props.UpdateSingleFolder} UpdateSafeItem={this.props.UpdateSafeItem} SetItemFolder={this.SetItemFolder}
+                                attemptRefresh={this.props.attemptRefresh}
                             />;
 
                             // if this folder is a parent we need to parse it children into a new div with a slight margin
@@ -170,5 +173,49 @@ export class SafeSideBar extends Component {
 
     async CloseContextMenu() {
         this.setState({ openContextMenu: false });
+    }
+
+    // makes it so hovering item can be dropped
+    AllEntriesAllowDrop(event) {
+        event.preventDefault();
+    }
+
+    // what to do when something is dropped on all entries
+    DropOnAllEntries(event) {
+        event.preventDefault();
+
+        // if the dropped element is a safe item, we set that item to be associated with this folder
+        if (event.dataTransfer.getData("safeitem") !== "")
+            this.SetItemFolder(JSON.parse(event.dataTransfer.getData("safeitem")), 0);
+    }
+
+    async SetItemFolder(safeitem, folder_id) {
+        // HTTP request options
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
+            body: folder_id,
+            credentials: 'include'
+        };
+
+        //make request and get response
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/accounts/' + safeitem.id + '/folder', requestOptions);
+        if (response.ok) {
+            safeitem.folderID = folder_id === 0 ? null : folder_id;
+            this.props.UpdateSafeItem(safeitem); // later we may want to do this before the call, and just re-update if the call fails.. it will speed up responsiveness
+        }
+        // unauthorized could need new access token, so we attempt refresh
+        else if (response.status === 401 || response.status === 403) {
+            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+
+            // dont recall if the refresh didnt succeed
+            if (!refreshSucceeded)
+                return;
+
+            this.SetItemFolder(safeitem, folder_id); // call again
+        }
+        // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
+        else {
+        }
     }
 }
