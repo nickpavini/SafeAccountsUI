@@ -10,6 +10,7 @@ import { Account } from './components/Account/Account';
 import { SafeSideBar } from './components/SafeSideBar/SafeSideBar';
 import { AddEditSafeItem } from './components/AddEditSafeItem/AddEditSafeItem';
 import { EmailConfirmation } from './components/EmailConfirmation/EmailConfirmation.js';
+import { PasswordReset } from './components/PasswordReset/PasswordReset.js';
 import './custom.css'
 
 localStorage.setItem("MOBILE_MODE", "MOBILE");
@@ -130,6 +131,14 @@ class AppComponent extends Component {
                                 <Redirect to="/dashboard" />
                             ) : (
                                     <EmailConfirmation />
+                                )
+                        )} />
+                        {/*page where users are redirected from their email when resetting password*/}
+                        <Route path='/passwordreset' render={() => (
+                            this.state.loggedIn ? (
+                                <Redirect to="/dashboard" />
+                            ) : (
+                                    <PasswordReset />
                                 )
                         )} />
                         <Route path='/dashboard' render={() => (
