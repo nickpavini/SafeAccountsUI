@@ -261,7 +261,7 @@ class AppComponent extends Component {
                 decryptedSafe[index].login = Decrypt(value.login);
                 decryptedSafe[index].password = Decrypt(value.password);
                 decryptedSafe[index].url = Decrypt(value.url);
-                decryptedSafe[index].decription = Decrypt(value.description);
+                decryptedSafe[index].description = Decrypt(value.description);
                 return null;
             });
 
