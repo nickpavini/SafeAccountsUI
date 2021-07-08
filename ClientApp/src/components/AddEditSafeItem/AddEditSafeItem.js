@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Redirect } from 'react-router';
+import { Encrypt } from '../HelperFunctions.js'
 import './AddEditSafeItem.css';
 
 export class AddEditSafeItem extends Component {
@@ -48,24 +49,33 @@ export class AddEditSafeItem extends Component {
         event.preventDefault(); //prevent page refresh
         this.setState({ loading: true }); // loading as we process request
 
-        var title = event.target.text_input_safe_item_title.value;
-        var login = event.target.text_input_safe_item_login.value;
-        var password = event.target.text_input_safe_item_password.value;
-        var url = event.target.text_input_safe_item_url.value;
-        var description = event.target.text_input_safe_item_description.value;
+        // get values and encrypt
+        var titleEncrypted = Encrypt(event.target.text_input_safe_item_title.value);
+        var loginEncrypted = Encrypt(event.target.text_input_safe_item_login.value);
+        var passwordEncrypted = Encrypt(event.target.text_input_safe_item_password.value);
+        var urlEncrypted = Encrypt(event.target.text_input_safe_item_url.value);
+        var descriptionEncrypted = Encrypt(event.target.text_input_safe_item_description.value);
 
         // HTTP request options
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            body: JSON.stringify({ title: title, login: login, password: password, url: url, description: description }),
+            body: JSON.stringify({ title: titleEncrypted, login: loginEncrypted, password: passwordEncrypted, url: urlEncrypted, description: descriptionEncrypted }),
             credentials: 'include'
         };
 
         //make request and get response
         const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/accounts', requestOptions);
         if (response.ok) {
+            // get new account with id, then set data to decrypted values internally
             var acc = JSON.parse(await response.text());
+            acc.title = event.target.text_input_safe_item_title.value;
+            acc.login = event.target.text_input_safe_item_login.value;
+            acc.password = event.target.text_input_safe_item_password.value;
+            acc.url = event.target.text_input_safe_item_url.value;
+            acc.description = event.target.text_input_safe_item_description.value;
+
+            // update the apps internal safe and redirect in a few seconds
             this.props.UpdateSafeItem(acc);
             setTimeout(() => this.setState({ redirect: true }), 4000);
         }
@@ -89,24 +99,33 @@ export class AddEditSafeItem extends Component {
         event.preventDefault(); //prevent page refresh
         this.setState({ loading: true }); // loading as we process request
 
-        var title = event.target.text_input_safe_item_title.value;
-        var login = event.target.text_input_safe_item_login.value;
-        var password = event.target.text_input_safe_item_password.value;
-        var url = event.target.text_input_safe_item_url.value;
-        var description = event.target.text_input_safe_item_description.value;
+        // get values and encrypt
+        var titleEncrypted = Encrypt(event.target.text_input_safe_item_title.value);
+        var loginEncrypted = Encrypt(event.target.text_input_safe_item_login.value);
+        var passwordEncrypted = Encrypt(event.target.text_input_safe_item_password.value);
+        var urlEncrypted = Encrypt(event.target.text_input_safe_item_url.value);
+        var descriptionEncrypted = Encrypt(event.target.text_input_safe_item_description.value);
 
         // HTTP request options
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            body: JSON.stringify({ title: title, login: login, password: password, url: url, description: description }),
+            body: JSON.stringify({ title: titleEncrypted, login: loginEncrypted, password: passwordEncrypted, url: urlEncrypted, description: descriptionEncrypted }),
             credentials: 'include'
         };
 
         //make request and get response
         const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/accounts/' + this.props.info.id, requestOptions);
         if (response.ok) {
+            // get new account with id, then set data to decrypted values internally
             var acc = JSON.parse(await response.text());
+            acc.title = event.target.text_input_safe_item_title.value;
+            acc.login = event.target.text_input_safe_item_login.value;
+            acc.password = event.target.text_input_safe_item_password.value;
+            acc.url = event.target.text_input_safe_item_url.value;
+            acc.description = event.target.text_input_safe_item_description.value;
+
+            // update the apps internal safe and redirect in a few seconds
             this.props.UpdateSafeItem(acc);
             setTimeout(() => this.setState({ redirect: true }), 4000);
         }

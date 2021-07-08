@@ -10,6 +10,7 @@ import { Account } from './components/Account/Account';
 import { SafeSideBar } from './components/SafeSideBar/SafeSideBar';
 import { AddEditSafeItem } from './components/AddEditSafeItem/AddEditSafeItem';
 import { EmailConfirmation } from './components/EmailConfirmation/EmailConfirmation.js';
+import { DecryptFolders, DecryptSafe } from './components/HelperFunctions.js'
 import './custom.css'
 
 localStorage.setItem("MOBILE_MODE", "MOBILE");
@@ -183,6 +184,7 @@ class AppComponent extends Component {
         const reqURI = process.env.REACT_APP_WEBSITE_URL + '/users/logout';
         const response = await fetch(reqURI, requestOptions); // this request will remove users cookies
         if (response.ok) {
+            window.localStorage.removeItem("UserKey"); // delete user key upon signout
             // reset state after removing cookies.. this will cause re-render and should make app be not logged in
             this.setState({
                 loggedIn: false, loading: false, // user is now logged out.. login page will render
@@ -230,6 +232,7 @@ class AppComponent extends Component {
             return true;
         }
         else {
+            window.localStorage.removeItem("UserKey"); // if cookies are no longer valid, lets delete the key
             this.setState({ loading: false, loggedIn: false });
             return false;
         }
@@ -247,8 +250,10 @@ class AppComponent extends Component {
         const reqURI = process.env.REACT_APP_WEBSITE_URL + '/users/' + this.state.uid + '/accounts';
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
+            //get safe and decypt
             const responseText = await response.text();
-            this.setState({ safe: JSON.parse(responseText) })
+            var safe = JSON.parse(responseText);
+            this.setState({ safe: DecryptSafe(safe) })
         }
     }
 
@@ -265,7 +270,8 @@ class AppComponent extends Component {
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
-            this.setState({ folders: JSON.parse(responseText) })
+            var folders = JSON.parse(responseText);
+            this.setState({ folders: DecryptFolders(folders) })
         }
     }
 
