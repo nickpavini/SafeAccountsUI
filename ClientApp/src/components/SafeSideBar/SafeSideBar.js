@@ -5,7 +5,7 @@ import { SearchBar } from '../SearchBar/SearchBar';
 import { faThLarge, faFolderPlus, faTimes, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FolderContextMenu } from './Folder/FolderContextMenu/FolderContextMenu';
-import { Encrypt } from '../HelperFunctions.js'
+import { DecryptFolders, Encrypt } from '../HelperFunctions.js'
 
 export class SafeSideBar extends Component {
     static displayName = SafeSideBar.name;
@@ -219,7 +219,8 @@ export class SafeSideBar extends Component {
         const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/folders/' + folder.id + '/parent', requestOptions);
         if (response.ok) {
             const responseText = await response.text();
-            this.props.UpdateFolders(JSON.parse(responseText)); // update the folders
+            var folders = JSON.parse(responseText);
+            this.props.UpdateFolders(DecryptFolders(folders)); // update the folders
         }
         // unauthorized could need new access token, so we attempt refresh
         else if (response.status === 401 || response.status === 403) {
