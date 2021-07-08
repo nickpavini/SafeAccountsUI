@@ -184,6 +184,7 @@ class AppComponent extends Component {
         const reqURI = process.env.REACT_APP_WEBSITE_URL + '/users/logout';
         const response = await fetch(reqURI, requestOptions); // this request will remove users cookies
         if (response.ok) {
+            window.localStorage.removeItem("UserKey"); // delete user key upon signout
             // reset state after removing cookies.. this will cause re-render and should make app be not logged in
             this.setState({
                 loggedIn: false, loading: false, // user is now logged out.. login page will render
@@ -231,6 +232,7 @@ class AppComponent extends Component {
             return true;
         }
         else {
+            window.localStorage.removeItem("UserKey"); // if cookies are no longer valid, lets delete the key
             this.setState({ loading: false, loggedIn: false });
             return false;
         }
