@@ -5,6 +5,7 @@ import { SearchBar } from '../SearchBar/SearchBar';
 import { faThLarge, faFolderPlus, faTimes, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FolderContextMenu } from './Folder/FolderContextMenu/FolderContextMenu';
+import { Encrypt } from '../HelperFunctions.js'
 
 export class SafeSideBar extends Component {
     static displayName = SafeSideBar.name;
@@ -123,7 +124,7 @@ export class SafeSideBar extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            body: JSON.stringify({ folder_name: "New Folder" }),
+            body: JSON.stringify({ folder_name: Encrypt("New Folder") }),
             credentials: 'include'
         };
 
