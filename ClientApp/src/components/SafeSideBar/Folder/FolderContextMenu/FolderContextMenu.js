@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import { DecryptFolders, DecryptSafe } from '../../../HelperFunctions.js'
 import './FolderContextMenu.css';
 
 export class FolderContextMenu extends Component {
@@ -61,8 +62,8 @@ export class FolderContextMenu extends Component {
         if (response.ok) {
             const responseText = await response.text();
             var safeAndFolders = JSON.parse(responseText);
-            this.props.UpdateSafe(safeAndFolders.safe) // update safe
-            this.props.UpdateFolders(safeAndFolders.updatedFolders); // update the folders
+            this.props.UpdateSafe(DecryptSafe(safeAndFolders.safe)) // update safe
+            this.props.UpdateFolders(DecryptFolders(safeAndFolders.updatedFolders)); // update the folders
         }
         // unauthorized could need new access token, so we attempt refresh
         else if (response.status === 401 || response.status === 403) {
