@@ -10,6 +10,7 @@ import { Account } from './components/Account/Account';
 import { SafeSideBar } from './components/SafeSideBar/SafeSideBar';
 import { AddEditSafeItem } from './components/AddEditSafeItem/AddEditSafeItem';
 import { EmailConfirmation } from './components/EmailConfirmation/EmailConfirmation.js';
+import { Decrypt } from './components/HelperFunctions.js'
 import './custom.css'
 
 localStorage.setItem("MOBILE_MODE", "MOBILE");
@@ -248,7 +249,21 @@ class AppComponent extends Component {
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
-            this.setState({ safe: JSON.parse(responseText) })
+            var safe = JSON.parse(responseText);
+            var decryptedSafe = [];
+
+            // go through and decrypt safe
+            safe.map((value, index) => {
+                decryptedSafe.push(value);
+                decryptedSafe[index].title = Decrypt(value.title);
+                decryptedSafe[index].login = Decrypt(value.login);
+                decryptedSafe[index].password = Decrypt(value.password);
+                decryptedSafe[index].url = Decrypt(value.url);
+                decryptedSafe[index].decription = Decrypt(value.description);
+                return null;
+            });
+
+            this.setState({ safe: decryptedSafe })
         }
     }
 
@@ -265,7 +280,17 @@ class AppComponent extends Component {
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
-            this.setState({ folders: JSON.parse(responseText) })
+            var folders = JSON.parse(responseText);
+            var decryptedFolders = [];
+
+            // go through and decrypt safe
+            folders.map((value, index) => {
+                decryptedFolders.push(value);
+                decryptedFolders[index].folderName = Decrypt(value.folderName);
+                return null;
+            });
+
+            this.setState({ folders: decryptedFolders })
         }
     }
 
