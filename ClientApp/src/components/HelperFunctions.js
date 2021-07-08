@@ -33,3 +33,33 @@ export function Decrypt(str) {
     var decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
     return decryptedStr.toString();
 }
+
+export function DecryptSafe(safe) {
+    var decryptedSafe = [];
+
+    // go through and decrypt safe
+    safe.map((value, index) => {
+        decryptedSafe.push(value);
+        decryptedSafe[index].title = Decrypt(value.title);
+        decryptedSafe[index].login = Decrypt(value.login);
+        decryptedSafe[index].password = Decrypt(value.password);
+        decryptedSafe[index].url = Decrypt(value.url);
+        decryptedSafe[index].description = Decrypt(value.description);
+        return null;
+    });
+
+    return decryptedSafe;
+}
+
+export function DecryptFolders(folders) {
+    var decryptedFolders = [];
+
+    // go through and decrypt safe
+    folders.map((value, index) => {
+        decryptedFolders.push(value);
+        decryptedFolders[index].folderName = Decrypt(value.folderName);
+        return null;
+    });
+
+    return decryptedFolders;
+}

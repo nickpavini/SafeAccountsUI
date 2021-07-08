@@ -10,7 +10,7 @@ import { Account } from './components/Account/Account';
 import { SafeSideBar } from './components/SafeSideBar/SafeSideBar';
 import { AddEditSafeItem } from './components/AddEditSafeItem/AddEditSafeItem';
 import { EmailConfirmation } from './components/EmailConfirmation/EmailConfirmation.js';
-import { Decrypt } from './components/HelperFunctions.js'
+import { DecryptFolders, DecryptSafe } from './components/HelperFunctions.js'
 import './custom.css'
 
 localStorage.setItem("MOBILE_MODE", "MOBILE");
@@ -250,22 +250,10 @@ class AppComponent extends Component {
         const reqURI = process.env.REACT_APP_WEBSITE_URL + '/users/' + this.state.uid + '/accounts';
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
+            //get safe and decypt
             const responseText = await response.text();
             var safe = JSON.parse(responseText);
-            var decryptedSafe = [];
-
-            // go through and decrypt safe
-            safe.map((value, index) => {
-                decryptedSafe.push(value);
-                decryptedSafe[index].title = Decrypt(value.title);
-                decryptedSafe[index].login = Decrypt(value.login);
-                decryptedSafe[index].password = Decrypt(value.password);
-                decryptedSafe[index].url = Decrypt(value.url);
-                decryptedSafe[index].description = Decrypt(value.description);
-                return null;
-            });
-
-            this.setState({ safe: decryptedSafe })
+            this.setState({ safe: DecryptSafe(safe) })
         }
     }
 
@@ -283,16 +271,7 @@ class AppComponent extends Component {
         if (response.ok) {
             const responseText = await response.text();
             var folders = JSON.parse(responseText);
-            var decryptedFolders = [];
-
-            // go through and decrypt safe
-            folders.map((value, index) => {
-                decryptedFolders.push(value);
-                decryptedFolders[index].folderName = Decrypt(value.folderName);
-                return null;
-            });
-
-            this.setState({ folders: decryptedFolders })
+            this.setState({ folders: DecryptFolders(folders) })
         }
     }
 
