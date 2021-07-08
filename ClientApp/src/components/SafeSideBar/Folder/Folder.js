@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { faFolder, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Encrypt } from '../../HelperFunctions.js'
 import './Folder.css';
 
 export class Folder extends Component {
@@ -88,12 +89,14 @@ export class Folder extends Component {
 
     // api call to change the folders name
     async SetFolderName(newName) {
+        // aes encrypt the name
+        var newNameEncrypted = Encrypt(newName);
 
         // HTTP request options
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            body: "\"" + newName + "\"",
+            body: "\"" + newNameEncrypted + "\"",
             credentials: 'include'
         };
 
