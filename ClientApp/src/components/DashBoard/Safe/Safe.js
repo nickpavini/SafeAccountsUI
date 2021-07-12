@@ -24,8 +24,6 @@ export class Safe extends Component {
 
         // function binding
         this.UpdateSelectedItems = this.UpdateSelectedItems.bind(this);
-        this.OpenContextMenu = this.OpenContextMenu.bind(this);
-        this.CloseContextMenu = this.CloseContextMenu.bind(this);
         this.AddSafeItem = this.AddSafeItem.bind(this);
     }
 
@@ -43,13 +41,11 @@ export class Safe extends Component {
             return <Redirect to={this.state.toUrl} />
 
         const RenderSafeItemContextMenu = () => {
-            if (this.state.openContextMenu)
+            if (this.props.AppState.openSafeItemContextMenu)
                 return <SafeItemContextMenu
                     AppState={this.props.AppState}
                     SetAppState={this.props.SetAppState}
                     item={this.props.AppState.safe.find(e => e.id === this.state.menu_item_id)}
-                    top={this.state.menu_top} left={this.state.menu_left}
-                    CloseContextMenu={this.CloseContextMenu}
                 />;
         }
 
@@ -106,10 +102,10 @@ export class Safe extends Component {
                                             return <SafeItem
                                                 key={value.id}
                                                 AppState={this.props.AppState}
+                                                SetAppState={this.props.SetAppState}
                                                 info={value}
                                                 checked={this.state.selectedItems.has(value.id)}
                                                 UpdateSelectedItems={this.UpdateSelectedItems}
-                                                OpenContextMenu={this.OpenContextMenu}
                                             />;
                                     }
                                     // display the account if its folder matches, or the selected folder is null  or empty then we display all
@@ -119,10 +115,10 @@ export class Safe extends Component {
                                             return <SafeItem
                                                 key={value.id}
                                                 AppState={this.props.AppState}
+                                                SetAppState={this.props.SetAppState}
                                                 info={value}
                                                 checked={this.state.selectedItems.has(value.id)}
                                                 UpdateSelectedItems={this.UpdateSelectedItems}
-                                                OpenContextMenu={this.OpenContextMenu}
                                             />;
                                     }
 
@@ -147,14 +143,6 @@ export class Safe extends Component {
 
         // update state
         this.setState({ selectedItems: items });
-    }
-
-    async OpenContextMenu(item_id, left, top) {
-        this.setState({ openContextMenu: true, menu_top: top, menu_left: left, menu_item_id: item_id })
-    }
-
-    async CloseContextMenu() {
-        this.setState({ openContextMenu: false });
     }
 
     AddSafeItem() {

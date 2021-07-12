@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import './SafeItem.css';
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AttempRefresh } from '../../../HelperFunctions.js'
+import { AttempRefresh, OpenSafeItemContextMenu } from '../../../HelperFunctions.js'
 
 export class SafeItem extends Component {
     static displayName = SafeItem.name;
@@ -25,7 +25,7 @@ export class SafeItem extends Component {
     componentDidMount() {
         document.getElementById("tr_safeitem_" + this.props.info.id.toString()).addEventListener('contextmenu', e => {
             e.preventDefault();
-            this.props.OpenContextMenu(this.props.info.id, e.pageX + "px", e.pageY + "px");
+            OpenSafeItemContextMenu(this.props.info.id, e.pageX + "px", e.pageY + "px", this.props.SetAppState);
         });
     }
 

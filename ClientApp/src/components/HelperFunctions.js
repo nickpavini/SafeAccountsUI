@@ -299,3 +299,16 @@ export async function OpenSelectedItemsMenu(SetAppState) {
 export async function CloseSelectedItemsMenu(SetAppState) {
     SetAppState({ openSelectedItemsMenu: false });
 }
+
+// open safeitem context menu and close all others
+export async function OpenSafeItemContextMenu(item_id, left, top, SetAppState) {
+    SetAppState({
+        openSafeItemContextMenu: true, openSelectedItemsMenu: false, openFolderContextMenu: false,
+        menu_top: top, menu_left: left, menu_item_id: item_id
+    })
+}
+
+// close the safeitem context menu
+export async function CloseSafeItemContextMenu(SetAppState) {
+    SetAppState({ openSafeItemContextMenu: false });
+}

@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import './SafeItemContextMenu.css';
 import { Redirect } from 'react-router-dom';
-import { AttempRefresh, RemoveSafeItemLocally } from '../../../../HelperFunctions.js'
+import { AttempRefresh, RemoveSafeItemLocally, CloseSafeItemContextMenu } from '../../../../HelperFunctions.js'
 
 export class SafeItemContextMenu extends Component {
     constructor(props) {
@@ -30,7 +30,7 @@ export class SafeItemContextMenu extends Component {
 
     // unrender if we click away
     async handleClick(e) {
-        this.props.CloseContextMenu();
+        CloseSafeItemContextMenu(this.props.SetAppState);
     }
 
     render() {
@@ -40,7 +40,7 @@ export class SafeItemContextMenu extends Component {
 
         // menu options
         return (
-            <div id="menu_safeitem" style={{ top: this.props.top, left: this.props.left }}>
+            <div id="menu_safeitem" style={{ top: this.props.AppState.menu_top, left: this.props.AppState.menu_left }}>
                 <span className="menu_safeitem" id="menu_safeitem_add_item" onClick={this.AddItem}>Add Item</span><br />
                 <span className="menu_safeitem" id="menu_safeitem_edit_item" onClick={this.EditSafeItem}>Edit Item</span><br />
                 <span className="menu_safeitem" id="menu_safeitem_delete_item" onClick={this.DeleteSafeItem}>Delete Item</span><br />
