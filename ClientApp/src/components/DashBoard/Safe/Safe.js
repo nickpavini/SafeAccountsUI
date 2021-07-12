@@ -29,7 +29,10 @@ export class Safe extends Component {
 
     // if props have changed, we need to update items selected
     componentDidUpdate(prevProps) {
-        if (prevProps.AppState.searchString !== this.props.AppState.searchString || prevProps.AppState.showFavorites !== this.props.AppState.showFavorites)
+        if (prevProps.AppState.searchString !== this.props.AppState.searchString ||
+            prevProps.AppState.showFavorites !== this.props.AppState.showFavorites ||
+            prevProps.AppState.selectedFolderID !== this.props.AppState.selectedFolderID
+        )
             this.setState({ selectedItems: new Set() });
         return true;
     }
