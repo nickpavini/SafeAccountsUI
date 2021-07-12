@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Route } from 'react-router';
-import { Layout } from './components/Layout.js';
+import { Layout } from './components/Layout/Layout.js';
 import { Home } from './components/Home/Home';
 import { SignUp } from './components/SignUp/SignUp';
 import { Login } from './components/Login/Login';

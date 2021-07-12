@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { NavMenu } from './NavMenu/NavMenu';
-import { NavbarAccountMenu } from './NavbarAccountMenu/NavbarAccountMenu';
-import { Footer } from './Footer/Footer';
+import { NavMenu } from '../NavMenu/NavMenu';
+import { NavbarAccountMenu } from '../NavbarAccountMenu/NavbarAccountMenu';
+import { Footer } from '../Footer/Footer';
 import './Layout.css'
 
 export class Layout extends Component {
