@@ -61,8 +61,8 @@ class AppComponent extends Component {
             device_mode: props.device_mode, windowDimensions: props.windowDimensions,
             loggedIn: null, loading: true,// loggedIn and loading flag
             uid: null, account_info: null, safe: null, folders: null, // store important userinfo
-            searchString: null, selectedFolderID: null, // what the user is searching for and what they have selected within the safe
-            showFavorites: false
+            searchString: null, selectedFolderID: null, showFavorites: false, // what the user is searching for and what they have selected within the safe
+            openSelectedItemsMenu: false,
         };
 
         //function bindings

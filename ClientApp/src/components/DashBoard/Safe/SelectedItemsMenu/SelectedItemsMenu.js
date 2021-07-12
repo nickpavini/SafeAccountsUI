@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { AttempRefresh, RemoveSafeItemLocally } from '../../../HelperFunctions.js'
+import { AttempRefresh, RemoveSafeItemLocally, CloseSelectedItemsMenu } from '../../../HelperFunctions.js'
 import './SelectedItemsMenu.css';
 
 export class SelectedItemsMenu extends Component {
@@ -46,7 +46,7 @@ export class SelectedItemsMenu extends Component {
             return;
         }
 
-        this.props.CloseSelectedItemsMenu();
+        CloseSelectedItemsMenu(this.props.SetAppState);
     }
 
     // DELETE multiple items from the safe

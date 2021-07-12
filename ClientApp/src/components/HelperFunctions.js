@@ -289,3 +289,13 @@ export async function SetFolderParent(folder, folder_id, AppState, SetAppState) 
     else {
     }
 }
+
+// open selected items menu and close all others
+export async function OpenSelectedItemsMenu(SetAppState) {
+    SetAppState({ openSelectedItemsMenu: true, openSafeItemContextMenu: false, openFolderContextMenu: false, openNavbarAccountMenu: false })
+}
+
+// close the selected items menu
+export async function CloseSelectedItemsMenu(SetAppState) {
+    SetAppState({ openSelectedItemsMenu: false });
+}
