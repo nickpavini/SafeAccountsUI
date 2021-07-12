@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { DecryptFolders, DecryptSafe, AttempRefresh, AddFolder } from '../../../HelperFunctions.js'
+import { DecryptFolders, DecryptSafe, AttempRefresh, AddFolder, CloseFolderContextMenu } from '../../../HelperFunctions.js'
 import './FolderContextMenu.css';
 
 export class FolderContextMenu extends Component {
@@ -22,13 +22,13 @@ export class FolderContextMenu extends Component {
 
     // unrender if we click away
     async handleClick(e) {
-        this.props.CloseContextMenu();
+        CloseFolderContextMenu(this.props.SetAppState);
     }
 
     render() {
         // menu options
         return (
-            <div id="menu_folder" style={{ top: this.props.top, left: this.props.left }}>
+            <div id="menu_folder" style={{ top: this.props.AppState.menu_top, left: this.props.AppState.menu_left }}>
                 <span className="menu_folder" id="menu_folder_add" onClick={() => AddFolder(this.props.AppState, this.props.SetAppState)}>Add Folder</span><br />
                 <span className="menu_folder" id="menu_folder_edit" onClick={this.RenameFolder}>Rename Folder</span><br />
                 <span className="menu_folder" id="menu_folder_delete" onClick={this.DeleteFolder}>Delete Folder</span><br />

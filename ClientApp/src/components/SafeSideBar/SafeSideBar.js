@@ -13,17 +13,9 @@ export class SafeSideBar extends Component {
     constructor(props) {
         super(props);
 
-        // set to hold the ids of which items are currently selected
-        this.state = {
-            openContextMenu: false, menu_top: "0px",
-            menu_left: "0px", menu_folder_id: null
-        };
-
         //bind functions
         this.ResetFilters = this.ResetFilters.bind(this);
         this.closeSideMenu = this.closeSideMenu.bind(this);
-        this.OpenContextMenu = this.OpenContextMenu.bind(this); // functions for the folder context menu
-        this.CloseContextMenu = this.CloseContextMenu.bind(this);
         this.DropOnAllEntries = this.DropOnAllEntries.bind(this);
         this.DropOnFolderLabel = this.DropOnFolderLabel.bind(this);
     }
@@ -31,13 +23,11 @@ export class SafeSideBar extends Component {
     render() {
         // conditional rendering of the context menu
         const RenderFolderContextMenu = () => {
-            if (this.state.openContextMenu)
+            if (this.props.AppState.openFolderContextMenu)
                 return <FolderContextMenu
                     AppState={this.props.AppState}
                     SetAppState={this.props.SetAppState}
-                    folder={this.props.AppState.folders.find(e => e.id === this.state.menu_folder_id)}
-                    top={this.state.menu_top} left={this.state.menu_left}
-                    CloseContextMenu={this.CloseContextMenu}
+                    folder={this.props.AppState.folders.find(e => e.id === this.props.AppState.menu_folder_id)}
                 />;
         }
 
@@ -87,7 +77,6 @@ export class SafeSideBar extends Component {
                                 AppState={this.props.AppState}
                                 SetAppState={this.props.SetAppState}
                                 folder={value}
-                                OpenContextMenu={this.OpenContextMenu}
                             />;
 
                             // if this folder is a parent we need to parse it children into a new div with a slight margin
@@ -131,14 +120,6 @@ export class SafeSideBar extends Component {
         setTimeout(() => {
             document.getElementById("div_SafeSideBar").style.border = "none"; // make it invisible so there isnt a small bar off to the left
         }, 500);
-    }
-
-    async OpenContextMenu(folder_id, left, top) {
-        this.setState({ openContextMenu: true, menu_top: top, menu_left: left, menu_folder_id: folder_id })
-    }
-
-    async CloseContextMenu() {
-        this.setState({ openContextMenu: false });
     }
 
     // makes it so hovering item can be dropped

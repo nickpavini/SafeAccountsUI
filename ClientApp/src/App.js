@@ -63,7 +63,7 @@ class AppComponent extends Component {
             uid: null, account_info: null, safe: null, folders: null, // store important userinfo
             searchString: null, selectedFolderID: null, showFavorites: false, // what the user is searching for and what they have selected within the safe
             openSelectedItemsMenu: false, openSafeItemContextMenu: false, openFolderContextMenu: false, openNavbarAccountMenu: false,
-            menu_top: "0px", menu_left: "0px", menu_item_id: null
+            menu_top: "0px", menu_left: "0px", menu_item_id: null, menu_folder_id: null
         };
 
         //function bindings

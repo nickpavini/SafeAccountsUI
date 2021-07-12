@@ -2,7 +2,7 @@
 import { faFolder, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Encrypt } from '../../HelperFunctions.js'
-import { AttempRefresh, SetSelectedFolder, UpdateSingleFolder, SetFolderParent, SetItemFolder } from '../../HelperFunctions.js'
+import { AttempRefresh, SetSelectedFolder, UpdateSingleFolder, SetFolderParent, SetItemFolder, OpenFolderContextMenu } from '../../HelperFunctions.js'
 import './Folder.css';
 
 export class Folder extends Component {
@@ -22,7 +22,7 @@ export class Folder extends Component {
     componentDidMount() {
         document.getElementById("div_folder_" + this.props.folder.id.toString()).addEventListener('contextmenu', e => {
             e.preventDefault();
-            this.props.OpenContextMenu(this.props.folder.id, e.pageX + "px", e.pageY + "px");
+            OpenFolderContextMenu(this.props.folder.id, e.pageX + "px", e.pageY + "px", this.props.SetAppState);
         });
     }
 

@@ -312,3 +312,16 @@ export async function OpenSafeItemContextMenu(item_id, left, top, SetAppState) {
 export async function CloseSafeItemContextMenu(SetAppState) {
     SetAppState({ openSafeItemContextMenu: false });
 }
+
+// open folder context menu
+export async function OpenFolderContextMenu(folder_id, left, top, SetAppState) {
+    SetAppState({
+        openFolderContextMenu: true, openSafeItemContextMenu: false, openSelectedItemsMenu: false,
+        menu_top: top, menu_left: left, menu_folder_id: folder_id
+    })
+}
+
+// close folder context menu
+export async function CloseFolderContextMenu(SetAppState) {
+    SetAppState({ openFolderContextMenu: false });
+}
