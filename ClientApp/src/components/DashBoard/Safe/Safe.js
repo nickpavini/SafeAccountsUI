@@ -33,7 +33,7 @@ export class Safe extends Component {
 
     // if props have changed, we need to update items selected
     componentDidUpdate(prevProps) {
-        if (prevProps !== this.props)
+        if (prevProps.AppState.searchString !== this.props.AppState.searchString || prevProps.AppState.showFavorites !== this.props.AppState.showFavorites)
             this.setState({ selectedItems: new Set() });
         return true;
     }
@@ -46,12 +46,18 @@ export class Safe extends Component {
 
         const RenderSafeItemContextMenu = () => {
             if (this.state.openContextMenu)
-                return <SafeItemContextMenu uid={this.props.uid} item={this.props.safe.find(e => e.id === this.state.menu_item_id)} FetchSafe={this.props.FetchSafe} top={this.state.menu_top} left={this.state.menu_left} CloseContextMenu={this.CloseContextMenu} attemptRefresh={this.props.attemptRefresh}/>;
+                return <SafeItemContextMenu
+                    AppState={this.props.AppState}
+                    SetAppState={this.props.SetAppState}
+                    item={this.props.AppState.safe.find(e => e.id === this.state.menu_item_id)}
+                    top={this.state.menu_top} left={this.state.menu_left}
+                    CloseContextMenu={this.CloseContextMenu}
+                />;
         }
 
         const RenderSearchBar = () => {
-            if (this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
-                return <SearchBar SetSearchString={this.props.SetSearchString} />;
+            if (this.props.AppState.device_mode === localStorage.getItem("MOBILE_MODE"))
+                return <SearchBar SetAppState={this.props.SetAppState} />;
         }
 
         const RenderTableHeaderSquare = () => {
@@ -64,7 +70,11 @@ export class Safe extends Component {
         // drop down menu for when 1 or more items have been selected by the checkbox
         const RenderSelectedItemsMenu = () => {
             if (this.state.openSelectedItemsMenu)
-                return <SelectedItemsMenu uid={this.props.uid} selectedItems={this.state.selectedItems} safe={this.props.safe} UpdateSafe={this.props.UpdateSafe} CloseSelectedItemsMenu={this.CloseSelectedItemsMenu} attemptRefresh={this.props.attemptRefresh}/>;
+                return <SelectedItemsMenu
+                    AppState={this.props.AppState}
+                    SetAppState={this.props.SetAppState}
+                    selectedItems={this.state.selectedItems}
+                    CloseSelectedItemsMenu={this.CloseSelectedItemsMenu} />;
         }
 
         return (
@@ -85,23 +95,37 @@ export class Safe extends Component {
                                 <td>Title</td>
                                 <td>Username</td>
                                 <td>Password</td>
-                                {this.props.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td>URL</td> : null}
-                                {this.props.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td>Last Modified</td> : null}
+                                {this.props.AppState.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td>URL</td> : null}
+                                {this.props.AppState.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td>Last Modified</td> : null}
                             </tr>
                         </thead>
                         <tbody id="tb_safeitems">
                             {
-                                this.props.safe.map((value, index) => {
+                                this.props.AppState.safe.map((value, index) => {
                                     // if favorites are selected, we dont worry about the folders or the search string
-                                    if (this.props.showFavorites) {
+                                    if (this.props.AppState.showFavorites) {
                                         if (value.isFavorite)
-                                            return <SafeItem key={value.id} uid={this.props.uid} device_mode={this.props.device_mode} info={value} checked={this.state.selectedItems.has(value.id.toString())} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />;
+                                            return <SafeItem
+                                                key={value.id}
+                                                AppState={this.props.AppState}
+                                                info={value}
+                                                checked={this.state.selectedItems.has(value.id)}
+                                                UpdateSelectedItems={this.UpdateSelectedItems}
+                                                OpenContextMenu={this.OpenContextMenu}
+                                            />;
                                     }
                                     // display the account if its folder matches, or the selected folder is null  or empty then we display all
-                                    else if (value.folderID === this.props.selectedFolderID || this.props.selectedFolderID === null) {
+                                    else if (value.folderID === this.props.AppState.selectedFolderID || this.props.AppState.selectedFolderID === null) {
                                         // match search string
-                                        if (this.props.searchString === null || value.title.toLowerCase().includes(this.props.searchString.toLowerCase()))
-                                            return <SafeItem key={value.id} uid={this.props.uid} device_mode={this.props.device_mode} info={value} checked={this.state.selectedItems.has(value.id.toString())} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />;
+                                        if (this.props.AppState.searchString === null || value.title.toLowerCase().includes(this.props.AppState.searchString.toLowerCase()))
+                                            return <SafeItem
+                                                key={value.id}
+                                                AppState={this.props.AppState}
+                                                info={value}
+                                                checked={this.state.selectedItems.has(value.id)}
+                                                UpdateSelectedItems={this.UpdateSelectedItems}
+                                                OpenContextMenu={this.OpenContextMenu}
+                                            />;
                                     }
 
                                     return null; // retun null if nothing

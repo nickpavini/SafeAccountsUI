@@ -75,7 +75,7 @@ export class Login extends Component {
             window.localStorage.setItem("UserKey", hashHex);
 
             // update and cause re-render
-            this.props.updateUserLoggedIn(obj.id);
+            this.props.UpdateUserLoggedIn(obj.id);
         }
     }
 }

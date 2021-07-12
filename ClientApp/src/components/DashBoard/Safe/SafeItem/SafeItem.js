@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import './SafeItem.css';
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AttempRefresh } from '../../../HelperFunctions.js'
 
 export class SafeItem extends Component {
     static displayName = SafeItem.name;
@@ -44,8 +45,8 @@ export class SafeItem extends Component {
                 <td><span id="span_safeitem_title" >{this.props.info.title}</span></td>
                 <td><span id="span_safeitem_login" >{this.props.info.login}</span></td>
                 <td><span id="span_safeitem_password" >*********</span></td>
-                {this.props.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td><span id="span_safeitem_url" >{this.props.info.url}</span></td> : null}
-                {this.props.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td><span id="span_safeitem_last_modified" >{this.props.info.lastModified.split(' ')[0]}</span></td> : null}
+                {this.props.AppState.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td><span id="span_safeitem_url" >{this.props.info.url}</span></td> : null}
+                {this.props.AppState.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td><span id="span_safeitem_last_modified" >{this.props.info.lastModified.split(' ')[0]}</span></td> : null}
             </tr>
         );
     }
@@ -55,7 +56,7 @@ export class SafeItem extends Component {
     }
 
     async SetItemSelected(event) {
-        this.props.UpdateSelectedItems(event.target.id.replace("input_chk_safeitem_", ""))
+        this.props.UpdateSelectedItems(parseInt(event.target.id.replace("input_chk_safeitem_", "")))
     }
 
     async SetItemIsFavorite(event) {
@@ -70,16 +71,16 @@ export class SafeItem extends Component {
         };
 
         //make request and get response
-        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/accounts/' + this.props.info.id.toString() + '/favorite', requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.AppState.uid + '/accounts/' + this.props.info.id.toString() + '/favorite', requestOptions);
         if (response.ok) {
             this.props.info.isFavorite = !this.props.info.isFavorite; // update local value only after successful call
         }
         // unauthorized could need new access token, so we attempt refresh
         else if (response.status === 401 || response.status === 403) {
-            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+            var uid = await AttempRefresh(); // try to refresh
 
             // dont recall if the refresh didnt succeed
-            if (!refreshSucceeded) {
+            if (uid === null) {
                 document.getElementById(event.currentTarget.id).style.color = this.props.info.isFavorite ? "yellow" : "white"; // reset colors if the req failed
                 return;
             }

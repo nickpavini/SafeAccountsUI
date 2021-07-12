@@ -2,6 +2,7 @@
 import { faFolder, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Encrypt } from '../../HelperFunctions.js'
+import { AttempRefresh, SetSelectedFolder, UpdateSingleFolder, SetFolderParent, SetItemFolder } from '../../HelperFunctions.js'
 import './Folder.css';
 
 export class Folder extends Component {
@@ -31,7 +32,7 @@ export class Folder extends Component {
 
         return (
             <div key={this.props.folder.id} id={fold_id} className="div_folder" onClick={this.SelectFolder} draggable="true" onDragStart={this.Drag} onDrop={this.Drop} onDragOver={this.AllowDrop} >
-                <FontAwesomeIcon icon={this.props.selectedFolderID === this.props.folder.id ? faFolderOpen : faFolder} style={{ color: "white" }} />
+                <FontAwesomeIcon icon={this.props.AppState.selectedFolderID === this.props.folder.id ? faFolderOpen : faFolder} style={{ color: "white" }} />
                 <span className="span_folder_name" id={span_id} onBlur={this.BlurName}>{this.props.folder.folderName}</span>
             </div>
         );
@@ -46,7 +47,7 @@ export class Folder extends Component {
             document.getElementById("div_folder_" + this.props.folder.id + "_child").style.display = document.getElementById("div_folder_" + this.props.folder.id + "_child").style.display === "block" ? "none" : "block";
         }
 
-        this.props.SetSelectedFolder(parseInt(fold_id));
+        SetSelectedFolder(parseInt(fold_id), this.props.SetAppState);
     }
 
     Drag(event) {
@@ -63,11 +64,11 @@ export class Folder extends Component {
 
         // if the dropped element is a safe item, we set that item to be associated with this folder
         if (event.dataTransfer.getData("safeitem") !== "") {
-            this.props.SetItemFolder(JSON.parse(event.dataTransfer.getData("safeitem")), this.props.folder.id);
+            SetItemFolder(JSON.parse(event.dataTransfer.getData("safeitem")), this.props.folder.id, this.props.AppState, this.props.SetAppState);
         }
         // if the dropped element is a folder, then we update that folders parent to be this folder
         else if (event.dataTransfer.getData("folder") !== "") {
-            this.props.SetFolderParent(JSON.parse(event.dataTransfer.getData("folder")), this.props.folder.id)
+            SetFolderParent(JSON.parse(event.dataTransfer.getData("folder")), this.props.folder.id, this.props.AppState, this.props.SetAppState)
         }
     }
 
@@ -101,20 +102,18 @@ export class Folder extends Component {
         };
 
         //make request and get response
-        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/folders/' + this.props.folder.id + '/name', requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.AppState.uid + '/folders/' + this.props.folder.id + '/name', requestOptions);
         if (response.ok) {
             this.props.folder.folderName = newName;
-            this.props.UpdateSingleFolder(this.props.folder)
+            UpdateSingleFolder(this.props.folder, this.props.AppState.folders, this.props.SetAppState)
         }
         // unauthorized could need new access token, so we attempt refresh
         else if (response.status === 401 || response.status === 403) {
-            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+            var uid = await AttempRefresh(); // try to refresh
 
             // dont recall if the refresh didnt succeed
-            if (!refreshSucceeded)
-                return;
-
-            this.SetFolderName(newName); // call again
+            if (uid !== null)
+                this.SetFolderName(newName); // call again
         }
         // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
         else {

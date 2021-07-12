@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { UpdateUserLoggedOut } from '../HelperFunctions.js'
 import './NavbarAccountMenu.css';
 
 export class NavbarAccountMenu extends Component {
@@ -13,7 +14,6 @@ export class NavbarAccountMenu extends Component {
         // function bindings
         this.handleClick = this.handleClick.bind(this);
         this.ViewAccount = this.ViewAccount.bind(this);
-        this.SignOut = this.SignOut.bind(this);
     }
 
     componentDidMount() {
@@ -33,7 +33,7 @@ export class NavbarAccountMenu extends Component {
         return (
             <div id="menu_navbar_account" >
                 <span className="menu_navbar_account" id="menu_navbar_account_my_account" onClick={this.ViewAccount}>Account</span><br />
-                <span className="menu_navbar_account" id="menu_navbar_account_sign_out" onClick={this.SignOut}>Sign Out</span><br />
+                <span className="menu_navbar_account" id="menu_navbar_account_sign_out" onClick={() => UpdateUserLoggedOut(this.props.SetAppState)}>Sign Out</span><br />
             </div>
         );
     }
@@ -51,9 +51,5 @@ export class NavbarAccountMenu extends Component {
 
     ViewAccount() {
         this.setState({ redirect: true });
-    }
-
-    SignOut() {
-        this.props.UpdateUserLoggedOut();
     }
 }

@@ -23,23 +23,33 @@ export class Layout extends Component {
     render() {
         const RenderNavbarAccountMenu = () => {
             if (this.state.openNavbarAccountMenu)
-                return <NavbarAccountMenu CloseNavbarAccountMenu={this.CloseNavbarAccountMenu} UpdateUserLoggedOut={this.props.UpdateUserLoggedOut} />;
+                return <NavbarAccountMenu
+                    SetAppState={this.props.SetAppState}
+                    CloseNavbarAccountMenu={this.CloseNavbarAccountMenu}
+                />;
         }
 
         // set heights for the top bar, bottom bar, and middle content based on mode
         // this prevents the footer from being able to overlap the content in the middle when both use position fixed.
         // I.e. The middle container will always be exactly the height it needs to be
-        var navbarHeight = 50, footerHeight = 55, middleHeight = this.props.windowDimensions.height - navbarHeight - footerHeight;
+        var navbarHeight = 50, footerHeight = 55, middleHeight = this.props.AppState.windowDimensions.height - navbarHeight - footerHeight;
 
         // include props from app.js to let navmenu know if it needed to update
         return (
             <div>
-                <NavMenu device_mode={this.props.device_mode} loggedIn={this.props.loggedIn} OpenNavbarAccountMenu={this.OpenNavbarAccountMenu} height={navbarHeight.toString() + "px" } />
+                <NavMenu
+                    AppState={this.props.AppState}
+                    OpenNavbarAccountMenu={this.OpenNavbarAccountMenu}
+                    height={navbarHeight.toString() + "px"}
+                />
                 {RenderNavbarAccountMenu()}
                 <div className="div_main_container" style={{ height: middleHeight.toString() + "px"}}>
                     {this.props.children}
                 </div>
-                <Footer device_mode={this.props.device_mode} loggedIn={this.props.loggedIn} height={footerHeight.toString() + "px" }/>
+                <Footer
+                    AppState={this.props.AppState}
+                    height={footerHeight.toString() + "px"}
+                />
             </div>
         );
     }

@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { AttempRefresh, RemoveSafeItemLocally } from '../../../HelperFunctions.js'
 import './SelectedItemsMenu.css';
 
 export class SelectedItemsMenu extends Component {
@@ -49,7 +50,7 @@ export class SelectedItemsMenu extends Component {
     }
 
     // DELETE multiple items from the safe
-    async DeleteMultipleItems() {
+    async DeleteMultipleItems(event) {
         // HTTP request options
         const requestOptions = {
             method: 'DELETE',
@@ -59,31 +60,23 @@ export class SelectedItemsMenu extends Component {
         };
 
         //make request and get response
-        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/accounts', requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.AppState.uid + '/accounts', requestOptions);
         if (response.ok) {
-            var updatedSafe = this.props.safe;
+            var updatedSafe = this.props.AppState.safe;
             this.props.selectedItems.forEach(e => {
-                var indexToDelete = this.props.safe.findIndex(f => f.id.toString() === e)
-                if (indexToDelete > -1) {
-                    updatedSafe.splice(indexToDelete, 1);
-                }
-                else {
-                    /*
-                        Here we might need an error catcher
-                     */
-                }
+                // if one fails to be removed, then we throw error... later we may want it to do fetchsafe as backup
+                if (!RemoveSafeItemLocally(e, updatedSafe))
+                    throw new Error({ code: 500, message: "Error: Could not remove item from safe locally"});
             });
-            this.props.UpdateSafe(updatedSafe);
+            this.props.SetAppState({ safe: updatedSafe });
         }
         // unauthorized could need new access token, so we attempt refresh
         else if (response.status === 401 || response.status === 403) {
-            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+            var uid = await AttempRefresh(); // try to refresh
 
             // dont recall if the refresh didnt succeed
-            if (!refreshSucceeded)
-                return;
-
-            this.DeleteMultipleItems(); // call again
+            if (uid !== null)
+                this.DeleteMultipleItems(); // call again
         }
         // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
         else {

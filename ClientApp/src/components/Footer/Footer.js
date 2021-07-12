@@ -27,7 +27,7 @@ export class Footer extends Component {
     }
 
     footerLoggedOut() {
-        var contents = this.props.device_mode === localStorage.getItem("DESKTOP_MODE")
+        var contents = this.props.AppState.device_mode === localStorage.getItem("DESKTOP_MODE")
             ? this.footerLoggedOutDesktop()
             : this.footerLoggedOutMobile();
 
@@ -51,7 +51,7 @@ export class Footer extends Component {
     }
 
     footerLoggedIn() {
-        var contents = this.props.device_mode === localStorage.getItem("DESKTOP_MODE")
+        var contents = this.props.AppState.device_mode === localStorage.getItem("DESKTOP_MODE")
             ? this.footerLoggedInDesktop()
             : this.footerLoggedInMobile();
 
