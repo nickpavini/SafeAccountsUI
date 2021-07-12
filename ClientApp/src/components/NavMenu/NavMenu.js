@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { faAlignLeft, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactComponent as LogoSvg } from '../../Assets/logo.svg';
+import { OpenNavbarAccountMenu } from '../HelperFunctions.js'
 import './NavMenu.css';
 
 export class NavMenu extends Component {
@@ -63,7 +64,7 @@ export class NavMenu extends Component {
                 <div className="div_navbar_items">
                     {RenderOpenSideBar()}
                     {this.RenderNameOrIcon("10px")}
-                    <FontAwesomeIcon id="icon_user" icon={faUser} onClick={this.props.OpenNavbarAccountMenu}/>
+                    <FontAwesomeIcon id="icon_user" icon={faUser} onClick={() => OpenNavbarAccountMenu(this.props.SetAppState)}/>
                 </div>
             </div>
         );

@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { UpdateUserLoggedOut } from '../HelperFunctions.js'
+import { UpdateUserLoggedOut, CloseNavbarAccountMenu } from '../HelperFunctions.js'
 import './NavbarAccountMenu.css';
 
 export class NavbarAccountMenu extends Component {
@@ -46,7 +46,7 @@ export class NavbarAccountMenu extends Component {
             return;
         }
 
-        this.props.CloseNavbarAccountMenu();
+        CloseNavbarAccountMenu(this.props.SetAppState);
     }
 
     ViewAccount() {

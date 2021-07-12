@@ -303,7 +303,7 @@ export async function CloseSelectedItemsMenu(SetAppState) {
 // open safeitem context menu and close all others
 export async function OpenSafeItemContextMenu(item_id, left, top, SetAppState) {
     SetAppState({
-        openSafeItemContextMenu: true, openSelectedItemsMenu: false, openFolderContextMenu: false,
+        openSafeItemContextMenu: true, openSelectedItemsMenu: false, openFolderContextMenu: false, openNavbarAccountMenu: false,
         menu_top: top, menu_left: left, menu_item_id: item_id
     })
 }
@@ -316,7 +316,7 @@ export async function CloseSafeItemContextMenu(SetAppState) {
 // open folder context menu
 export async function OpenFolderContextMenu(folder_id, left, top, SetAppState) {
     SetAppState({
-        openFolderContextMenu: true, openSafeItemContextMenu: false, openSelectedItemsMenu: false,
+        openFolderContextMenu: true, openSafeItemContextMenu: false, openSelectedItemsMenu: false, openNavbarAccountMenu: false,
         menu_top: top, menu_left: left, menu_folder_id: folder_id
     })
 }
@@ -324,4 +324,14 @@ export async function OpenFolderContextMenu(folder_id, left, top, SetAppState) {
 // close folder context menu
 export async function CloseFolderContextMenu(SetAppState) {
     SetAppState({ openFolderContextMenu: false });
+}
+
+// open navbar account menu and close all others
+export async function OpenNavbarAccountMenu(SetAppState) {
+    SetAppState({ openNavbarAccountMenu: true, openFolderContextMenu: false, openSafeItemContextMenu: false, openSelectedItemsMenu: false })
+}
+
+// close navbar account menu
+export async function CloseNavbarAccountMenu(SetAppState) {
+    SetAppState({ openNavbarAccountMenu: false });
 }

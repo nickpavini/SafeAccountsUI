@@ -9,24 +9,12 @@ export class Layout extends Component {
 
     constructor(props) {
         super(props);
-
-        // set to hold the ids of which items are currently selected
-        this.state = {
-            openNavbarAccountMenu: false
-        };
-
-        // function binding
-        this.OpenNavbarAccountMenu = this.OpenNavbarAccountMenu.bind(this);
-        this.CloseNavbarAccountMenu = this.CloseNavbarAccountMenu.bind(this);
     }
 
     render() {
         const RenderNavbarAccountMenu = () => {
-            if (this.state.openNavbarAccountMenu)
-                return <NavbarAccountMenu
-                    SetAppState={this.props.SetAppState}
-                    CloseNavbarAccountMenu={this.CloseNavbarAccountMenu}
-                />;
+            if (this.props.AppState.openNavbarAccountMenu)
+                return <NavbarAccountMenu SetAppState={this.props.SetAppState} />;
         }
 
         // set heights for the top bar, bottom bar, and middle content based on mode
@@ -39,7 +27,7 @@ export class Layout extends Component {
             <div>
                 <NavMenu
                     AppState={this.props.AppState}
-                    OpenNavbarAccountMenu={this.OpenNavbarAccountMenu}
+                    SetAppState={this.props.SetAppState}
                     height={navbarHeight.toString() + "px"}
                 />
                 {RenderNavbarAccountMenu()}
@@ -52,13 +40,5 @@ export class Layout extends Component {
                 />
             </div>
         );
-    }
-
-    async OpenNavbarAccountMenu() {
-        this.setState({ openNavbarAccountMenu: true })
-    }
-
-    async CloseNavbarAccountMenu() {
-        this.setState({ openNavbarAccountMenu: false });
     }
 }
