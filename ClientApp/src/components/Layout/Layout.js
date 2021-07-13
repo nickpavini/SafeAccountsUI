@@ -7,10 +7,6 @@ import './Layout.css'
 export class Layout extends Component {
     static displayName = Layout.name;
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const RenderNavbarAccountMenu = () => {
             if (this.props.AppState.openNavbarAccountMenu)
