@@ -55,7 +55,7 @@ export class SelectedItemsMenu extends Component {
         const requestOptions = {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            body: JSON.stringify(Array.from(this.props.selectedItems)),
+            body: JSON.stringify(Array.from(this.props.AppState.selectedItems)),
             credentials: 'include'
         };
 
@@ -63,12 +63,12 @@ export class SelectedItemsMenu extends Component {
         const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.AppState.uid + '/accounts', requestOptions);
         if (response.ok) {
             var updatedSafe = this.props.AppState.safe;
-            this.props.selectedItems.forEach(e => {
+            this.props.AppState.selectedItems.forEach(e => {
                 // if one fails to be removed, then we throw error... later we may want it to do fetchsafe as backup
                 if (!RemoveSafeItemLocally(e, updatedSafe))
                     throw new Error({ code: 500, message: "Error: Could not remove item from safe locally"});
             });
-            this.props.SetAppState({ safe: updatedSafe });
+            this.props.SetAppState({ safe: updatedSafe, selectedItems: new Set() });
         }
         // unauthorized could need new access token, so we attempt refresh
         else if (response.status === 401 || response.status === 403) {

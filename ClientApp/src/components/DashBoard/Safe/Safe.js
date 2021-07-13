@@ -18,23 +18,11 @@ export class Safe extends Component {
 
          // set to hold the ids of which items are currently selected
         this.state = {
-            selectedItems: new Set(),
             redirect: false, toUrl: null
         }; 
 
         // function binding
-        this.UpdateSelectedItems = this.UpdateSelectedItems.bind(this);
         this.AddSafeItem = this.AddSafeItem.bind(this);
-    }
-
-    // if props have changed, we need to update items selected
-    componentDidUpdate(prevProps) {
-        if (prevProps.AppState.searchString !== this.props.AppState.searchString ||
-            prevProps.AppState.showFavorites !== this.props.AppState.showFavorites ||
-            prevProps.AppState.selectedFolderID !== this.props.AppState.selectedFolderID
-        )
-            this.setState({ selectedItems: new Set() });
-        return true;
     }
 
     render() {
@@ -58,7 +46,7 @@ export class Safe extends Component {
         }
 
         const RenderTableHeaderSquare = () => {
-            if (this.state.selectedItems.size > 0)
+            if (this.props.AppState.selectedItems.size > 0)
                 return <td><FontAwesomeIcon id="icon_safeitem_dropdown" icon={faCaretSquareDown} onClick={() => OpenSelectedItemsMenu(this.props.SetAppState)}/></td>
             else
                 return <td><FontAwesomeIcon id="icon_safeitem_square" icon={faSquare} style={{ color: "white" }} /></td>
@@ -70,7 +58,6 @@ export class Safe extends Component {
                 return <SelectedItemsMenu
                     AppState={this.props.AppState}
                     SetAppState={this.props.SetAppState}
-                    selectedItems={this.state.selectedItems}
                 />
         }
 
@@ -107,8 +94,7 @@ export class Safe extends Component {
                                                 AppState={this.props.AppState}
                                                 SetAppState={this.props.SetAppState}
                                                 info={value}
-                                                checked={this.state.selectedItems.has(value.id)}
-                                                UpdateSelectedItems={this.UpdateSelectedItems}
+                                                checked={this.props.AppState.selectedItems.has(value.id)}
                                             />;
                                     }
                                     // display the account if its folder matches, or the selected folder is null  or empty then we display all
@@ -120,8 +106,7 @@ export class Safe extends Component {
                                                 AppState={this.props.AppState}
                                                 SetAppState={this.props.SetAppState}
                                                 info={value}
-                                                checked={this.state.selectedItems.has(value.id)}
-                                                UpdateSelectedItems={this.UpdateSelectedItems}
+                                                checked={this.props.AppState.selectedItems.has(value.id)}
                                             />;
                                     }
 
@@ -133,19 +118,6 @@ export class Safe extends Component {
                 </div>
             </div>
         );
-    }
-
-    async UpdateSelectedItems(id) {
-        var items = this.state.selectedItems;
-
-        // if the id exists, than we are unselecting it, else we are adding it to the selection
-        if (this.state.selectedItems.has(id))
-            items.delete(id);
-        else
-            items.add(id);
-
-        // update state
-        this.setState({ selectedItems: items });
     }
 
     AddSafeItem() {

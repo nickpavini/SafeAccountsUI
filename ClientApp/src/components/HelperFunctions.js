@@ -130,18 +130,31 @@ export function DecryptFolders(folders) {
 
 // call back for the sidebar to set search params for the safe.. If a folder, or favorites category is selected, search string will search within the additional specs
 export function SetSearchString(str, SetAppState) {
-    SetAppState({ searchString: str, showFavorites: false });
+    SetAppState({ searchString: str, showFavorites: false, selectedItems: new Set() });
 }
 
 // call back for the Folder component to set selected for the safe.. if a new folder was chosen, then we update showFavorites to false. This also happens when All entries is selected
 export function SetSelectedFolder(id, SetAppState) {
-    SetAppState({ selectedFolderID: id, showFavorites: false });
+    SetAppState({ selectedFolderID: id, showFavorites: false, selectedItems: new Set() });
 }
 
 // sets the showFavorites attribute to true, and resets the searchstring and folder
 export function ShowFavorites(SetAppState) {
     document.getElementById("input_text_safe_search").value = "";
-    SetAppState({ showFavorites: true, searchString: "", selectedFolderID: null });
+    SetAppState({ showFavorites: true, searchString: "", selectedFolderID: null, selectedItems: new Set() });
+}
+
+export async function UpdateSelectedItems(id, AppState, SetAppState) {
+    var items = AppState.selectedItems;
+
+    // if the id exists, than we are unselecting it, else we are adding it to the selection
+    if (AppState.selectedItems.has(id))
+        items.delete(id);
+    else
+        items.add(id);
+
+    // update state
+    SetAppState({ selectedItems: items });
 }
 
 // add or edit an item in the safe

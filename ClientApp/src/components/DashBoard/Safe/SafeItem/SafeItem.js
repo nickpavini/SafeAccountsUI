@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import './SafeItem.css';
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AttempRefresh, OpenSafeItemContextMenu } from '../../../HelperFunctions.js'
+import { AttempRefresh, OpenSafeItemContextMenu, UpdateSelectedItems } from '../../../HelperFunctions.js'
 
 export class SafeItem extends Component {
     static displayName = SafeItem.name;
@@ -56,7 +56,7 @@ export class SafeItem extends Component {
     }
 
     async SetItemSelected(event) {
-        this.props.UpdateSelectedItems(parseInt(event.target.id.replace("input_chk_safeitem_", "")))
+        UpdateSelectedItems(parseInt(event.target.id.replace("input_chk_safeitem_", "")), this.props.AppState, this.props.SetAppState)
     }
 
     async SetItemIsFavorite(event) {
