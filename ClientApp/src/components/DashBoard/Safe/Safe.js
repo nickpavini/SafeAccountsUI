@@ -36,7 +36,7 @@ export class Safe extends Component {
                 return <SafeItemContextMenu
                     AppState={this.props.AppState}
                     SetAppState={this.props.SetAppState}
-                    item={this.props.AppState.safe.find(e => e.id === this.state.menu_item_id)}
+                    item={this.props.AppState.safe.find(e => e.id === this.props.AppState.menu_item_id)}
                 />;
         }
 
