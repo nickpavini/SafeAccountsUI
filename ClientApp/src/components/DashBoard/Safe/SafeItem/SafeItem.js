@@ -85,7 +85,7 @@ export class SafeItem extends Component {
                 return;
             }
 
-            this.SetItemIsFavorite(); // call again
+            this.SetItemIsFavorite(event); // call again
         }
         // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
         else {

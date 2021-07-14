@@ -50,7 +50,7 @@ export class SelectedItemsMenu extends Component {
     }
 
     // DELETE multiple items from the safe
-    async DeleteMultipleItems(event) {
+    async DeleteMultipleItems() {
         // HTTP request options
         const requestOptions = {
             method: 'DELETE',
