@@ -56,7 +56,7 @@ export async function UpdateUserLoggedOut(SetAppState) {
 
         // dont recall if the refresh didnt succeed
         if (uid !== null)
-            UpdateUserLoggedOut(); // call again
+            UpdateUserLoggedOut(SetAppState); // call again
     }
     // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
     else {
