@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import { SetSearchString } from '../HelperFunctions.js'
 import './SearchBar.css';
 
 export class SearchBar extends Component {
@@ -19,6 +20,6 @@ export class SearchBar extends Component {
 
     // update the search string to update view
     async SearchStringChanged(event) {
-        this.props.SetSearchString(event.target.value)
+        SetSearchString(event.target.value, this.props.SetAppState);
     }
 }

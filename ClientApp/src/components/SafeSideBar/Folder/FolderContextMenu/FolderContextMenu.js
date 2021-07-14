@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { DecryptFolders, DecryptSafe } from '../../../HelperFunctions.js'
+import { DecryptFolders, DecryptSafe, AttempRefresh, AddFolder, CloseFolderContextMenu } from '../../../HelperFunctions.js'
 import './FolderContextMenu.css';
 
 export class FolderContextMenu extends Component {
@@ -22,14 +22,14 @@ export class FolderContextMenu extends Component {
 
     // unrender if we click away
     async handleClick(e) {
-        this.props.CloseContextMenu();
+        CloseFolderContextMenu(this.props.SetAppState);
     }
 
     render() {
         // menu options
         return (
-            <div id="menu_folder" style={{ top: this.props.top, left: this.props.left }}>
-                <span className="menu_folder" id="menu_folder_add" onClick={this.props.AddFolder}>Add Folder</span><br />
+            <div id="menu_folder" style={{ top: this.props.AppState.menu_top, left: this.props.AppState.menu_left }}>
+                <span className="menu_folder" id="menu_folder_add" onClick={() => AddFolder(this.props.AppState, this.props.SetAppState)}>Add Folder</span><br />
                 <span className="menu_folder" id="menu_folder_edit" onClick={this.RenameFolder}>Rename Folder</span><br />
                 <span className="menu_folder" id="menu_folder_delete" onClick={this.DeleteFolder}>Delete Folder</span><br />
             </div>
@@ -58,22 +58,20 @@ export class FolderContextMenu extends Component {
         };
 
         //make request and get response
-        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/folders/' + this.props.folder.id.toString(), requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.AppState.uid + '/folders/' + this.props.folder.id.toString(), requestOptions);
         if (response.ok) {
             const responseText = await response.text();
             var safeAndFolders = JSON.parse(responseText);
-            this.props.UpdateSafe(DecryptSafe(safeAndFolders.safe)) // update safe
-            this.props.UpdateFolders(DecryptFolders(safeAndFolders.updatedFolders)); // update the folders
+            this.props.SetAppState({ safe: DecryptSafe(safeAndFolders.safe) }) // update safe
+            this.props.SetAppState({ folders: DecryptFolders(safeAndFolders.updatedFolders) }); // update the folders
         }
         // unauthorized could need new access token, so we attempt refresh
         else if (response.status === 401 || response.status === 403) {
-            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+            var uid = await AttempRefresh(); // try to refresh
 
             // dont recall if the refresh didnt succeed
-            if (!refreshSucceeded)
-                return;
-
-            this.DeleteFolder(); // call again
+            if (uid !== null)
+                this.DeleteFolder(); // call again
         }
         // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
         else {

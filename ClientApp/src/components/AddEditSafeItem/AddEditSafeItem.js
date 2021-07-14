@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Redirect } from 'react-router';
-import { Encrypt } from '../HelperFunctions.js'
+import { Encrypt, AttempRefresh, UpdateSafeItem } from '../HelperFunctions.js'
 import './AddEditSafeItem.css';
 
 export class AddEditSafeItem extends Component {
@@ -65,7 +65,7 @@ export class AddEditSafeItem extends Component {
         };
 
         //make request and get response
-        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/accounts', requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.AppState.uid + '/accounts', requestOptions);
         if (response.ok) {
             // get new account with id, then set data to decrypted values internally
             var acc = JSON.parse(await response.text());
@@ -76,18 +76,16 @@ export class AddEditSafeItem extends Component {
             acc.description = event.target.text_input_safe_item_description.value;
 
             // update the apps internal safe and redirect in a few seconds
-            this.props.UpdateSafeItem(acc);
+            UpdateSafeItem(acc, this.props.AppState.safe, this.props.SetAppState);
             setTimeout(() => this.setState({ redirect: true }), 4000);
         }
         // unauthorized could need new access token, so we attempt refresh
         else if (response.status === 401 || response.status === 403) {
-            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+            var uid = await AttempRefresh(); // try to refresh
 
             // dont recall if the refresh didnt succeed
-            if (!refreshSucceeded)
-                return;
-
-            this.AddSafeItem(event); // call again
+            if (uid !== null)
+                this.AddSafeItem(event); // call again
         }
         // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
         else {
@@ -115,7 +113,7 @@ export class AddEditSafeItem extends Component {
         };
 
         //make request and get response
-        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.uid + '/accounts/' + this.props.info.id, requestOptions);
+        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.AppState.uid + '/accounts/' + this.props.info.id, requestOptions);
         if (response.ok) {
             // get new account with id, then set data to decrypted values internally
             var acc = JSON.parse(await response.text());
@@ -126,18 +124,16 @@ export class AddEditSafeItem extends Component {
             acc.description = event.target.text_input_safe_item_description.value;
 
             // update the apps internal safe and redirect in a few seconds
-            this.props.UpdateSafeItem(acc);
+            UpdateSafeItem(acc, this.props.AppState.safe, this.props.SetAppState);
             setTimeout(() => this.setState({ redirect: true }), 4000);
         }
         // unauthorized could need new access token, so we attempt refresh
         else if (response.status === 401 || response.status === 403) {
-            var refreshSucceeded = await this.props.attemptRefresh(); // try to refresh
+            var uid = await AttempRefresh(); // try to refresh
 
             // dont recall if the refresh didnt succeed
-            if (!refreshSucceeded)
-                return;
-
-            this.EditSafeItem(event); // call again
+            if (uid !== null)
+                this.EditSafeItem(event); // call again
         }
         // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
         else {

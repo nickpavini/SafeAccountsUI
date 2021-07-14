@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Route } from 'react-router';
-import { Layout } from './components/Layout.js';
+import { Layout } from './components/Layout/Layout.js';
 import { Home } from './components/Home/Home';
 import { SignUp } from './components/SignUp/SignUp';
 import { Login } from './components/Login/Login';
@@ -10,7 +10,7 @@ import { Account } from './components/Account/Account';
 import { SafeSideBar } from './components/SafeSideBar/SafeSideBar';
 import { AddEditSafeItem } from './components/AddEditSafeItem/AddEditSafeItem';
 import { EmailConfirmation } from './components/EmailConfirmation/EmailConfirmation.js';
-import { DecryptFolders, DecryptSafe } from './components/HelperFunctions.js'
+import { DecryptFolders, DecryptSafe, AttempRefresh } from './components/HelperFunctions.js'
 import './custom.css'
 
 localStorage.setItem("MOBILE_MODE", "MOBILE");
@@ -58,30 +58,32 @@ class AppComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            device_mode: props.device_mode, windowDimensions: props.windowDimensions,
             loggedIn: null, loading: true,// loggedIn and loading flag
             uid: null, account_info: null, safe: null, folders: null, // store important userinfo
-            searchString: null, selectedFolderID: null, // what the user is searching for and what they have selected within the safe
-            showFavorites: false
+            searchString: null, selectedFolderID: null, selectedItems: new Set(), showFavorites: false, // what the user is searching for and what they have selected within the safe
+            openSelectedItemsMenu: false, openSafeItemContextMenu: false, openFolderContextMenu: false, openNavbarAccountMenu: false,
+            menu_top: "0px", menu_left: "0px", menu_item_id: null, menu_folder_id: null
         };
 
         //function bindings
-        this.attemptRefresh = this.attemptRefresh.bind(this);
-        this.updateUserLoggedIn = this.updateUserLoggedIn.bind(this);
-        this.UpdateUserLoggedOut = this.UpdateUserLoggedOut.bind(this);
+        this.LoadApp = this.LoadApp.bind(this);
+        this.SetAppState = this.SetAppState.bind(this);
+        this.UpdateUserLoggedIn = this.UpdateUserLoggedIn.bind(this);
         this.FetchSafe = this.FetchSafe.bind(this);
         this.FetchUserFolders = this.FetchUserFolders.bind(this);
         this.FetchUserInfo = this.FetchUserInfo.bind(this);
-        this.SetSearchString = this.SetSearchString.bind(this);
-        this.SetSelectedFolder = this.SetSelectedFolder.bind(this);
-        this.ShowFavorites = this.ShowFavorites.bind(this);
-        this.UpdateSafe = this.UpdateSafe.bind(this);
-        this.UpdateSafeItem = this.UpdateSafeItem.bind(this);
-        this.UpdateSingleFolder = this.UpdateSingleFolder.bind(this);
-        this.UpdateFolders = this.UpdateFolders.bind(this);
     }
 
     componentDidMount() {
-        this.attemptRefresh();
+        this.LoadApp();
+    }
+
+    static getDerivedStateFromProps(props, current_state) {
+        return {
+            device_mode: props.device_mode,
+            windowDimensions: props.windowDimensions
+        }
     }
 
     render() {
@@ -93,10 +95,10 @@ class AppComponent extends Component {
         }
         else {
             const RenderSafeSideBar = () => {
-                if (this.state.loggedIn && this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
-                    return <SafeSideBar device_mode={this.props.device_mode} uid={this.state.uid} Folders={this.state.folders} FetchUserFolders={this.FetchUserFolders} UpdateSafe={this.UpdateSafe}
-                        selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} UpdateFolders={this.UpdateFolders} UpdateSingleFolder={this.UpdateSingleFolder}
-                        SetSearchString={this.SetSearchString} ShowFavorites={this.ShowFavorites} UpdateSafeItem={this.UpdateSafeItem} attemptRefresh={this.attemptRefresh}
+                if (this.state.loggedIn && this.state.device_mode === localStorage.getItem("MOBILE_MODE"))
+                    return <SafeSideBar
+                        AppState={this.state}
+                        SetAppState={this.SetAppState}
                     />
             }
 
@@ -104,7 +106,10 @@ class AppComponent extends Component {
             contents = (
                 <div>
                     {RenderSafeSideBar()}
-                    <Layout device_mode={this.props.device_mode} windowDimensions={this.props.windowDimensions} loggedIn={this.state.loggedIn} UpdateUserLoggedOut={this.UpdateUserLoggedOut} SetSearchString={this.SetSearchString}>
+                    <Layout
+                        AppState={this.state}
+                        SetAppState={this.SetAppState}
+                    >
                         <Route exact path='/' render={() => (
                             this.state.loggedIn ? (
                                 <Redirect to="/dashboard" />
@@ -116,7 +121,7 @@ class AppComponent extends Component {
                             this.state.loggedIn ? (
                                 <Redirect to="/dashboard" />
                             ) : (
-                                    <Login updateUserLoggedIn={this.updateUserLoggedIn} />
+                                    <Login UpdateUserLoggedIn={this.UpdateUserLoggedIn} />
                                 )
                         )} />
                         <Route path='/signup' render={() => (
@@ -135,21 +140,28 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/dashboard' render={() => (
                             this.state.loggedIn ? (
-                                <DashBoard device_mode={this.props.device_mode} uid={this.state.uid} safe={this.state.safe} FetchSafe={this.FetchSafe} UpdateSafe={this.UpdateSafe} folders={this.state.folders} FetchUserFolders={this.FetchUserFolders} UpdateFolders={this.UpdateFolders} UpdateSingleFolder={this.UpdateSingleFolder} searchString={this.state.searchString} SetSearchString={this.SetSearchString} selectedFolderID={this.state.selectedFolderID} SetSelectedFolder={this.SetSelectedFolder} showFavorites={this.state.showFavorites} UpdateSafeItem={this.UpdateSafeItem} attemptRefresh={this.attemptRefresh} ShowFavorites={this.ShowFavorites}/>
+                                <DashBoard
+                                    AppState={this.state}
+                                    SetAppState={this.SetAppState}
+                                />
                             ) : (
                                     <Redirect to="/login" />
                                 )
                         )} />
                         <Route path='/safeitems/:item_id' render={(props) => (
                             this.state.loggedIn ? (
-                                <AddEditSafeItem device_mode={this.props.device_mode} uid={this.state.uid} info={this.state.safe.find(e => e.id.toString() === props.location.pathname.split("/").pop())} UpdateSafeItem={this.UpdateSafeItem} attemptRefresh={this.attemptRefresh} />
+                                <AddEditSafeItem
+                                    AppState={this.state}
+                                    SetAppState={this.SetAppState}
+                                    info={this.state.safe.find(e => e.id.toString() === props.location.pathname.split("/").pop())}
+                                />
                             ) : (
                                     <Redirect to="/login" />
                                 )
                         )} />
                         <Route path='/account' render={() => (
                             this.state.loggedIn ? (
-                                <Account uid={this.state.uid} account_info={this.state.account_info}/>
+                                <Account AppState={this.state}/>
                             ) : (
                                     <Redirect to="/login" />
                                 )
@@ -163,7 +175,7 @@ class AppComponent extends Component {
     }
 
     // call back function for app to set user logged in
-    async updateUserLoggedIn(uidStr) {
+    async UpdateUserLoggedIn(uidStr) {
         this.setState({ loading: true, loggedIn: true, uid: uidStr });
         await this.FetchSafe(); // get accounts
         await this.FetchUserFolders(); // get users folders
@@ -171,71 +183,18 @@ class AppComponent extends Component {
         this.setState({ loading: false });
     }
 
-    // call back function for app to set user logged out... NOTE: here we will make a call to the server which removes the cookies in the returning response
-    async UpdateUserLoggedOut() {
-
-        // http request options
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            credentials: 'include'
-        };
-
-        const reqURI = process.env.REACT_APP_WEBSITE_URL + '/users/logout';
-        const response = await fetch(reqURI, requestOptions); // this request will remove users cookies
-        if (response.ok) {
-            window.localStorage.removeItem("UserKey"); // delete user key upon signout
-            // reset state after removing cookies.. this will cause re-render and should make app be not logged in
-            this.setState({
-                loggedIn: false, loading: false, // user is now logged out.. login page will render
-                uid: null, account_info: null, safe: null, folders: null,
-                searchString: null, selectedFolderID: null
-            });
-        }
-        // unauthorized could need new access token, so we attempt refresh
-        else if (response.status === 401 || response.status === 403) {
-            var refreshSucceeded = await this.attemptRefresh(); // try to refresh
-
-            // dont recall if the refresh didnt succeed
-            if (!refreshSucceeded)
-                return;
-
-            this.UpdateUserLoggedOut(); // call again
-        }
-        // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
-        else {
-
-        }
-    }
-
     // attempt to retrieve a new access token with the existing cookies.. Note that cookies are http only and contain JWT tokens and refresh tokens
-    async attemptRefresh() {
-
-        // http request options
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            credentials: 'include'
-        };
-
-        // make a call to the refresh and if the result is ok, then we are logged in
-        const reqURI = process.env.REACT_APP_WEBSITE_URL + '/refresh';
-        const response = await fetch(reqURI, requestOptions);
-        if (response.ok) {
-            const responseText = await response.text();
-            var obj = JSON.parse(responseText);
-            this.setState({ loggedIn: true, uid: obj.id });
+    async LoadApp() {
+        const uid = await AttempRefresh()
+        if (uid !== null) {
+            this.setState({ loggedIn: true, uid: uid });
             await this.FetchSafe(); // get accounts
             await this.FetchUserFolders(); // get users folders
-            await this.FetchUserInfo();
+            await this.FetchUserInfo(); // get user account info
             this.setState({ loading: false }); // done loading
-            return true;
         }
-        else {
-            window.localStorage.removeItem("UserKey"); // if cookies are no longer valid, lets delete the key
+        else
             this.setState({ loading: false, loggedIn: false });
-            return false;
-        }
     }
 
     //fetch all the users accounts.. may move this to safe, but for now we have it here to easily know whether to display loading or not
@@ -293,63 +252,8 @@ class AppComponent extends Component {
         }
     }
 
-    // call back for the sidebar to set search params for the safe.. If a folder, or favorites category is selected, search string will search within the additional specs
-    SetSearchString(str) {
-        this.setState({ searchString: str, showFavorites: false });
-    }
-
-    // call back for the Folder component to set selected for the safe.. if a new folder was chosen, then we update showFavorites to false. This also happens when All entries is selected
-    SetSelectedFolder(id) {
-        this.setState({ selectedFolderID: id, showFavorites: false });
-    }
-
-    // sets the showFavorites attribute to true, and resets the searchstring and folder
-    ShowFavorites() {
-        document.getElementById("input_text_safe_search").value = "";
-        this.setState({ showFavorites: true, searchString: "", selectedFolderID: null });
-    }
-
-    UpdateSafe(updatedSafe) {
-        this.setState({ safe: updatedSafe });
-    }
-
-    // add or edit an item in the safe
-    UpdateSafeItem(safeitem) {
-        var updatedSafe = this.state.safe; // copy current safe
-        var itemIndex = this.state.safe.findIndex(e => e.id === safeitem.id); // get index of safeitem passed in
-
-        // if the safe item already exists, this is a modification
-        if (itemIndex !== -1) {
-            updatedSafe[itemIndex] = safeitem; // modify safeitem
-        }
-        // if the safe item does not exist, we are adding it to the safe
-        else {
-            updatedSafe.push(safeitem);
-        }
-
-
-        this.setState({ safe: updatedSafe }); // update state for re-render
-    }
-
-    // add or edit a folder
-    UpdateSingleFolder(folder) {
-        var updatedFolders = this.state.folders; // copy current folders
-        var itemIndex = this.state.folders.findIndex(e => e.id === folder.id); // get index of folder passed in
-
-        // if the folder already exists, this is a modification
-        if (itemIndex !== -1) {
-            updatedFolders[itemIndex] = folder; // modify
-        }
-        // if the folder does not exist, we are adding it
-        else {
-            updatedFolders.push(folder);
-        }
-
-        this.setState({ folders: updatedFolders }); // update state for re-render
-    }
-
-    // update all folders at once
-    UpdateFolders(updatedFolders) {
-        this.setState({folders: updatedFolders});
+    // layered function to allow setState from outside helper function
+    SetAppState(stateChange) {
+        this.setState(stateChange);
     }
 }

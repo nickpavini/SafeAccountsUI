@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { faAlignLeft, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactComponent as LogoSvg } from '../../Assets/logo.svg';
+import { OpenNavbarAccountMenu } from '../HelperFunctions.js'
 import './NavMenu.css';
 
 export class NavMenu extends Component {
@@ -19,7 +20,7 @@ export class NavMenu extends Component {
     }
 
     render() {
-        var contents = !this.props.loggedIn
+        var contents = !this.props.AppState.loggedIn
             ? this.navbarLoggedOut()
             : this.navbarLoggedIn();
 
@@ -28,7 +29,7 @@ export class NavMenu extends Component {
 
     // whether we return the name or logo
     RenderNameOrIcon(marginLeft="0px") {
-        if (this.props.device_mode === localStorage.getItem("DESKTOP_MODE"))
+        if (this.props.AppState.device_mode === localStorage.getItem("DESKTOP_MODE"))
             return <NavbarBrand tag={Link} to="/" style={{ color: "#FFF" }}>Safe Accounts</NavbarBrand>;
         else
             return <NavbarBrand tag={Link} to="/" style={{ marginLeft: marginLeft }}><LogoSvg id="svg_navmenu_logo" fill="#000" /></NavbarBrand>;
@@ -52,7 +53,7 @@ export class NavMenu extends Component {
     navbarLoggedIn() {
         // only render the searchbar in this component on desktop
         const RenderOpenSideBar = () => {
-            if (this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
+            if (this.props.AppState.device_mode === localStorage.getItem("MOBILE_MODE"))
                 return (
                     <FontAwesomeIcon id="sidebar_menu_icon" onClick={this.openSideMenu} icon={faAlignLeft} size="2x"/>
                 );
@@ -63,7 +64,7 @@ export class NavMenu extends Component {
                 <div className="div_navbar_items">
                     {RenderOpenSideBar()}
                     {this.RenderNameOrIcon("10px")}
-                    <FontAwesomeIcon id="icon_user" icon={faUser} onClick={this.props.OpenNavbarAccountMenu}/>
+                    <FontAwesomeIcon id="icon_user" icon={faUser} onClick={() => OpenNavbarAccountMenu(this.props.SetAppState)}/>
                 </div>
             </div>
         );

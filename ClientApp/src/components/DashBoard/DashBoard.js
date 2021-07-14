@@ -6,14 +6,20 @@ import { SafeSideBar } from '../SafeSideBar/SafeSideBar';
 export class DashBoard extends Component {
     render() {
         const RenderSafeSideBar = () => {
-            if (this.props.device_mode === localStorage.getItem("DESKTOP_MODE"))
-                return <SafeSideBar device_mode={this.props.device_mode} uid={this.props.uid} SetSearchString={this.props.SetSearchString} Folders={this.props.folders} FetchUserFolders={this.props.FetchUserFolders} selectedFolderID={this.props.selectedFolderID} SetSelectedFolder={this.props.SetSelectedFolder} UpdateFolders={this.props.UpdateFolders} UpdateSafe={this.props.UpdateSafe} UpdateSingleFolder={this.props.UpdateSingleFolder} ShowFavorites={this.props.ShowFavorites} UpdateSafeItem={this.props.UpdateSafeItem} attemptRefresh={this.props.attemptRefresh} />;
+            if (this.props.AppState.device_mode === localStorage.getItem("DESKTOP_MODE"))
+                return <SafeSideBar
+                    AppState={this.props.AppState}
+                    SetAppState={this.props.SetAppState}
+                />;
         }
 
         return (
             <div className="div_dashboard">
                 {RenderSafeSideBar()}
-                <Safe uid={this.props.uid} device_mode={this.props.device_mode} safe={this.props.safe} UpdateSafe={this.props.UpdateSafe} FetchSafe={this.props.FetchSafe} searchString={this.props.searchString} SetSearchString={this.props.SetSearchString} selectedFolderID={this.props.selectedFolderID} showFavorites={this.props.showFavorites} attemptRefresh={this.props.attemptRefresh}/>
+                <Safe
+                    AppState={this.props.AppState}
+                    SetAppState={this.props.SetAppState}
+                />
             </div>
         );
     }

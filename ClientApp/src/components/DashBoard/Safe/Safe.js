@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SearchBar } from '../../SearchBar/SearchBar';
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { Redirect } from 'react-router-dom';
+import { OpenSelectedItemsMenu } from '../../HelperFunctions.js'
 
 export class Safe extends Component {
     static displayName = Safe.name;
@@ -17,25 +18,11 @@ export class Safe extends Component {
 
          // set to hold the ids of which items are currently selected
         this.state = {
-            selectedItems: new Set(), openSelectedItemsMenu: false, openContextMenu: false,
-            menu_top: "0px", menu_left: "0px", menu_item_id: null,
             redirect: false, toUrl: null
         }; 
 
         // function binding
-        this.UpdateSelectedItems = this.UpdateSelectedItems.bind(this);
-        this.OpenSelectedItemsMenu = this.OpenSelectedItemsMenu.bind(this);
-        this.CloseSelectedItemsMenu = this.CloseSelectedItemsMenu.bind(this);
-        this.OpenContextMenu = this.OpenContextMenu.bind(this);
-        this.CloseContextMenu = this.CloseContextMenu.bind(this);
         this.AddSafeItem = this.AddSafeItem.bind(this);
-    }
-
-    // if props have changed, we need to update items selected
-    componentDidUpdate(prevProps) {
-        if (prevProps !== this.props)
-            this.setState({ selectedItems: new Set() });
-        return true;
     }
 
     render() {
@@ -45,26 +32,33 @@ export class Safe extends Component {
             return <Redirect to={this.state.toUrl} />
 
         const RenderSafeItemContextMenu = () => {
-            if (this.state.openContextMenu)
-                return <SafeItemContextMenu uid={this.props.uid} item={this.props.safe.find(e => e.id === this.state.menu_item_id)} FetchSafe={this.props.FetchSafe} top={this.state.menu_top} left={this.state.menu_left} CloseContextMenu={this.CloseContextMenu} attemptRefresh={this.props.attemptRefresh}/>;
+            if (this.props.AppState.openSafeItemContextMenu)
+                return <SafeItemContextMenu
+                    AppState={this.props.AppState}
+                    SetAppState={this.props.SetAppState}
+                    item={this.props.AppState.safe.find(e => e.id === this.props.AppState.menu_item_id)}
+                />;
         }
 
         const RenderSearchBar = () => {
-            if (this.props.device_mode === localStorage.getItem("MOBILE_MODE"))
-                return <SearchBar SetSearchString={this.props.SetSearchString} />;
+            if (this.props.AppState.device_mode === localStorage.getItem("MOBILE_MODE"))
+                return <SearchBar SetAppState={this.props.SetAppState} />;
         }
 
         const RenderTableHeaderSquare = () => {
-            if (this.state.selectedItems.size > 0)
-                return <td><FontAwesomeIcon id="icon_safeitem_dropdown" icon={faCaretSquareDown} onClick={this.OpenSelectedItemsMenu}/></td>
+            if (this.props.AppState.selectedItems.size > 0)
+                return <td><FontAwesomeIcon id="icon_safeitem_dropdown" icon={faCaretSquareDown} onClick={() => OpenSelectedItemsMenu(this.props.SetAppState)}/></td>
             else
                 return <td><FontAwesomeIcon id="icon_safeitem_square" icon={faSquare} style={{ color: "white" }} /></td>
         }
 
         // drop down menu for when 1 or more items have been selected by the checkbox
         const RenderSelectedItemsMenu = () => {
-            if (this.state.openSelectedItemsMenu)
-                return <SelectedItemsMenu uid={this.props.uid} selectedItems={this.state.selectedItems} safe={this.props.safe} UpdateSafe={this.props.UpdateSafe} CloseSelectedItemsMenu={this.CloseSelectedItemsMenu} attemptRefresh={this.props.attemptRefresh}/>;
+            if (this.props.AppState.openSelectedItemsMenu)
+                return <SelectedItemsMenu
+                    AppState={this.props.AppState}
+                    SetAppState={this.props.SetAppState}
+                />
         }
 
         return (
@@ -85,23 +79,35 @@ export class Safe extends Component {
                                 <td>Title</td>
                                 <td>Username</td>
                                 <td>Password</td>
-                                {this.props.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td>URL</td> : null}
-                                {this.props.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td>Last Modified</td> : null}
+                                {this.props.AppState.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td>URL</td> : null}
+                                {this.props.AppState.device_mode === localStorage.getItem("DESKTOP_MODE") ? <td>Last Modified</td> : null}
                             </tr>
                         </thead>
                         <tbody id="tb_safeitems">
                             {
-                                this.props.safe.map((value, index) => {
+                                this.props.AppState.safe.map((value, index) => {
                                     // if favorites are selected, we dont worry about the folders or the search string
-                                    if (this.props.showFavorites) {
+                                    if (this.props.AppState.showFavorites) {
                                         if (value.isFavorite)
-                                            return <SafeItem key={value.id} uid={this.props.uid} device_mode={this.props.device_mode} info={value} checked={this.state.selectedItems.has(value.id.toString())} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />;
+                                            return <SafeItem
+                                                key={value.id}
+                                                AppState={this.props.AppState}
+                                                SetAppState={this.props.SetAppState}
+                                                info={value}
+                                                checked={this.props.AppState.selectedItems.has(value.id)}
+                                            />;
                                     }
                                     // display the account if its folder matches, or the selected folder is null  or empty then we display all
-                                    else if (value.folderID === this.props.selectedFolderID || this.props.selectedFolderID === null) {
+                                    else if (value.folderID === this.props.AppState.selectedFolderID || this.props.AppState.selectedFolderID === null) {
                                         // match search string
-                                        if (this.props.searchString === null || value.title.toLowerCase().includes(this.props.searchString.toLowerCase()))
-                                            return <SafeItem key={value.id} uid={this.props.uid} device_mode={this.props.device_mode} info={value} checked={this.state.selectedItems.has(value.id.toString())} UpdateSelectedItems={this.UpdateSelectedItems} OpenContextMenu={this.OpenContextMenu} />;
+                                        if (this.props.AppState.searchString === null || value.title.toLowerCase().includes(this.props.AppState.searchString.toLowerCase()))
+                                            return <SafeItem
+                                                key={value.id}
+                                                AppState={this.props.AppState}
+                                                SetAppState={this.props.SetAppState}
+                                                info={value}
+                                                checked={this.props.AppState.selectedItems.has(value.id)}
+                                            />;
                                     }
 
                                     return null; // retun null if nothing
@@ -112,35 +118,6 @@ export class Safe extends Component {
                 </div>
             </div>
         );
-    }
-
-    async UpdateSelectedItems(id) {
-        var items = this.state.selectedItems;
-
-        // if the id exists, than we are unselecting it, else we are adding it to the selection
-        if (this.state.selectedItems.has(id))
-            items.delete(id);
-        else
-            items.add(id);
-
-        // update state
-        this.setState({ selectedItems: items });
-    }
-
-    async OpenSelectedItemsMenu() {
-        this.setState({ openSelectedItemsMenu: true })
-    }
-
-    async CloseSelectedItemsMenu() {
-        this.setState({ openSelectedItemsMenu: false });
-    }
-
-    async OpenContextMenu(item_id, left, top) {
-        this.setState({ openContextMenu: true, menu_top: top, menu_left: left, menu_item_id: item_id })
-    }
-
-    async CloseContextMenu() {
-        this.setState({ openContextMenu: false });
     }
 
     AddSafeItem() {
