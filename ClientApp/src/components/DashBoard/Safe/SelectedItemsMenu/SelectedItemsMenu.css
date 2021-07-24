@@ -1,6 +1,4 @@
 #menu_selected_items {
-    justify-content: center;
-    align-items: center;
     border: 1px solid black;
     background-color: white;
     color: black;
@@ -8,10 +6,33 @@
     margin-top: 28px;
     margin-left: 7px;
     z-index: 1 !important;
+    width: 185px;
+    text-align: left;
 }
 
 .menu_selected_items {
-    margin-left: 5px;
-    margin-right: 5px;
+    padding-left: 8px;
     cursor: pointer;
+}
+
+.menu_selected_items:hover {
+    background-color: #ddd;
+}
+
+#div_selected_items_move_options {
+    border-bottom: 1px solid black;
+}
+
+#icon_menu_selected_items_back {
+    color: black;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+#btn_selected_items_move_here {
+    float: right;
+    background: none;
+    border: none;
+    border-radius: 5px;
+    margin-right: 4px;
 }
