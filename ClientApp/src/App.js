@@ -248,7 +248,7 @@ class AppComponent extends Component {
         const response = await fetch(reqURI, requestOptions);
         if (response.ok) {
             const responseText = await response.text();
-            this.setState({ account_info: responseText })
+            this.setState({ account_info: JSON.parse(responseText) })
         }
     }
 
