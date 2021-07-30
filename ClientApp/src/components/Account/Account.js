@@ -56,14 +56,14 @@ export class Account extends Component {
 
                 <div id="acc_page_right">
                     <div id="acc_page_settings">
-                        {this.RenderAccPageRight()}
+                        {this.RenderAccPageSettings()}
                     </div>
                 </div>
             </div>
         );
     }
 
-    RenderAccPageRight() {
+    RenderAccPageSettings() {
         if (this.state.selectedOption === "My Account")
             return this.RenderMyAccountInfo();
         /*
@@ -90,7 +90,9 @@ export class Account extends Component {
     AccountPageMobile() {
         return (
             <div id="account_page_container">
-                Mobile
+                <div id="acc_page_mobile">
+                    {this.RenderAccPageSettings()}
+                </div>
             </div>
         );
     }

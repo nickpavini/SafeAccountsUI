@@ -1,6 +1,7 @@
 #account_page_container {
     border-top: 1px solid white;
     height: 100%;
+    width: 100%;
 }
 
 #acc_page_left {
@@ -17,6 +18,13 @@
     width: 60%;
     height: 100%;
     overflow: auto;
+}
+
+#acc_page_mobile {
+    background-color: rgba(40, 40, 43, 0.75);
+    height: 100%;
+    color: white;
+    padding: 30px 10px 0px 10px;
 }
 
 #acc_page_options {
@@ -88,4 +96,22 @@
 
 .btn_acc_info_edit:after {
     content: "Edit";
+}
+
+@media (max-width: 800px) {
+    #my_account_header {
+        font-size: 25px;
+    }
+
+    #div_acc_info_container {
+        margin-top: 25px;
+        margin-left: 0px;
+        width: 100%;
+        height: 350px;
+        border-radius: 15px;
+        background-color: rgba(40, 40, 43, 0.3);
+        padding-top: 45px;
+        padding-left: 35px;
+        padding-right: 35px;
+    }
 }
