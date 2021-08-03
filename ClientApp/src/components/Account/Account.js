@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import { AttempRefresh } from '../HelperFunctions.js'
 import './Account.css';
 
 export class Account extends Component {
@@ -77,14 +78,85 @@ export class Account extends Component {
                 <p id="my_account_header">My Account</p>
                 <div id="div_acc_info_container">
                     <span className="acc_info_label">First Name</span>
-                    <div><span className="acc_info">{this.props.AppState.account_info.first_Name}</span><button className="btn_acc_info_edit" onClick={null}/></div>
+                    <div><span className="acc_info" id="acc_info_firstName" onBlur={() => this.BlurInfo("acc_info_firstName")}>{this.props.AppState.account_info.first_Name}</span><button className="btn_acc_info_edit" onClick={() => this.SetInfoEditable("acc_info_firstName")} /></div>
                     <span className="acc_info_label">Last Name</span>
-                    <div><span className="acc_info">{this.props.AppState.account_info.last_Name}</span><button className="btn_acc_info_edit" onClick={null} /></div>
+                    <div><span className="acc_info" id="acc_info_lastName" onBlur={() => this.BlurInfo("acc_info_lastName")}>{this.props.AppState.account_info.last_Name}</span><button className="btn_acc_info_edit" onClick={() => this.SetInfoEditable("acc_info_lastName")} /></div>
                     <span className="acc_info_label">Email</span>
                     <div><span className="acc_info">{this.props.AppState.account_info.email}</span><button className="btn_acc_info_edit" onClick={null} /></div>
                 </div>
             </div>
         );
+    }
+
+    SetInfoEditable(id) {
+        document.getElementById(id).setAttribute("contentEditable", "true");
+        document.getElementById(id).focus();
+        document.getElementById(id).addEventListener("keypress", function (e) {
+            if (e.keyCode === 13) {
+                this.blur();
+            }
+        });
+    }
+
+    BlurInfo(id) {
+        // if the element wasnt being edited then we just return
+        if (document.getElementById(id).attributes.getNamedItem("contentEditable") === "false")
+            return;
+
+        // set it no longer editable, remove the event listener for enter key, and get the current folder name
+        document.getElementById(id).setAttribute("contentEditable", "false");
+        var info = document.getElementById(id).innerHTML;
+
+        // check for name change, and set as needed
+        if (info !== this.props.AppState.account_info.first_Name) {
+            this.EditInfo(id, id.replace("acc_info_", ""), info);
+        }
+    }
+
+    async EditInfo(id, infoToEdit, info) {
+
+        // set url based on info to edit
+        var url = process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.AppState.uid;
+        var updatedAccInfo = this.props.AppState.account_info
+        switch(infoToEdit) {
+            case "firstName":
+                url += '/firstname';
+                updatedAccInfo.first_Name = info;
+                break;
+            case "lastName":
+                url += '/lastname';
+                updatedAccInfo.last_Name = info;
+                break;
+            default:
+                break;
+        }
+
+        // HTTP request options
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
+            body: "\"" + info + "\"",
+            credentials: 'include'
+        };
+
+        //make request and get response
+        const response = await fetch(url, requestOptions);
+        if (response.ok) {
+            this.props.SetAppState({account_info: updatedAccInfo})
+        }
+        // unauthorized could need new access token, so we attempt refresh
+        else if (response.status === 401 || response.status === 403) {
+            var uid = await AttempRefresh(); // try to refresh
+
+            // dont recall if the refresh didnt succeed
+            if (uid !== null)
+                this.EditInfo(infoToEdit, info); // call again
+        }
+        // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
+        else {
+            document.getElementById(id).innerHTML = infoToEdit === "firstName" ? this.props.AppState.account_info.first_Name : this.props.AppState.account_info.last_Name; // reset info if the api call failed
+        }
+
     }
 
     AccountPageMobile() {

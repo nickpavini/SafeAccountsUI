@@ -161,7 +161,10 @@ class AppComponent extends Component {
                         )} />
                         <Route path='/account' render={() => (
                             this.state.loggedIn ? (
-                                <Account AppState={this.state}/>
+                                <Account
+                                    AppState={this.state}
+                                    SetAppState={this.SetAppState}
+                                />
                             ) : (
                                     <Redirect to="/login" />
                                 )
