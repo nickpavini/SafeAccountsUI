@@ -15,6 +15,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
+    - name: Create env file
+      run: |
+        touch D:\a\SafeAccountsUI\SafeAccountsUI\ClientApp\.env
+        echo REACT_APP_API_KEY=${{ secrets.REACT_APP_API_KEY }} >> D:\a\SafeAccountsUI\SafeAccountsUI\ClientApp\.env
+        echo REACT_APP_WEBSITE_URL=${{ secrets.REACT_APP_WEBSITE_URL }} >> D:\a\SafeAccountsUI\SafeAccountsUI\ClientApp\.env
+        cat D:\a\SafeAccountsUI\SafeAccountsUI\ClientApp\.env
 
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v1
