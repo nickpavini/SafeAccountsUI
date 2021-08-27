@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { toUTF8Array } from '../HelperFunctions.js'
+import sjcl from "sjcl";
 import './Login.css';
 
 export class Login extends Component {
@@ -68,10 +68,8 @@ export class Login extends Component {
             /*
              * Here we will hash the pwd and store it in localStorage
              */
-            const data = toUTF8Array(password);
-            const hash = await crypto.subtle.digest('SHA-256', new Uint8Array(data));
-            const hashArray = Array.from(new Uint8Array(hash)); // convert buffer to byte array
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+            var hashArr = sjcl.hash.sha256.hash(password);
+            var hashHex = sjcl.codec.hex.fromBits(hashArr);
             window.localStorage.setItem("UserKey", hashHex);
 
             // update and cause re-render
