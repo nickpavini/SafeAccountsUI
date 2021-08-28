@@ -8,11 +8,18 @@ var CryptoJS = require("crypto-js");
 
 // attempt to retrieve a new access token with the existing cookies.. Note that cookies are http only and contain JWT tokens and refresh tokens
 export async function AttempRefresh() {
+    if (window.localStorage.getItem("AccessToken") === null || window.localStorage.getItem("RefreshToken") === null)
+        return null;
+
     // http request options
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-        credentials: 'include'
+        headers: {
+            'Content-Type': 'application/json',
+            'ApiKey': process.env.REACT_APP_API_KEY,
+            'AccessToken': window.localStorage.getItem("AccessToken"),
+            'RefreshToken': window.localStorage.getItem("RefreshToken")
+        }
     };
 
     // make a call to the refresh and if the result is ok, then we are logged in
@@ -20,8 +27,12 @@ export async function AttempRefresh() {
     const response = await fetch(reqURI, requestOptions);
     if (response.ok) {
         const responseText = await response.text();
-        var obj = JSON.parse(responseText);
-        return obj.id;
+        var loginRes = JSON.parse(responseText);
+
+        window.localStorage.setItem("AccessToken", loginRes.accessToken);
+        window.localStorage.setItem("RefreshToken", loginRes.refreshToken);
+
+        return loginRes.id;
     }
     else {
         window.localStorage.removeItem("UserKey"); // if cookies are no longer valid, lets delete the key
@@ -31,37 +42,16 @@ export async function AttempRefresh() {
 
 // call back function for app to set user logged out... NOTE: here we will make a call to the server which removes the cookies in the returning response
 export async function UpdateUserLoggedOut(SetAppState) {
+    window.localStorage.removeItem("UserKey"); // delete user key upon signout
+    window.localStorage.removeItem("AccessToken"); // delete token upon signout
+    window.localStorage.removeItem("RefreshToken"); // delete token upon signout
 
-    // http request options
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-        credentials: 'include'
-    };
-
-    const reqURI = process.env.REACT_APP_WEBSITE_URL + '/users/logout';
-    const response = await fetch(reqURI, requestOptions); // this request will remove users cookies
-    if (response.ok) {
-        window.localStorage.removeItem("UserKey"); // delete user key upon signout
-        // reset state after removing cookies.. this will cause re-render and should make app be not logged in
-        SetAppState({
-            loggedIn: false, loading: false, // user is now logged out.. login page will render
-            uid: null, account_info: null, safe: null, folders: null,
-            searchString: null, selectedFolderID: null
-        });
-    }
-    // unauthorized could need new access token, so we attempt refresh
-    else if (response.status === 401 || response.status === 403) {
-        var uid = await AttempRefresh(); // try to refresh
-
-        // dont recall if the refresh didnt succeed
-        if (uid !== null)
-            UpdateUserLoggedOut(SetAppState); // call again
-    }
-    // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
-    else {
-
-    }
+    // reset state after removing cookies.. this will cause re-render and should make app be not logged in
+    SetAppState({
+        loggedIn: false, loading: false, // user is now logged out.. login page will render
+        uid: null, account_info: null, safe: null, folders: null,
+        searchString: null, selectedFolderID: null
+    });
 }
 
 // aes encrypt string to hex string
@@ -192,9 +182,12 @@ export async function SetItemFolder(safeitem, folder_id, AppState, SetAppState) 
     // HTTP request options
     const requestOptions = {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-        body: folder_id,
-        credentials: 'include'
+        headers: {
+            'Content-Type': 'application/json',
+            'ApiKey': process.env.REACT_APP_API_KEY,
+            'AccessToken': window.localStorage.getItem("AccessToken")
+        },
+        body: folder_id
     };
 
     //make request and get response
@@ -225,9 +218,12 @@ export async function AddFolder(AppState, SetAppState, firstTry = true) {
     // HTTP request options
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-        body: JSON.stringify({ folder_name: Encrypt("New Folder") }),
-        credentials: 'include'
+        headers: {
+            'Content-Type': 'application/json',
+            'ApiKey': process.env.REACT_APP_API_KEY,
+            'AccessToken': window.localStorage.getItem("AccessToken")
+        },
+        body: JSON.stringify({ folder_name: Encrypt("New Folder") })
     };
 
     //make request and get response
@@ -278,9 +274,12 @@ export async function SetFolderParent(folder, folder_id, AppState, SetAppState) 
     // HTTP request options
     const requestOptions = {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-        body: folder_id,
-        credentials: 'include'
+        headers: {
+            'Content-Type': 'application/json',
+            'ApiKey': process.env.REACT_APP_API_KEY,
+            'AccessToken': window.localStorage.getItem("AccessToken")
+        },
+        body: folder_id
     };
 
     //make request and get response

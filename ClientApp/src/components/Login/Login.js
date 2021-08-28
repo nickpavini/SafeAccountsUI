@@ -55,15 +55,14 @@ export class Login extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({email: email, password: password}),
-            credentials: 'include'
+            body: JSON.stringify({email: email, password: password})
         };
 
         //make request and get response
         const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/login', requestOptions);
         if (response.ok) {
             const responseText = await response.text();
-            var obj = JSON.parse(responseText);
+            var loginRes = JSON.parse(responseText);
 
             /*
              * Here we will hash the pwd and store it in localStorage
@@ -71,9 +70,11 @@ export class Login extends Component {
             var hashArr = sjcl.hash.sha256.hash(password);
             var hashHex = sjcl.codec.hex.fromBits(hashArr);
             window.localStorage.setItem("UserKey", hashHex);
+            window.localStorage.setItem("AccessToken", loginRes.accessToken);
+            window.localStorage.setItem("RefreshToken", loginRes.refreshToken.token);
 
             // update and cause re-render
-            this.props.UpdateUserLoggedIn(obj.id);
+            this.props.UpdateUserLoggedIn(loginRes.id);
         }
     }
 }

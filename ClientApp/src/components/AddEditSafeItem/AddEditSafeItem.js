@@ -59,9 +59,12 @@ export class AddEditSafeItem extends Component {
         // HTTP request options
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            body: JSON.stringify({ title: titleEncrypted, login: loginEncrypted, password: passwordEncrypted, url: urlEncrypted, description: descriptionEncrypted }),
-            credentials: 'include'
+            headers: {
+                'Content-Type': 'application/json',
+                'ApiKey': process.env.REACT_APP_API_KEY,
+                'AccessToken': window.localStorage.getItem("AccessToken")
+            },
+            body: JSON.stringify({ title: titleEncrypted, login: loginEncrypted, password: passwordEncrypted, url: urlEncrypted, description: descriptionEncrypted })
         };
 
         //make request and get response
@@ -107,9 +110,12 @@ export class AddEditSafeItem extends Component {
         // HTTP request options
         const requestOptions = {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            body: JSON.stringify({ title: titleEncrypted, login: loginEncrypted, password: passwordEncrypted, url: urlEncrypted, description: descriptionEncrypted }),
-            credentials: 'include'
+            headers: {
+                'Content-Type': 'application/json',
+                'ApiKey': process.env.REACT_APP_API_KEY,
+                'AccessToken': window.localStorage.getItem("AccessToken")
+            },
+            body: JSON.stringify({ title: titleEncrypted, login: loginEncrypted, password: passwordEncrypted, url: urlEncrypted, description: descriptionEncrypted })
         };
 
         //make request and get response

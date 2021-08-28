@@ -205,8 +205,11 @@ class AppComponent extends Component {
 
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            credentials: 'include'
+            headers: {
+                'Content-Type': 'application/json',
+                'ApiKey': process.env.REACT_APP_API_KEY,
+                'AccessToken': window.localStorage.getItem("AccessToken")
+            }
         };
 
         const reqURI = process.env.REACT_APP_WEBSITE_URL + '/users/' + this.state.uid + '/accounts';
@@ -224,8 +227,11 @@ class AppComponent extends Component {
 
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            credentials: 'include'
+            headers: {
+                'Content-Type': 'application/json',
+                'ApiKey': process.env.REACT_APP_API_KEY,
+                'AccessToken': window.localStorage.getItem("AccessToken")
+            }
         };
 
         const reqURI = process.env.REACT_APP_WEBSITE_URL + '/users/' + this.state.uid + '/folders';
@@ -242,8 +248,11 @@ class AppComponent extends Component {
 
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            credentials: 'include'
+            headers: {
+                'Content-Type': 'application/json',
+                'ApiKey': process.env.REACT_APP_API_KEY,
+                'AccessToken': window.localStorage.getItem("AccessToken")
+            }
         };
 
         const reqURI = process.env.REACT_APP_WEBSITE_URL + '/users/' + this.state.uid;

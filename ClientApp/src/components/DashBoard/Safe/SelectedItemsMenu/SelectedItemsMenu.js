@@ -95,9 +95,12 @@ export class SelectedItemsMenu extends Component {
         // HTTP request options
         const requestOptions = {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            body: JSON.stringify(Array.from(this.props.AppState.selectedItems)),
-            credentials: 'include'
+            headers: {
+                'Content-Type': 'application/json',
+                'ApiKey': process.env.REACT_APP_API_KEY,
+                'AccessToken': window.localStorage.getItem("AccessToken")
+            },
+            body: JSON.stringify(Array.from(this.props.AppState.selectedItems))
         };
 
         //make request and get response
@@ -154,9 +157,12 @@ export class SelectedItemsMenu extends Component {
         // HTTP request options
         const requestOptions = {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            body: JSON.stringify(body),
-            credentials: 'include'
+            headers: {
+                'Content-Type': 'application/json',
+                'ApiKey': process.env.REACT_APP_API_KEY,
+                'AccessToken': window.localStorage.getItem("AccessToken")
+            },
+            body: JSON.stringify(body)
         };
 
         //make request and get response
