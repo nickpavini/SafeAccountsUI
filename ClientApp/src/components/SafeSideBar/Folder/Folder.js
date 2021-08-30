@@ -96,9 +96,12 @@ export class Folder extends Component {
         // HTTP request options
         const requestOptions = {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            body: "\"" + newNameEncrypted + "\"",
-            credentials: 'include'
+            headers: {
+                'Content-Type': 'application/json',
+                'ApiKey': process.env.REACT_APP_API_KEY,
+                'AccessToken': window.localStorage.getItem("AccessToken")
+            },
+            body: "\"" + newNameEncrypted + "\""
         };
 
         //make request and get response

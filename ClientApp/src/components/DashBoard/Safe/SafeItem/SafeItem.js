@@ -65,9 +65,12 @@ export class SafeItem extends Component {
         // HTTP request options
         const requestOptions = {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            body: JSON.stringify(!this.props.info.isFavorite), // set as opposite of current
-            credentials: 'include'
+            headers: {
+                'Content-Type': 'application/json',
+                'ApiKey': process.env.REACT_APP_API_KEY,
+                'AccessToken': window.localStorage.getItem("AccessToken")
+            },
+            body: JSON.stringify(!this.props.info.isFavorite) // set as opposite of current
         };
 
         //make request and get response

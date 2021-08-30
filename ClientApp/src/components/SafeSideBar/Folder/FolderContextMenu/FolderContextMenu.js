@@ -53,8 +53,11 @@ export class FolderContextMenu extends Component {
         // HTTP request options
         const requestOptions = {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            credentials: 'include'
+            headers: {
+                'Content-Type': 'application/json',
+                'ApiKey': process.env.REACT_APP_API_KEY,
+                'AccessToken': window.localStorage.getItem("AccessToken")
+            }
         };
 
         //make request and get response

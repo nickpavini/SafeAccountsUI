@@ -134,9 +134,12 @@ export class Account extends Component {
         // HTTP request options
         const requestOptions = {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'ApiKey': process.env.REACT_APP_API_KEY },
-            body: "\"" + info + "\"",
-            credentials: 'include'
+            headers: {
+                'Content-Type': 'application/json',
+                'ApiKey': process.env.REACT_APP_API_KEY,
+                'AccessToken': window.localStorage.getItem("AccessToken")
+            },
+            body: "\"" + info + "\""
         };
 
         //make request and get response

@@ -44,8 +44,11 @@ export class EmailConfirmation extends Component {
         // HTTP request options
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include'
+            headers: {
+                'Content-Type': 'application/json',
+                'ApiKey': process.env.REACT_APP_API_KEY,
+                'AccessToken': window.localStorage.getItem("AccessToken")
+            }
         };
 
         //make request and get response
