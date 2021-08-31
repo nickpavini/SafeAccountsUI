@@ -20,6 +20,16 @@
     background-color: white;
 }
 
+#div_signup_success {
+    padding: 30px 70px 40px 70px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
 #div_signup_welcome {
     width: 300px;
     margin-bottom: 10px;

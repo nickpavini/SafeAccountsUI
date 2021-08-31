@@ -7,21 +7,24 @@ export class SignUp extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { signedUp: false, data: null, redirect: false };
+        this.state = {
+            signedUp: false,
+            error: false, errorMessage: null
+        };
         this.SignUp = this.SignUp.bind(this); // bind sign up function
     }
 
-    componentDidMount() {
-    }
-
     render() {
-        // redirect upon login
-        if (this.state.redirect)
-            return (<Redirect to="/login" />);
-
         // just as a place holder we are displaying the sign up response
         if (this.state.signedUp)
-            return (<p>{this.state.data}</p>);
+            return (
+                <div className="div_signup_container">
+                    <div id="div_signup_success">
+                        <h3>Signup Successful!</h3>
+                        <p>Check your email for a verification link.</p>
+                    </div>
+                </div>
+            );
 
         return (
             <div className="div_signup_container">
@@ -64,8 +67,14 @@ export class SignUp extends Component {
         };
 
         const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users', requestOptions);
-        const responseText = await response.text();
-        this.setState({ data: responseText, signedUp: true })
-        this.timeout = setTimeout(() => this.setState({ redirect: true }), 5000); // set redirect to true after 5 seconds
-  }
+        if (response.ok) {
+            // successful signup
+            this.setState({ signedUp: true });
+        }
+        else {
+            // capture the error message in state for displaying or handling
+            const responseText = await response.text();
+            this.setState({ error: true, errorMessage: responseText });
+        }
+    }
 }
