@@ -7,7 +7,7 @@ export class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { rememberMe: false };
+        this.state = { rememberMe: false, loading: false };
 
         // function bindings
         this.OnChangeRemeberMe = this.OnChangeRemeberMe.bind(this);
@@ -15,6 +15,13 @@ export class Login extends Component {
     }
 
     render() {
+        if (this.state.loading)
+            return (
+                <div className="div_login_container">
+                    <div class="loader"></div>
+                </div>
+                );
+
         return (
             <div className="div_login_container">
                 <div className="div_login">
@@ -47,6 +54,8 @@ export class Login extends Component {
 
     // function to attempt login and cookie retrieval
     async Login(event) {
+        this.setState({ loading: true });
+
         event.preventDefault(); //prevent page refresh
         var email = event.target.text_input_login_email.value;
         var password = event.target.text_input_login_password.value;
@@ -76,5 +85,7 @@ export class Login extends Component {
             // update and cause re-render
             this.props.UpdateUserLoggedIn(loginRes.id);
         }
+
+        this.setState({ loading: false });
     }
 }
