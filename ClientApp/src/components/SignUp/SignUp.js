@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './SignUp.css';
-import { Redirect } from 'react-router-dom';
 
 export class SignUp extends Component {
     static displayName = SignUp.name;
