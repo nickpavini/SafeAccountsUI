@@ -30,7 +30,7 @@ export async function AttempRefresh() {
         var loginRes = JSON.parse(responseText);
 
         window.localStorage.setItem("AccessToken", loginRes.accessToken);
-        window.localStorage.setItem("RefreshToken", loginRes.refreshToken);
+        window.localStorage.setItem("RefreshToken", loginRes.refreshToken.token);
 
         return loginRes.id;
     }
