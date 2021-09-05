@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { NavMenu } from '../NavMenu/NavMenu';
 import { NavbarAccountMenu } from '../NavbarAccountMenu/NavbarAccountMenu';
 import { Footer } from '../Footer/Footer';
+import { ImportExportMenu } from '../DashBoard/Safe/ImportExportMenu/ImportExportMenu';
 import './Layout.css'
 
 export class Layout extends Component {
@@ -21,6 +22,10 @@ export class Layout extends Component {
         // include props from app.js to let navmenu know if it needed to update
         return (
             <div>
+                <ImportExportMenu
+                    AppState={this.props.AppState}
+                    SetAppState={this.props.SetAppState}
+                />
                 <NavMenu
                     AppState={this.props.AppState}
                     SetAppState={this.props.SetAppState}

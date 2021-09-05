@@ -27,7 +27,7 @@
     cursor: pointer;
 }
 
-#icon_safeitem_plus {
+#icon_safeitem_plus, #icon_safeitem_export {
     float: right;
     font-size: 18px;
     margin-right: 48px;
@@ -59,7 +59,7 @@
         float: left;
     }
 
-    #icon_safeitem_plus {
+    #icon_safeitem_plus, #icon_safeitem_export {
         margin-right: 12px;
     }
 }

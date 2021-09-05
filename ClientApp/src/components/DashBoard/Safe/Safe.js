@@ -7,8 +7,9 @@ import { faSquare, faStar, faCaretSquareDown } from "@fortawesome/free-solid-svg
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SearchBar } from '../../SearchBar/SearchBar';
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router-dom';
-import { OpenSelectedItemsMenu } from '../../HelperFunctions.js'
+import { OpenSelectedItemsMenu, OpenImportExportMenu } from '../../HelperFunctions.js'
 
 export class Safe extends Component {
     static displayName = Safe.name;
@@ -68,6 +69,7 @@ export class Safe extends Component {
                     <span id="span_safe_title">Password List</span>
                     {RenderSearchBar()}
                     <FontAwesomeIcon id="icon_safeitem_plus" icon={faPlusSquare} style={{ color: "white" }} onClick={this.AddSafeItem}/>
+                    <FontAwesomeIcon id="icon_safeitem_export" icon={faDownload} style={{ color: "white" }} onClick={() => OpenImportExportMenu(this.props.SetAppState)}/>
                 </div>
                 <div className="div_safeitems">
                     {RenderSelectedItemsMenu()}

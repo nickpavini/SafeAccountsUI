@@ -348,6 +348,17 @@ export async function CloseNavbarAccountMenu(SetAppState) {
     SetAppState({ openNavbarAccountMenu: false });
 }
 
+// open import export menu and close all others
+export async function OpenImportExportMenu(SetAppState) {
+    SetAppState({ openSelectedItemsMenu: false, openSafeItemContextMenu: false, openFolderContextMenu: false, openNavbarAccountMenu: false })
+    document.getElementById("import_export_menu").style.opacity = "1";
+}
+
+// close import export menu
+export async function CloseImportExportMenu() {
+    document.getElementById("import_export_menu").style.opacity = "0";
+}
+
 export function toUTF8Array(str) {
     var utf8 = [];
     for (var i = 0; i < str.length; i++) {
