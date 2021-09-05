@@ -88,6 +88,25 @@ export function Decrypt(str) {
     return decryptedStr.toString();
 }
 
+// aes encrypt entire safe
+export function EncryptSafe(safe) {
+    var encryptedSafe = [];
+
+    // go through and decrypt safe
+    safe.map((value, index) => {
+        var valueCopy = Clone(value);
+        encryptedSafe.push(valueCopy);
+        encryptedSafe[index].title = Encrypt(valueCopy.title);
+        encryptedSafe[index].login = Encrypt(valueCopy.login);
+        encryptedSafe[index].password = Encrypt(valueCopy.password);
+        encryptedSafe[index].url = Encrypt(valueCopy.url);
+        encryptedSafe[index].description = Encrypt(valueCopy.description);
+        return null;
+    });
+
+    return encryptedSafe;
+}
+
 export function DecryptSafe(safe) {
     var decryptedSafe = [];
 
@@ -103,6 +122,21 @@ export function DecryptSafe(safe) {
     });
 
     return decryptedSafe;
+}
+
+// aes encrypt all folders
+export function EncryptFolders(folders) {
+    var encryptedFolders = [];
+
+    // go through and decrypt safe
+    folders.map((value, index) => {
+        var valueCopy = Clone(value);
+        encryptedFolders.push(valueCopy);
+        encryptedFolders[index].folderName = Encrypt(valueCopy.folderName);
+        return null;
+    });
+
+    return encryptedFolders;
 }
 
 export function DecryptFolders(folders) {
@@ -388,4 +422,39 @@ export function toUTF8Array(str) {
         }
     }
     return utf8;
+}
+
+// clone function from stack overflow.. link: https://stackoverflow.com/questions/728360/how-do-i-correctly-clone-a-javascript-object
+function Clone(obj) {
+    var copy;
+
+    // Handle the 3 simple types, and null or undefined
+    if (null == obj || "object" != typeof obj) return obj;
+
+    // Handle Date
+    if (obj instanceof Date) {
+        copy = new Date();
+        copy.setTime(obj.getTime());
+        return copy;
+    }
+
+    // Handle Array
+    if (obj instanceof Array) {
+        copy = [];
+        for (var i = 0, len = obj.length; i < len; i++) {
+            copy[i] = Clone(obj[i]);
+        }
+        return copy;
+    }
+
+    // Handle Object
+    if (obj instanceof Object) {
+        copy = {};
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = Clone(obj[attr]);
+        }
+        return copy;
+    }
+
+    throw new Error("Unable to copy obj! Its type isn't supported.");
 }
