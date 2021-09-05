@@ -181,6 +181,43 @@ export async function UpdateSelectedItems(id, AppState, SetAppState) {
     SetAppState({ selectedItems: items });
 }
 
+// POST a new item to the safe
+export async function PostSafeItem(encryptedItemToAdd, AppState) {
+
+    // HTTP request options
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'ApiKey': process.env.REACT_APP_API_KEY,
+            'AccessToken': window.localStorage.getItem("AccessToken")
+        },
+        body: JSON.stringify({ title: encryptedItemToAdd.title, login: encryptedItemToAdd.login, password: encryptedItemToAdd.password, url: encryptedItemToAdd.url, description: encryptedItemToAdd.description })
+    };
+
+    //make request and get response
+    const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + AppState.uid + '/accounts', requestOptions);
+    if (response.ok) {
+        // get new account with id, then set data to decrypted values internally
+        var acc = JSON.parse(await response.text());
+        return acc;
+    }
+    // unauthorized could need new access token, so we attempt refresh
+    else if (response.status === 401 || response.status === 403) {
+        var uid = await AttempRefresh(); // try to refresh
+
+        // dont recall if the refresh didnt succeed
+        if (uid !== null)
+            PostSafeItem(encryptedItemToAdd, AppState); // call again
+    }
+    // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
+    else {
+
+    }
+
+    return -1; // upon failure
+}
+
 // add or edit an item in the safe
 export function UpdateSafeItem(safeitem, safe, SetAppState) {
     var updatedSafe = safe; // copy current safe
