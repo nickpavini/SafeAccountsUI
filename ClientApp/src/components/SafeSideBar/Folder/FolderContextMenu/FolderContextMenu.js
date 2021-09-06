@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { DecryptFolders, DecryptSafe, AttempRefresh, AddFolder, CloseFolderContextMenu } from '../../../HelperFunctions.js'
+import { DeleteFolder, AddFolder, CloseFolderContextMenu } from '../../../HelperFunctions.js'
 import './FolderContextMenu.css';
 
 export class FolderContextMenu extends Component {
@@ -9,7 +9,6 @@ export class FolderContextMenu extends Component {
         // function bindings
         this.handleClick = this.handleClick.bind(this);
         this.RenameFolder = this.RenameFolder.bind(this);
-        this.DeleteFolder = this.DeleteFolder.bind(this);
     }
 
     componentDidMount() {
@@ -31,7 +30,7 @@ export class FolderContextMenu extends Component {
             <div id="menu_folder" style={{ top: this.props.AppState.menu_top, left: this.props.AppState.menu_left }}>
                 <span className="menu_folder" id="menu_folder_add" onClick={() => AddFolder(this.props.AppState, this.props.SetAppState)}>Add Folder</span><br />
                 <span className="menu_folder" id="menu_folder_edit" onClick={this.RenameFolder}>Rename Folder</span><br />
-                <span className="menu_folder" id="menu_folder_delete" onClick={this.DeleteFolder}>Delete Folder</span><br />
+                <span className="menu_folder" id="menu_folder_delete" onClick={() => DeleteFolder(this.props.AppState, this.props.SetAppState, this.props.folder)}>Delete Folder</span><br />
             </div>
         );
     }
@@ -46,39 +45,5 @@ export class FolderContextMenu extends Component {
                 this.blur();
             }
         });
-    }
-
-    // DELETE the folder
-    async DeleteFolder() {
-        // HTTP request options
-        const requestOptions = {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'ApiKey': process.env.REACT_APP_API_KEY,
-                'AccessToken': window.localStorage.getItem("AccessToken")
-            }
-        };
-
-        //make request and get response
-        const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.AppState.uid + '/folders/' + this.props.folder.id.toString(), requestOptions);
-        if (response.ok) {
-            const responseText = await response.text();
-            var safeAndFolders = JSON.parse(responseText);
-            this.props.SetAppState({ safe: DecryptSafe(safeAndFolders.safe) }) // update safe
-            this.props.SetAppState({ folders: DecryptFolders(safeAndFolders.updatedFolders) }); // update the folders
-        }
-        // unauthorized could need new access token, so we attempt refresh
-        else if (response.status === 401 || response.status === 403) {
-            var uid = await AttempRefresh(); // try to refresh
-
-            // dont recall if the refresh didnt succeed
-            if (uid !== null)
-                this.DeleteFolder(); // call again
-        }
-        // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
-        else {
-            
-        }
     }
 }

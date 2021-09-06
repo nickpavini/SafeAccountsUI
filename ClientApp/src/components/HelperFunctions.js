@@ -324,6 +324,40 @@ export async function AddFolder(AppState, SetAppState, firstTry = true, folderTo
     return -1;
 }
 
+// DELETE the folder
+export async function DeleteFolder(AppState, SetAppState, folder) {
+    // HTTP request options
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'ApiKey': process.env.REACT_APP_API_KEY,
+            'AccessToken': window.localStorage.getItem("AccessToken")
+        }
+    };
+
+    //make request and get response
+    const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + AppState.uid + '/folders/' + folder.id.toString(), requestOptions);
+    if (response.ok) {
+        const responseText = await response.text();
+        var safeAndFolders = JSON.parse(responseText);
+        SetAppState({ safe: DecryptSafe(safeAndFolders.safe) }) // update safe
+        SetAppState({ folders: DecryptFolders(safeAndFolders.updatedFolders) }); // update the folders
+    }
+    // unauthorized could need new access token, so we attempt refresh
+    else if (response.status === 401 || response.status === 403) {
+        var uid = await AttempRefresh(); // try to refresh
+
+        // dont recall if the refresh didnt succeed
+        if (uid !== null)
+            DeleteFolder(AppState, SetAppState, folder); // call again
+    }
+    // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
+    else {
+
+    }
+}
+
 // add or edit a folder
 export function UpdateSingleFolder(folder, folders, SetAppState) {
     var updatedFolders = folders; // copy current folders
