@@ -218,6 +218,44 @@ export async function PostSafeItem(encryptedItemToAdd, AppState) {
     return -1; // upon failure
 }
 
+// DELETE multiple items from the safe
+export async function DeleteMultipleItems(AppState, SetAppState) {
+    // HTTP request options
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'ApiKey': process.env.REACT_APP_API_KEY,
+            'AccessToken': window.localStorage.getItem("AccessToken")
+        },
+        body: JSON.stringify(Array.from(AppState.selectedItems))
+    };
+
+    //make request and get response
+    const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users/' + AppState.uid + '/accounts', requestOptions);
+    if (response.ok) {
+        var updatedSafe = AppState.safe;
+        AppState.selectedItems.forEach(e => {
+            // if one fails to be removed, then we throw error... later we may want it to do fetchsafe as backup
+            if (!RemoveSafeItemLocally(e, updatedSafe))
+                throw new Error({ code: 500, message: "Error: Could not remove item from safe locally" });
+        });
+        SetAppState({ safe: updatedSafe, selectedItems: new Set() });
+    }
+    // unauthorized could need new access token, so we attempt refresh
+    else if (response.status === 401 || response.status === 403) {
+        var uid = await AttempRefresh(); // try to refresh
+
+        // dont recall if the refresh didnt succeed
+        if (uid !== null)
+            DeleteMultipleItems(AppState, SetAppState); // call again
+    }
+    // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
+    else {
+
+    }
+}
+
 // add or edit an item in the safe
 export function UpdateSafeItem(safeitem, safe, SetAppState) {
     var updatedSafe = safe; // copy current safe
