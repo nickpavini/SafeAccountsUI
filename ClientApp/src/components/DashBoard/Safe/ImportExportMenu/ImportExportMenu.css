@@ -1,4 +1,5 @@
 #import_export_menu {
+    display: none;
     opacity: 0;
     position: absolute;
     left: 50%;

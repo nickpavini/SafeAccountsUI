@@ -502,12 +502,22 @@ export async function CloseNavbarAccountMenu(SetAppState) {
 // open import export menu and close all others
 export async function OpenImportExportMenu(SetAppState) {
     SetAppState({ openSelectedItemsMenu: false, openSafeItemContextMenu: false, openFolderContextMenu: false, openNavbarAccountMenu: false })
-    document.getElementById("import_export_menu").style.opacity = "1";
+    document.getElementById("import_export_menu").style.display = "block"; // bring into scope first then set opacity
+
+    // if we dont wrap it in a super short timeout, the opacity transition will not happen
+    setTimeout(() => {
+        document.getElementById("import_export_menu").style.opacity = "1";
+    }, 1);
 }
 
 // close import export menu
 export async function CloseImportExportMenu() {
     document.getElementById("import_export_menu").style.opacity = "0";
+
+    // after closing width make display none so we cant interact with on accident
+    setTimeout(() => {
+        document.getElementById("import_export_menu").style.display = "none";
+    }, 400);
 }
 
 export function toUTF8Array(str) {
