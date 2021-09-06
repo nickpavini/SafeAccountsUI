@@ -56,6 +56,7 @@ export class AddEditSafeItem extends Component {
             password: Encrypt(event.target.text_input_safe_item_password.value),
             url: Encrypt(event.target.text_input_safe_item_url.value),
             description: Encrypt(event.target.text_input_safe_item_description.value),
+            folderID: null
         }
 
         var retItem = await PostSafeItem(item, this.props.AppState);

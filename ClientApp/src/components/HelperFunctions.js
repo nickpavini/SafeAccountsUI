@@ -192,7 +192,7 @@ export async function PostSafeItem(encryptedItemToAdd, AppState) {
             'ApiKey': process.env.REACT_APP_API_KEY,
             'AccessToken': window.localStorage.getItem("AccessToken")
         },
-        body: JSON.stringify({ title: encryptedItemToAdd.title, login: encryptedItemToAdd.login, password: encryptedItemToAdd.password, url: encryptedItemToAdd.url, description: encryptedItemToAdd.description })
+        body: JSON.stringify({ title: encryptedItemToAdd.title, login: encryptedItemToAdd.login, password: encryptedItemToAdd.password, url: encryptedItemToAdd.url, description: encryptedItemToAdd.description, folderID: encryptedItemToAdd.folderID })
     };
 
     //make request and get response
