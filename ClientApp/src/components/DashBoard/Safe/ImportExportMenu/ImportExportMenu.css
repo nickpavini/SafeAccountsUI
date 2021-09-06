@@ -53,3 +53,7 @@
 #div_import_passwords_menu_option {
     margin-bottom: 20px;
 }
+
+#file_input {
+    display: none;
+}
