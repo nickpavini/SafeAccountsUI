@@ -281,10 +281,10 @@ export async function SetItemFolder(safeitem, folder_id, AppState, SetAppState) 
 }
 
 // adds a new folder to the props, and updates the db remotely
-export async function AddFolder(AppState, SetAppState, firstTry = true) {
+export async function AddFolder(AppState, SetAppState, firstTry = true, folderToAdd = { folderName: "New Folder", parentID: null }) {
     // append to the props only if this isnt a retry after a potentially fixable error
     if (firstTry)
-        UpdateSingleFolder({ id: -1, folderName: "New Folder", parentID: null }, AppState.folders, SetAppState)
+        UpdateSingleFolder({ id: -1, folderName: folderToAdd.folderName, parentID: folderToAdd.parentID }, AppState.folders, SetAppState)
 
     // HTTP request options
     const requestOptions = {
@@ -294,7 +294,7 @@ export async function AddFolder(AppState, SetAppState, firstTry = true) {
             'ApiKey': process.env.REACT_APP_API_KEY,
             'AccessToken': window.localStorage.getItem("AccessToken")
         },
-        body: JSON.stringify({ folder_name: Encrypt("New Folder") })
+        body: JSON.stringify({ folder_name: Encrypt(folderToAdd.folderName), parent_id: folderToAdd.parentID })
     };
 
     //make request and get response
@@ -304,9 +304,9 @@ export async function AddFolder(AppState, SetAppState, firstTry = true) {
 
         // get new account with id, then set data to decrypted values internally
         var folder = JSON.parse(await response.text());
-        folder.folderName = "New Folder";
+        folder.folderName = folderToAdd.folderName;
         UpdateSingleFolder(folder, AppState.folders, SetAppState) // legit update folders, first one was just visual with placeholder id
-        return;
+        return folder.id;
     }
     // unauthorized could need new access token, so we attempt refresh
     else if (response.status === 401 || response.status === 403) {
@@ -321,6 +321,7 @@ export async function AddFolder(AppState, SetAppState, firstTry = true) {
     // if it didnt work then lets make sure to remove the visual new folder
     AppState.folders.pop();
     SetAppState({ folders: AppState.folders });
+    return -1;
 }
 
 // add or edit a folder
@@ -335,6 +336,13 @@ export function UpdateSingleFolder(folder, folders, SetAppState) {
     // if the folder does not exist, we are adding it
     else {
         updatedFolders.push(folder);
+
+        // update parent to has child if need be for rendering
+        if (folder.parentID !== null) {
+            var parentIndex = updatedFolders.findIndex(e => e.id === folder.parentID); // get index of folder passed in
+            updatedFolders[parentIndex].hasChild = true;
+        }
+
     }
 
     SetAppState({ folders: updatedFolders }); // update state for re-render
