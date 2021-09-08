@@ -8,7 +8,7 @@ export class SignUp extends Component {
         super(props);
         this.state = {
             signedUp: false,
-            error: false, errorMessage: null
+            errorMessage: null
         };
         this.SignUp = this.SignUp.bind(this); // bind sign up function
     }
@@ -42,6 +42,7 @@ export class SignUp extends Component {
                             <br />
                             <input className="text_input_signup" type="password" placeholder="Password" id="text_input_signup_pass" size="35" required></input>
                             <br />
+                            {this.state.errorMessage && <p className='error_message'>{this.state.errorMessage}</p>}
                             <button id="btn_signup" type="submit">Sign Up</button>
                         </div>
                     </form>
@@ -72,8 +73,8 @@ export class SignUp extends Component {
         }
         else {
             // capture the error message in state for displaying or handling
-            const responseText = await response.text();
-            this.setState({ error: true, errorMessage: responseText });
+            const responseText = await response.json();
+            this.setState({ error: true, errorMessage: responseText.errorDetails });
         }
     }
 }
