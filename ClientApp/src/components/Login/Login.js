@@ -7,7 +7,7 @@ export class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { rememberMe: false, loading: false };
+        this.state = { rememberMe: false, loading: false, errorMessage: null };
 
         // function bindings
         this.OnChangeRemeberMe = this.OnChangeRemeberMe.bind(this);
@@ -35,6 +35,7 @@ export class Login extends Component {
                             <br />
                             <input className="text_input_login" type="password" placeholder="Password" id="text_input_login_password" size="35" required></input>
                             <br />
+                            {this.state.errorMessage && <p className='error_message'>{this.state.errorMessage}</p>}
                             <div className="div_login_buttons">
                                 <input type="checkbox" defaultChecked={false} onClick={this.OnChangeRemeberMe} id="input_chk_login_remember"></input>
                                 <label id="lbl-login-remember">Remember me</label>
@@ -84,6 +85,9 @@ export class Login extends Component {
 
             // update and cause re-render
             this.props.UpdateUserLoggedIn(loginRes.id);
+        }
+        else {
+            this.setState({errorMessage: "Invalid email or password"})
         }
 
         this.setState({ loading: false });
