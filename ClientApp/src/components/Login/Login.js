@@ -18,7 +18,7 @@ export class Login extends Component {
         if (this.state.loading)
             return (
                 <div className="div_login_container">
-                    <div class="loader"></div>
+                    <div className="loader"></div>
                 </div>
                 );
 
