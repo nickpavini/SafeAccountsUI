@@ -74,7 +74,7 @@ export class SignUp extends Component {
         else {
             // capture the error message in state for displaying or handling
             const responseText = await response.json();
-            this.setState({ error: true, errorMessage: responseText.errorDetails });
+            this.setState({ error: true, errorMessage: responseText.message });
         }
     }
 }
