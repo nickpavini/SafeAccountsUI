@@ -54,10 +54,19 @@ export class SignUp extends Component {
     //this is the function where we will call our api and attemp to register a user
     async SignUp(event) {
         event.preventDefault(); //prevent page refresh
+
+        var regexPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})";
+        var password = event.target.text_input_signup_pass.value;
+
+        if (!password.match(regexPattern)) {
+            var errorMessage = "Password must be 8 characters with an upper and lower case letter, a number, and a special character.";
+            this.setState({ error: true, errorMessage: errorMessage })
+            return;
+        }
+
         var firstname = event.target.text_input_signup_firstname.value;
         var lastname = event.target.text_input_signup_lastname.value;
         var email = event.target.text_input_signup_email.value;
-        var password = event.target.text_input_signup_pass.value;
 
         // http request options
         const requestOptions = {
