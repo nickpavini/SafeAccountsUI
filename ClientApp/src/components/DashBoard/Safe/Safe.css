@@ -3,7 +3,7 @@
     width: 83%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(40, 40, 43, 0.75);
+    background-color: rgba(34, 34, 36, 0.75);
     border-top: .5px solid lightgray;
     color: white;
 }
@@ -16,10 +16,9 @@
 #title_and_options {
     width: 100%;
     background-color: #28282B;
-    margin-bottom: 0px;
     padding-left: 10px;
-    padding-top: 2px;
-    padding-bottom: 3px;
+    padding-top: 6px;
+    padding-bottom: 10px;
 }
 
 #icon_safeitem_dropdown {

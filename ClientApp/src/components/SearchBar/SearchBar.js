@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { SetSearchString } from '../HelperFunctions.js'
 import './SearchBar.css';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSearch} from "@fortawesome/free-solid-svg-icons";
 
 export class SearchBar extends Component {
     constructor(props) {
@@ -13,7 +15,10 @@ export class SearchBar extends Component {
     render() {
         return (
             <div id="div_searchbar">
+                <div id="div_search_container">
                 <input type="text" maxLength="15" id="input_text_safe_search" onInput={this.SearchStringChanged} placeholder="Search Safe"></input>
+                    <FontAwesomeIcon id="icon_search" icon={faSearch} />
+                </div>
             </div>
         );
     }
