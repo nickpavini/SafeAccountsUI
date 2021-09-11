@@ -55,7 +55,7 @@ export class SignUp extends Component {
     async SignUp(event) {
         event.preventDefault(); //prevent page refresh
 
-        var regexPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})";
+        var regexPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})";
         var password = event.target.text_input_signup_pass.value;
 
         if (!password.match(regexPattern)) {
