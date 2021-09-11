@@ -17,29 +17,43 @@ export class AddEditSafeItem extends Component {
     render() {
         // check for redirection
         var contents = this.state.redirect
-            ? < Redirect to="/dashboard" />
-            : this.state.loading
-                ? <p>loading...</p>
-                : (
-                    <div className="div_modify_safe_item">
-                        <label id="lbl_add_edit_item">{this.props.info !== undefined ? "Edit Safe Item" : "Add Safe Item"}</label>
-                        <form id="form_modify_safe_item" onSubmit={this.props.info === undefined ? this.AddSafeItem : this.EditSafeItem}>
-                            <div className="container">
-                                <textarea className="text_input_safe_item" placeholder="Title" id="text_input_safe_item_title" rows="1" cols="38" defaultValue={this.props.info !== undefined ? this.props.info.title : ""} ></textarea>
-                                <br />
-                                <textarea className="text_input_safe_item" placeholder="Username" id="text_input_safe_item_login" rows="1" cols="38" defaultValue={this.props.info !== undefined ? this.props.info.login : ""} ></textarea>
-                                <br />
-                                <textarea className="text_input_safe_item" placeholder="Password" id="text_input_safe_item_password" rows="1" cols="38" defaultValue={this.props.info !== undefined ? this.props.info.password : ""} required></textarea>
-                                <br />
-                                <textarea className="text_input_safe_item" placeholder="Url" id="text_input_safe_item_url" rows="1" cols="38" defaultValue={this.props.info !== undefined ? this.props.info.url : ""} ></textarea>
-                                <br />
-                                <textarea className="text_input_safe_item" placeholder="Description..." id="text_input_safe_item_description" rows="4" cols="38" defaultValue={this.props.info !== undefined ? this.props.info.description : ""} ></textarea>
-                                <br />
-                                <button id="btn_modify_safe_item" type="submit"><b>Save</b></button>
-                            </div>
-                        </form>
+            ? < Redirect to="/dashboard"/>
+            : <div className="div_modify_safe_item">
+                <label
+                    id="lbl_add_edit_item">{this.props.info !== undefined ? "Edit Safe Item" : "Add Safe Item"}</label>
+                <form id="form_modify_safe_item"
+                      onSubmit={this.props.info === undefined ? this.AddSafeItem : this.EditSafeItem}>
+                    <div className="container">
+                            <textarea className="text_input_safe_item" placeholder="Title"
+                                      id="text_input_safe_item_title" rows="1" cols="38"
+                                      defaultValue={this.props.info !== undefined ? this.props.info.title : ""}></textarea>
+                        <br/>
+                        <textarea className="text_input_safe_item" placeholder="Username"
+                                  id="text_input_safe_item_login" rows="1" cols="38"
+                                  defaultValue={this.props.info !== undefined ? this.props.info.login : ""}></textarea>
+                        <br/>
+                        <textarea className="text_input_safe_item" placeholder="Password"
+                                  id="text_input_safe_item_password" rows="1" cols="38"
+                                  defaultValue={this.props.info !== undefined ? this.props.info.password : ""}
+                                  required></textarea>
+                        <br/>
+                        <textarea className="text_input_safe_item" placeholder="Url" id="text_input_safe_item_url"
+                                  rows="1" cols="38"
+                                  defaultValue={this.props.info !== undefined ? this.props.info.url : ""}></textarea>
+                        <br/>
+                        <textarea className="text_input_safe_item" placeholder="Description..."
+                                  id="text_input_safe_item_description" rows="4" cols="38"
+                                  defaultValue={this.props.info !== undefined ? this.props.info.description : ""}></textarea>
+                        <br/>
+                        <button id="btn_modify_safe_item" type="submit">
+                            <b>{this.state.loading ? "Saving" : "Save"}</b>
+                        </button>
+                        <button id="btn_cancel" type="button" onClick={() => this.setState({redirect: true})}>
+                            <b>Cancel</b>
+                        </button>
                     </div>
-                );
+                </form>
+            </div>
 
         return contents;
     }
@@ -93,7 +107,13 @@ export class AddEditSafeItem extends Component {
                 'ApiKey': process.env.REACT_APP_API_KEY,
                 'AccessToken': window.localStorage.getItem("AccessToken")
             },
-            body: JSON.stringify({ title: titleEncrypted, login: loginEncrypted, password: passwordEncrypted, url: urlEncrypted, description: descriptionEncrypted })
+            body: JSON.stringify({
+                title: titleEncrypted,
+                login: loginEncrypted,
+                password: passwordEncrypted,
+                url: urlEncrypted,
+                description: descriptionEncrypted
+            })
         };
 
         //make request and get response

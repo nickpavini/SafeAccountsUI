@@ -1,5 +1,8 @@
 #input_text_safe_search {
     width: 100%;
+    border-radius: 5px;
+    padding-left: 10px;
+    border: none;
     resize: none;
 }
 
@@ -10,10 +13,9 @@
     }
 
     #input_text_safe_search {
-        width: 100px;
         font-size: 12px;
         border: none;
-        background-color: grey !important;
+        background-color: #e2d9d9 !important;
         border-radius: 5px;
     }
 
@@ -25,4 +27,15 @@
         outline: none;
         border: none;
     }
+}
+
+#div_search_container {
+    position: relative;
+}
+
+#icon_search {
+    position: absolute;
+    right: 10px;
+    color: #736c6c;
+    top: 5px;
 }

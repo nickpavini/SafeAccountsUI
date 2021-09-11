@@ -20,7 +20,7 @@ export class Safe extends Component {
          // set to hold the ids of which items are currently selected
         this.state = {
             redirect: false, toUrl: null
-        }; 
+        };
 
         // function binding
         this.AddSafeItem = this.AddSafeItem.bind(this);

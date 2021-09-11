@@ -37,6 +37,17 @@
     padding: 2px 0px 4px 0px;
 }
 
+#btn_cancel {
+    margin-top: 10px;
+    width: 100%;
+    color: white;
+    cursor: pointer;
+    background: black;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 2px 0px 4px 0px;
+}
+
 @media (max-width: 500px) {
 
     #lbl_add_edit_item {
