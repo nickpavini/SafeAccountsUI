@@ -35,7 +35,10 @@ export async function AttempRefresh() {
         return loginRes.id;
     }
     else {
-        window.localStorage.removeItem("UserKey"); // if cookies are no longer valid, lets delete the key
+        // if refresh fails, lets delete the key and tokens
+        window.localStorage.removeItem("UserKey");
+        window.localStorage.removeItem("AccessToken");
+        window.localStorage.removeItem("RefreshToken");
         return null;
     }
 }
