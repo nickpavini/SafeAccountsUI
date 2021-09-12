@@ -87,9 +87,7 @@ export class Login extends Component {
             this.props.UpdateUserLoggedIn(loginRes.id);
         }
         else {
-            this.setState({errorMessage: "Invalid email or password"})
+            this.setState({ errorMessage: "Invalid email or password", loading: false });
         }
-
-        this.setState({ loading: false });
     }
 }
