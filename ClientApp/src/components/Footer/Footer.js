@@ -1,4 +1,6 @@
 ﻿import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { faCopyright } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './Footer.css';
@@ -37,7 +39,9 @@ export class Footer extends Component {
     footerLoggedOutDesktop() {
         return (
             <div className="div_footer" style={{ height: this.props.height }} >
+                <div id="div_terms_of_service_link"><NavLink to="/terms" tag={Link} id="footer_navlinks"><u>Terms</u></NavLink></div>
                 <div id="div_copyright"><FontAwesomeIcon icon={faCopyright} /><span id="span_copyright">2021 Safe Accounts</span></div>
+                <div id="div_contact_us_link"><span><u>Contact</u></span></div>
             </div >
         );
     }
@@ -45,7 +49,9 @@ export class Footer extends Component {
     footerLoggedOutMobile() {
         return (
             <div className="div_footer" style={{ height: this.props.height }} >
+                <div id="div_terms_of_service_link"><NavLink to="/terms" tag={Link} id="footer_navlinks"><u>Terms</u></NavLink></div>
                 <div id="div_copyright"><FontAwesomeIcon icon={faCopyright} /><span id="span_copyright">2021 Safe Accounts</span></div>
+                <div id="div_contact_us_link"><span><u>Contact</u></span></div>
             </div >
         );
     }
@@ -61,7 +67,9 @@ export class Footer extends Component {
     footerLoggedInDesktop() {
         return (
             <div className="div_footer" style={{ height: this.props.height }} >
+                <div id="div_terms_of_service_link"><NavLink to="/terms" tag={Link} id="footer_navlinks"><u>Terms</u></NavLink></div>
                 <div id="div_copyright"><FontAwesomeIcon icon={faCopyright} /><span id="span_copyright">2021 Safe Accounts</span></div>
+                <div id="div_contact_us_link"><span><u>Contact</u></span></div>
             </div >
         );
     }
@@ -69,7 +77,9 @@ export class Footer extends Component {
     footerLoggedInMobile() {
         return (
             <div className="div_footer" style={{ height: this.props.height }} >
+                <div id="div_terms_of_service_link"><NavLink to="/terms" tag={Link} id="footer_navlinks"><u>Terms</u></NavLink></div>
                 <div id="div_copyright"><FontAwesomeIcon icon={faCopyright} /><span id="span_copyright">2021 Safe Accounts</span></div>
+                <div id="div_contact_us_link"><span><u>Contact</u></span></div>
             </div >
         );
     }

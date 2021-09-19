@@ -5,12 +5,29 @@
     border-top: 1px solid black;
     text-align: center;
     border-top: .5px solid lightgray;
+    display: flex;
+    justify-content: center;
+}
+
+#footer_navlinks {
+    padding-right: 0px !important;
+    color: grey;
 }
 
 #div_copyright {
     margin-top: 13px;
+    margin-left: 20px;
 }
 
 #span_copyright {
     margin-left: 5px;
+}
+
+#div_terms_of_service_link {
+    margin-top: 13px;
+}
+
+#div_contact_us_link {
+    margin-left: 20px;
+    margin-top: 13px;
 }

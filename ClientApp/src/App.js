@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout/Layout.js';
 import { Home } from './components/Home/Home';
+import { TermsAndConditions } from './components/TermsAndConditions/TermsAndConditions';
 import { SignUp } from './components/SignUp/SignUp';
 import { Login } from './components/Login/Login';
 import { DashBoard } from './components/DashBoard/DashBoard.js';
@@ -116,6 +117,9 @@ class AppComponent extends Component {
                             ) : (
                                     <Home />
                                 )
+                        )} />
+                        <Route exact path='/terms' render={() => (
+                            <TermsAndConditions />
                         )} />
                         <Route path='/login' render={() => (
                             this.state.loggedIn ? (

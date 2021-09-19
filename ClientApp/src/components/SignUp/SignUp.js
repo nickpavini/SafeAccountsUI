@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './SignUp.css';
 
 export class SignUp extends Component {
@@ -43,6 +45,9 @@ export class SignUp extends Component {
                             <input className="text_input_signup" type="password" placeholder="Password" id="text_input_signup_pass" size="35" required></input>
                             <br />
                             {this.state.errorMessage && <p className='error_message'>{this.state.errorMessage}</p>}
+                            <div id="div_signup_agreement">
+                                <span id="span_signup_agreement">By signing up you agree to our <NavLink to="/terms" tag={Link} ><u>Terms and Conditions</u></NavLink></span>
+                            </div>
                             <button id="btn_signup" type="submit">Sign Up</button>
                         </div>
                     </form>

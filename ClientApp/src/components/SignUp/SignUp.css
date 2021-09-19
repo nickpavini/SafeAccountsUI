@@ -53,6 +53,10 @@
     margin-bottom: 10px;
 }
 
+#div_signup_agreement {
+    width: 300px;
+}
+
 #btn_signup {
     margin-top: 20px;
     background: none !important;
