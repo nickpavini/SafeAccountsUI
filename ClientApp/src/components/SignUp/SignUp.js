@@ -9,13 +9,20 @@ export class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            signedUp: false,
+            signedUp: false, loading: false,
             errorMessage: null
         };
         this.SignUp = this.SignUp.bind(this); // bind sign up function
     }
 
     render() {
+        if (this.state.loading)
+            return (
+                <div className="div_signup_container">
+                    <div className="loader"></div>
+                </div>
+            );
+
         // just as a place holder we are displaying the sign up response
         if (this.state.signedUp)
             return (
@@ -69,6 +76,7 @@ export class SignUp extends Component {
             return;
         }
 
+        this.setState({ loading: true }); // set as loading
         var firstname = event.target.text_input_signup_firstname.value;
         var lastname = event.target.text_input_signup_lastname.value;
         var email = event.target.text_input_signup_email.value;
@@ -83,12 +91,12 @@ export class SignUp extends Component {
         const response = await fetch(process.env.REACT_APP_WEBSITE_URL + '/users', requestOptions);
         if (response.ok) {
             // successful signup
-            this.setState({ signedUp: true });
+            this.setState({ signedUp: true, loading: false });
         }
         else {
             // capture the error message in state for displaying or handling
             const responseText = await response.json();
-            this.setState({ error: true, errorMessage: responseText.message });
+            this.setState({ error: true, errorMessage: responseText.message, loading: false });
         }
     }
 }
