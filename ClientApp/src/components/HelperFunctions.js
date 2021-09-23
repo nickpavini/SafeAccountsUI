@@ -211,7 +211,7 @@ export async function PostSafeItem(encryptedItemToAdd, AppState) {
 
         // dont recall if the refresh didnt succeed
         if (uid !== null)
-            PostSafeItem(encryptedItemToAdd, AppState); // call again
+            return await PostSafeItem(encryptedItemToAdd, AppState); // call again
     }
     // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
     else {
