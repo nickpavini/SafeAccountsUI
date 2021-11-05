@@ -3,7 +3,7 @@ import { NavbarBrand, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { faAlignLeft, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ReactComponent as LogoSvg } from '../../Assets/logo.svg';
+import LogoSvg  from '../../Assets/logo.png';
 import { OpenNavbarAccountMenu } from '../HelperFunctions.js'
 import './NavMenu.css';
 
@@ -35,10 +35,25 @@ export class NavMenu extends Component {
             return <NavbarBrand tag={Link} to="/" style={{ marginLeft: marginLeft }}><LogoSvg id="svg_navmenu_logo" fill="#000" /></NavbarBrand>;
     }
 
-    // html for a basic navbar when logged out
+    // html for a basic navbar when logged out <LogoSvg id="svg_navmenu_logo" fill="#000" />
     navbarLoggedOut() {
-
         return (
+            <div id="nav-logged-out" style={{ height: this.props.height }}>
+                <nav className="div-navbar-items-logged-out">
+                    <div className="nav-logo">
+                        <NavbarBrand tag={Link} to="/" style={{ marginLeft: '0px' }}>
+                            <img src={LogoSvg} width="45px" height="45px" style={{ marginLeft: '20px', verticalAlign: 'middle'}} />
+                        </NavbarBrand>
+                        <p>Safe Accounts</p>
+                    </div>
+                    <div class="nav-menu-lo">
+                        <button className="btn draw-border"><NavLink to="/">Login</NavLink></button>
+                        <button className="btn draw-border" id="sign-up"><NavLink to="/">Sign Up</NavLink></button>
+                    </div>
+                </nav>
+            </div>
+        );
+       /* return (
             <div id="div_navbar" style={{ height: this.props.height }}>
                 <div className="div_navbar_items">
                     {this.RenderNameOrIcon()}
@@ -46,7 +61,7 @@ export class NavMenu extends Component {
                     <NavLink id="navlinks" tag={Link} to="/signup">Sign Up</NavLink>
                 </div>
             </div>
-        );
+        );*/
     }
 
     // html for a basic navbar when loggedIn

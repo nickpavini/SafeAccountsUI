@@ -1,0 +1,132 @@
+#morals h1{
+    font-size: 50px;
+    font-family: 'Coolvetica';
+    color: #142036;
+    padding-left: 30px;
+    padding-bottom: 200px;
+}
+
+#morals .bottom-container{
+    display: grid;
+    margin-left: -400px;
+    grid-template-columns: repeat(3,1fr);
+    padding-left: 230px;
+    padding-right: 100px;
+    grid-auto-rows: 120px;
+    padding-top: 20px;
+}
+
+#morals h4{
+    margin-top:100px;
+    padding-left: 30px;
+    font-size: 35px;
+    font-family: 'Coolvetica';
+    color: #142036;
+}
+
+
+
+#morals h3{
+    font-size: 35px;
+    font-family: 'Coolvetica';
+    color: #ffffff;
+    padding-left:40px;
+    white-space: nowrap;
+}
+
+#morals p{
+    font-size: 20px;
+    font-family: 'Lato';
+    color: #ffffff;
+    padding-left:40px;
+    text-align: left;
+}
+
+#morals .container{
+    margin-top: -130px;
+    background: rgb(91, 147, 192);
+    margin-bottom: 150px;
+    border-radius: 40px;
+}
+
+#morals .col{
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+
+#morals img{
+    padding-left:40px;
+    padding-bottom: 40px;
+}
+
+#morals h5{
+    text-align: center;
+    font-size: 25px;
+    font-family: 'Coolvetica';
+    color: #ffffff;
+    padding-top: 0px;
+    white-space: nowrap;
+}
+
+.container1{
+    grid-column-start:1;
+    grid-column-end:3;
+    grid-row-start:1;
+    grid-row-end:3;
+}
+
+.container2{
+    grid-column-start:3;
+    grid-column-end:5;
+    grid-row-start:1;
+    grid-row-end:3;
+}
+
+
+
+@media screen and (max-width: 960px){
+    #morals .bottom-container{
+        margin-left: -200px;
+        padding-left: 180px;
+        padding-top: 20px;
+    }
+}
+
+
+@media screen and (max-width: 800px){
+
+    
+    #morals .bottom-container{
+        margin-left: -100px;
+        grid-template-columns: repeat(1,1fr);
+    }
+
+
+    .container1{
+
+        grid-column-start:1;
+        grid-column-end:3;
+        grid-row-start:1;
+        grid-row-end:3;
+    }
+    
+    .container2{
+        grid-column-start:1;
+        grid-column-end:3;
+        grid-row-start:3;
+        grid-row-end:5;
+    }
+}
+
+
+
+@media screen and (max-width: 400px){
+    #morals h1{
+        font-size: 40px;
+        
+    }
+
+    #morals .bottom-container{
+        margin-left: -140px;
+    }
+}
