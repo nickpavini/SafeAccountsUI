@@ -3,7 +3,6 @@ import './Starter.css';
 import { Container, Row, Col } from 'reactstrap';
 import starter from '../../../Assets/img/start.png'
 import { motion } from 'framer-motion';
-import { Link} from 'react-scroll';
 
 const Starter = () => {
 
