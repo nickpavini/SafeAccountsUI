@@ -1,0 +1,188 @@
+
+@font-face {
+    font-family: 'Coolvetica';
+    src: url('../../../Assets/fonts/coolvetica rg.ttf') format('ttf');
+}
+
+
+#starter img{
+    margin-top:-70px;
+    width: 110%;
+    height: auto;
+}
+
+#full{
+    width: 100%;
+    background-color: #142036;
+    height: 800px ;
+    padding-top: 100px;
+    margin-top: -30px;
+}
+
+#starter .row{
+    margin-top: -20px;
+}
+#starter h1 {
+    font-size: 40px;
+    font-family: 'Coolvetica';
+    color: #f0f2ac;
+    padding-top: 50px;
+}
+
+#starter p{
+    
+    font-size: 30px;
+    font-family: 'Lato';
+    color: white;
+}
+
+.button {
+    --offset: 10px;
+    --border-size: 2px;
+    display: block;
+    position: relative;
+    padding: 1.1em 3em;
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: #fcba03;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    outline: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 0;
+    box-shadow: inset 0 0 0 var(--border-size) currentcolor;
+    transition: background 0.8s ease;
+    font-family: 'CoolVetica';
+    margin-top: 20px;
+}
+
+    .button:hover {
+        background: rgba(100, 0, 0, .03);
+    }
+
+.button__horizontal, .button__vertical {
+    position: absolute;
+    top: var(--horizontal-offset, 0);
+    right: var(--vertical-offset, 0);
+    bottom: var(--horizontal-offset, 0);
+    left: var(--vertical-offset, 0);
+    transition: transform 0.8s ease;
+    will-change: transform;
+}
+
+    .button__horizontal::before, .button__vertical::before {
+        content: '';
+        position: absolute;
+        border: inherit;
+    }
+
+.button__horizontal {
+    --vertical-offset: calc(var(--offset) * -1);
+    border-top: var(--border-size) solid currentcolor;
+    border-bottom: var(--border-size) solid currentcolor;
+}
+
+    .button__horizontal::before {
+        top: calc(var(--vertical-offset) - var(--border-size));
+        bottom: calc(var(--vertical-offset) - var(--border-size));
+        left: calc(var(--vertical-offset) * -1);
+        right: calc(var(--vertical-offset) * -1);
+    }
+
+.button:hover .button__horizontal {
+    transform: scaleX(0);
+}
+
+.button__vertical {
+    --horizontal-offset: calc(var(--offset) * -1);
+    border-left: var(--border-size) solid currentcolor;
+    border-right: var(--border-size) solid currentcolor;
+}
+
+    .button__vertical::before {
+        top: calc(var(--horizontal-offset) * -1);
+        bottom: calc(var(--horizontal-offset) * -1);
+        left: calc(var(--horizontal-offset) - var(--border-size));
+        right: calc(var(--horizontal-offset) - var(--border-size));
+    }
+
+.button:hover .button__vertical {
+    transform: scaleY(0);
+}
+
+
+#wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  @media screen and (max-width:970px){
+    #starter h1{
+        padding-top: 20px;
+    }
+}
+
+@media screen and (max-width:850px){
+
+    #starter img{
+        width: 400px;
+        height: 400px;
+        margin-left: -30px;
+        margin-bottom: -100px;
+        margin-top: -80px;
+    }
+
+    #starter h1{
+        font-size: 2.5rem;
+        margin-top: -80px;
+    }
+
+    #starter p{
+        font-size: 1.5rem;
+    }
+
+    #full{
+        height: 600px;
+    }
+    #explore{
+        font-size: 1rem;
+    }
+}
+
+
+
+ @media screen and (max-width:680px){
+    #starter h1{
+        font-size: 2rem;
+        padding-top: 0px;
+        margin-top: 0px;
+    }
+
+    #starter p{
+        font-size: 1rem;
+    }
+
+    #explore{
+        font-size: 1rem;
+    }
+
+    .button {
+        font-size: 10px;
+    }
+
+}
+
+
+@media screen and (max-width:400px){
+
+    #starter img{
+        width: 350px;
+        height: 400px;
+    }
+}
+
+

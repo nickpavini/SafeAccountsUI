@@ -1,0 +1,202 @@
+
+@font-face {
+    font-family: 'Coolvetica';
+    src: url('../../../Assets/fonts/coolvetica rg.ttf') format('ttf');
+}
+
+.con {
+    display: grid;
+    overflow: hidden;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 15px;
+    padding: 15px;
+    background: black;
+    border-radius: 30px;
+}
+
+.horizontal__text {
+    background-color: rgb(18, 34, 49);
+    color: rgb(255, 255, 255);
+    font-family: 'Coolvetica';
+    font-size: 3rem;
+}
+
+.points {
+    margin-left:-40px;
+    margin-top:10px;
+
+}
+#about ul {
+    width: 250px;
+    height: 250px;
+    margin-top: 70px;
+    margin-left: 70px;
+    margin-right: 200px;
+    margin-bottom: 120px;
+}
+
+
+/* Safe image */
+/*#about #safe {
+    position: absolute;
+    top:300px;
+    right: 30px;
+    width: 500px;
+    height: 400px;
+    z-index: -1;
+    margin-top: -20px;
+}*/
+
+.safe-containter {
+    display: grid;
+    float: right;
+
+}
+
+.layer1, .layer2 {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+
+#about li {
+    font-family: 'Lato';
+    font-size: 20px;
+    margin-left: 50px;
+    padding: 5px;
+    list-style: none;
+}
+
+#about li::before {
+    content: "\00BB";
+}
+
+
+
+
+#about hr {
+    width: 700px;
+    left: 0px;
+    background-image: linear-gradient(90deg, rgba(7,56,120,1) 0%, rgba(165,173,184,1) 100%);
+    margin: 0;
+    border: 4px;
+    height: 10px;
+}
+
+
+#about h1 {
+    font-size: 50px;
+    font-family: 'Coolvetica';
+    color: #142036;
+    padding-left: 30px;
+}
+
+
+#about h4 {
+    margin-top: 100px;
+    padding-left: 30px;
+    font-size: 35px;
+    font-family: 'Coolvetica';
+    color: #142036;
+}
+
+#about p {
+    padding-left: 30px;
+    font-size: 30px;
+    font-family: 'Lato';
+    color: #142036;
+}
+
+
+
+
+
+@media screen and (max-width:600px) {
+
+    #about p {
+        padding-top: 280px;
+    }
+    /* social media icon sizes*/
+    #about img {
+        width: 55px;
+        height: 55px;
+    }
+
+    .no-icons {
+        display: none;
+    }
+
+    /* Black box of icons*/
+    #about ul {
+        width: 155px;
+        height: 170px;
+        margin-left:190px;
+        margin-top: 8px;
+        margin-bottom: 69px;
+    }
+    .layer2 {
+    margin-right:40px;
+    margin-left:-15px;
+    }
+    .con {
+        display: grid;
+        overflow: hidden;
+        list-style: none;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 15px;
+        padding-top: 25px;
+        top: 4px;
+        background: black;
+        border-radius: 30px;
+
+    }
+
+    /* Safe image */
+    #about #safe {
+        width: 320px;
+        height: 250px;
+        z-index: -1;
+        margin-top: -20px;
+    }
+
+    #about hr {
+        width: 300px;
+        left: 0px;
+        background-image: linear-gradient(90deg, rgba(7,56,120,1) 0%, rgba(165,173,184,1) 100%);
+        margin: 0;
+        border: 4px;
+        height: 10px;
+    }
+
+    .layer2 {
+        margin-right: 20px;
+        margin-left: -150px;
+    }
+}
+
+
+
+@media screen and (max-width:475px) {
+
+    .layer2 {
+    margin-right:20px;
+    margin-left:-150px;
+    width:400px;
+    }
+
+
+    .safe-containter {
+    margin-left:20px;
+    float:none;
+    }
+    #about ul {
+        margin-bottom: 0px;
+    }
+
+    #about p {
+        padding-top: 100px;
+    }
+}
+

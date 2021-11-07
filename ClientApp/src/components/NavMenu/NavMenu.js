@@ -35,16 +35,20 @@ export class NavMenu extends Component {
             return <NavbarBrand tag={Link} to="/" style={{ marginLeft: marginLeft }}><LogoSvg id="svg_navmenu_logo" fill="#000" /></NavbarBrand>;
     }
 
-    // html for a basic navbar when logged out
+    // html for a basic navbar when logged out <LogoSvg id="svg_navmenu_logo" fill="#000" />
     navbarLoggedOut() {
-
         return (
-            <div id="div_navbar" style={{ height: this.props.height }}>
-                <div className="div_navbar_items">
-                    {this.RenderNameOrIcon()}
-                    <NavLink id="navlinks" tag={Link} to="/login">Login</NavLink>
-                    <NavLink id="navlinks" tag={Link} to="/signup">Sign Up</NavLink>
-                </div>
+            <div id="nav-logged-out" style={{ height: this.props.height }}>
+                <nav className="div-navbar-items-logged-out">
+                    <div className="nav-logo">
+                        <NavbarBrand tag={Link} to="/"><LogoSvg id="svg_navmenu_logo" fill="#000" /></NavbarBrand>
+                        <p>Safe Accounts</p>
+                    </div>
+                    <div class="nav-menu-lo">
+                        <button className="btn draw-border"><NavLink tag={Link} to="/login">Login</NavLink></button>
+                        <button className="btn draw-border" id="home_btn_sign_up"><NavLink tag={Link} to="/signup">Sign Up</NavLink></button>
+                    </div>
+                </nav>
             </div>
         );
     }
