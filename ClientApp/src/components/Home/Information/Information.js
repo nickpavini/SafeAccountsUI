@@ -64,7 +64,7 @@ const Information = () => {
 
                     <motion.div className="box1" variants={fadeBottom}>
 
-                        <h5 className="heading">Prevent Thief ♘</h5>
+                        <h5 className="heading">Prevent Theft ♘</h5>
            
                         <p>
                             Over the past decades, cyber attacks have stolen over a million of 
