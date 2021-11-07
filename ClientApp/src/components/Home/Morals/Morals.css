@@ -3,8 +3,17 @@
     font-family: 'Coolvetica';
     color: #142036;
     padding-left: 30px;
-    padding-bottom: 200px;
 }
+
+#morals hr {
+    width: 700px;
+    left: 0px;
+    background-image: linear-gradient(90deg, rgba(7,56,120,1) 0%, rgba(165,173,184,1) 100%);
+    margin: 0;
+    border: 4px;
+    height: 10px;
+}
+
 
 #morals .bottom-container{
     display: grid;
@@ -29,7 +38,7 @@
 #morals h3{
     font-size: 35px;
     font-family: 'Coolvetica';
-    color: #ffffff;
+    color: #000;
     padding-left:40px;
     white-space: nowrap;
 }
@@ -37,16 +46,14 @@
 #morals p{
     font-size: 20px;
     font-family: 'Lato';
-    color: #ffffff;
+    color: #000;
     padding-left:40px;
     text-align: left;
 }
 
 #morals .container{
-    margin-top: -130px;
-    background: rgb(91, 147, 192);
+    margin-top: 100px;
     margin-bottom: 150px;
-    border-radius: 40px;
 }
 
 #morals .col{
@@ -115,6 +122,15 @@
         grid-column-end:3;
         grid-row-start:3;
         grid-row-end:5;
+    }
+
+    #morals hr {
+        width: 300px;
+        left: 0px;
+        background-image: linear-gradient(90deg, rgba(7,56,120,1) 0%, rgba(165,173,184,1) 100%);
+        margin: 0;
+        border: 4px;
+        height: 10px;
     }
 }
 
