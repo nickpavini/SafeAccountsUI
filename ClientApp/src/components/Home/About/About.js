@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react'
+import React from 'react'
 import './About.css';
 import safe from '../../../Assets/img/safe.png';
 
@@ -119,12 +119,12 @@ const About = () => {
                          <motion.img  src={YT} variants={item} />
                          <motion.img  src={WA} variants={item} />
                          <motion.img  src={SC}  variants={item} />
-                         <motion.img  class="no-icons"src={AM} variants={item} />
-                         <motion.img  class="no-icons" src={reddit} variants={item} />
-                         <motion.img  class="no-icons" src={twitter} variants={item} />
-                         <motion.img  class="no-icons" src={IN} variants={item} />
-                         <motion.img  class="no-icons" src={discord}  variants={item} />
-                         <motion.img  class="no-icons" src={SC}  variants={item} />
+                         <motion.img  className="no-icons"src={AM} variants={item} />
+                         <motion.img  className="no-icons" src={reddit} variants={item} />
+                         <motion.img  className="no-icons" src={twitter} variants={item} />
+                         <motion.img  className="no-icons" src={IN} variants={item} />
+                         <motion.img  className="no-icons" src={discord}  variants={item} />
+                         <motion.img  className="no-icons" src={SC}  variants={item} />
             </motion.ul>
             </div>
 

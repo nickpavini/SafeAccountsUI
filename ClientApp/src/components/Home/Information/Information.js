@@ -105,7 +105,7 @@ const Information = () => {
                     </motion.div>
                     
                     <motion.div className="box5" variants={fadeTop}>
-                        <img id="hacker" src = {hacker}/>
+                        <img id="hacker" alt="" src = {hacker}/>
                     </motion.div>
                 </motion.div>
             </div>

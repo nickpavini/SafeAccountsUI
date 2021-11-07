@@ -82,7 +82,7 @@ const Morals = () => {
                             <Col>
                                 <motion.div
                                 variants={fadeLeft}>
-                                <img src={Accountability}/>
+                                <img alt="" src={Accountability}/>
                                 <h3>Free & Open Soruce!</h3>
                                 <p>Safe Accounts has 0 cost and all the code is available online for peer review.</p>
                                 </motion.div>
@@ -90,7 +90,7 @@ const Morals = () => {
                             <Col>
                                 <motion.div
                                 variants={fadeLeft}>
-                                <img src={Security}/>
+                                <img alt="" src={Security}/>
                                 <h3>Security</h3>
                                 <p>Our goal is assist in making everyone's online presence more secure and allow you to feel safe.</p>
                                 </motion.div>
@@ -98,7 +98,7 @@ const Morals = () => {
                             <Col>
                                 <motion.div
                                 variants={fadeLeft}>
-                                <img src={Privacy}/>
+                                <img alt="" src={Privacy}/>
                                 <h3>Privacy</h3>
                                 <p>We believe in your right to privacy. Safe accounts will never sell your email and does not track your online activity.</p>
                                 </motion.div>

@@ -44,7 +44,7 @@ export class NavMenu extends Component {
                         <NavbarBrand tag={Link} to="/"><LogoSvg id="svg_navmenu_logo" fill="#000" /></NavbarBrand>
                         <p>Safe Accounts</p>
                     </div>
-                    <div class="nav-menu-lo">
+                    <div className="nav-menu-lo">
                         <button className="btn draw-border"><NavLink tag={Link} to="/login">Login</NavLink></button>
                         <button className="btn draw-border" id="home_btn_sign_up"><NavLink tag={Link} to="/signup">Sign Up</NavLink></button>
                     </div>

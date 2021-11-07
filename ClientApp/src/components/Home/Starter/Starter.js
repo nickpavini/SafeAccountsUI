@@ -6,12 +6,6 @@ import { motion } from 'framer-motion';
 
 const Starter = () => {
 
-
-    const fadeBottom = {
-        hidden: { opacity: 0, y: 180 },
-        visible: { opacity: 1, y: 0 }
-    };
-
     const fadeLeft ={
         hidden: {opacity:0,x:-180},
         visible: {opacity:1,x:0}
@@ -60,8 +54,8 @@ const Starter = () => {
                         transition = {{duration:1}}  
                         className="button">
                                 Explore
-                        <div class="button__horizontal"></div>
-                        <div class="button__vertical"></div>
+                        <div className="button__horizontal"></div>
+                        <div className="button__vertical"></div>
                     </motion.button>*/}
 
                     </span>
