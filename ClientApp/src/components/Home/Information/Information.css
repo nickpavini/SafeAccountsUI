@@ -121,55 +121,58 @@
 
 
 @media screen and (max-width:1030px){
-
-    .why-wrapper{
+    .why-wrapper {
         grid-template-columns: repeat(3,1fr);
+        padding-bottom: 80px;
     }
 
     #why p{
         font-size: 20px;
     }
     
-.box1{
+    .box1{
 
-    grid-column-start:1;
-    grid-column-end:4;
-    grid-row-start:1;
-    grid-row-end:3;
-}
+        grid-column-start:1;
+        grid-column-end:4;
+        grid-row-start:1;
+        grid-row-end:3;
+    }
 
- .box2{
+    .box2{
 
-    grid-column-start:1;
-    grid-column-end:4;
-    grid-row-start:3;
-    grid-row-end:5;
-}
+        grid-column-start:1;
+        grid-column-end:4;
+        grid-row-start:3;
+        grid-row-end:5;
+    }
 
+    .box5{
+        grid-column-start:1;
+        grid-column-end:4;
+        grid-row-start:5;
+        grid-row-end:7;
+    }
 
-.box5{
-    grid-column-start:1;
-    grid-column-end:4;
-    grid-row-start:5;
-    grid-row-end:7;
-} 
+    #hacker {
+        width: 300px;
+        height: auto;
+    }
 
- .box3{
+    .box3 {
+        padding-top: 80px;
+        grid-column-start: 1;
+        grid-column-end: 4;
+        grid-row-start: 7;
+        grid-row-end: 9;
+    }
 
-    grid-column-start:1;
-    grid-column-end:4;
-    grid-row-start:10;
-    grid-row-end:12;
-}
-
- .box4{
-    grid-column-start:1;
-    grid-column-end:4;
-    grid-row-start:12;
-    grid-row-end:14;
-}
-
-    
+    .box4 {
+        padding-top: 40px;
+        grid-column-start: 1;
+        grid-column-end: 4;
+        grid-row-start: 9;
+        grid-row-end: 11;
+    }
 }
 
 
@@ -189,13 +192,15 @@
         border: 4px;
         height: 10px;
     }
+
     .why-wrapper{
         grid-template-columns: repeat(2,1fr);
         padding-bottom: 80px;
     }
+
     /* BOX5 HackerBox*/
     .box5{
-        padding-top: 20px;
+        padding-top: 15px;
         grid-column-start:1;
         grid-column-end:4;
         grid-row-start:5;
@@ -206,7 +211,7 @@
         height: auto;
     }
     
-     .box3{
+    .box3{
         padding-top: 10px;
         grid-column-start:1;
         grid-column-end:4;
@@ -214,7 +219,7 @@
         grid-row-end:9;
     }
     
-     .box4{
+    .box4{
         padding-top: 40px;
         grid-column-start:1;
         grid-column-end:4;
