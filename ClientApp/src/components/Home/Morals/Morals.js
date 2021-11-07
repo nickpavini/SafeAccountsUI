@@ -33,11 +33,6 @@ const Morals = () => {
         visible: {opacity:1}
     };
 
-    const fadeBottom = {
-        hidden: {opacity:0,y:180},
-        visible: {opacity:1,y:0}
-    };
-
     const container = {
         hidden: { opacity: 0, scale: 0 },
         visible: {
@@ -65,81 +60,53 @@ const Morals = () => {
                 animate={controls}
                 variants={fadeLeft}
                 transition = {{duration:1}}
-            > Company Morals</motion.h1>
+            >Company Morals</motion.h1>
 
-            <motion.div
-            initial="hidden"
-            animate={controls}
-            variants={fadeIn}
-            >
-            <Container>
-                <motion.div
-                       ref = {ref}
-                       initial="hidden"
-                       animate={controls}
-                       variants={container}
-                >
-                <Row>
-                    <Col>
-                    <motion.div
-                    variants={fadeLeft}>
-                    <img src={Accountability}/>
-                    <h3>Accountability</h3>
-                    <p>I like to eat eat eat apples and bannaas I like to ate ate ate apples and bananas</p>
-                    </motion.div>
-                    </Col>
-                    <Col>
-                    <motion.div
-                    variants={fadeLeft}>
-                    <img src={Security}/>
-                    <h3>Security</h3>
-                    <p>I like to eat eat eat apples and bannas I like to iat iat iat ipples and bininis</p>
-                    </motion.div>
-                </Col>
-                <Col>
-                    <motion.div
-                    variants={fadeLeft}>
-                    <img src={Privacy}/>
-                    <h3>Privacy</h3>
-                    <p>I like to eat eat eat apples and bannas I like to eat eat eat epples and benenes</p>
-                    </motion.div>
-                </Col>
-                </Row>
-                </motion.div>
-            </Container>
+            <motion.hr
+                initial="hidden"
+                animate={controls}
+                variants={fadeIn}
+                transition={{ duration: 2 }}
+            />
+            <br/>
 
+            <motion.div initial="hidden" animate={controls} variants={fadeIn}>
+                <Container>
+                    <motion.div
+                           ref = {ref}
+                           initial="hidden"
+                           animate={controls}
+                           variants={container}
+                    >
+                        <Row>
+                            <Col>
+                                <motion.div
+                                variants={fadeLeft}>
+                                <img src={Accountability}/>
+                                <h3>Free & Open Soruce!</h3>
+                                <p>Safe Accounts has 0 cost and all the code is available online for peer review.</p>
+                                </motion.div>
+                            </Col>
+                            <Col>
+                                <motion.div
+                                variants={fadeLeft}>
+                                <img src={Security}/>
+                                <h3>Security</h3>
+                                <p>Our goal is assist in making everyone's online presence more secure and allow you to feel safe.</p>
+                                </motion.div>
+                            </Col>
+                            <Col>
+                                <motion.div
+                                variants={fadeLeft}>
+                                <img src={Privacy}/>
+                                <h3>Privacy</h3>
+                                <p>We believe in your right to privacy. Safe accounts will never sell your email and does not track your online activity.</p>
+                                </motion.div>
+                            </Col>
+                        </Row>
+                    </motion.div>
+                </Container>
             </motion.div>
-
-
-{/*            <motion.div className= "bottom-container"
-            
-            variants={fadeBottom}
-            initial='hidden'
-            animate='visible'
-            transition = {{duration:1}}
-            >
-                    <Container className="container1" style = {{ display:"inline-block",width:"300px"}}>
-                        <Row>
-                        <Col>
-                            <h5>Free and Open Source</h5>
-                            <p>Safe Accounts has 0 cost and all of the code is available online for review.</p>
-                        </Col>
-                        </Row>
-                    </Container>
-            
-
-                    <Container className="container2" style = {{ display:"inline-block",width:"300px"}}>
-                        <Row>
-                        <Col>
-                            <h5>Simplicity on all platforms</h5>
-                            <p>Saving and accessing your passwords on all your devices is safe and easy.</p>
-                        </Col>
-                        </Row>
-                    </Container>
-              
-            </motion.div>*/}
-
-
         </div>
     )
 }
