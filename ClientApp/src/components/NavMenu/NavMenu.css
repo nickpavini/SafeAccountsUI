@@ -1,4 +1,4 @@
-﻿
+
 @font-face {
     font-family: 'Coolvetica';
     src: url('../../Assets/fonts/coolvetica rg.ttf') format('truetype');
@@ -14,24 +14,14 @@
     position:fixed;
     top:6px;
 }
-/*SA Logo */
-/*.nav-logo img {
-    margin-left: 30px;
-    vertical-align: middle;
-    padding-right: 0px;
-    margin-right: -20px;
-    margin-top: 12px;
-}*/
-
 
 /*SA Logo Text*/
 .nav-logo p {
-    margin-left: 18px;
+    margin-left: 10px;
     padding-bottom: 0px;
     margin-top: 9px;
     position: absolute;
-    padding-left: 40px;
-    font-family: 'Secular One', sans-serif;
+    padding-left: 30px;
     font-size: 25px;
     display: inline;
     white-space: nowrap;
@@ -134,7 +124,7 @@
         color: rgb(190, 164, 12);
 }
 
-#sign-up {
+#home_btn_sign_up {
     margin-left: 40px;
 }
 
@@ -145,35 +135,8 @@
     list-style: none;
     text-align: center;
     justify-content: end;
-    padding-right: 90px;
+    padding-right: 70px;
 }
-
-
-@media screen and (max-width:730px) {
-    #nav-logged-out p {
-        display: none;
-    }
-}
-
-@media screen and (max-width:530px) {
-
-
-    #sign-up {
-        margin-right: -15px;
-        margin-left: 15px;
-    }
-
-    .nav-menu-lo {
-        padding-right: 30px;
-    }
-}
-
-
-
-
-
-
-
 
 #div_navbar {
     background-color: #28282B;
@@ -193,8 +156,10 @@
 }
 
 #svg_navmenu_logo {
-    height: 35px;
-    width: 35px;
+    height: 45px;
+    width: 45px;
+    margin-left: 30px;
+    margin-top: 3px;
 }
 
 #navlinks {
@@ -226,7 +191,15 @@ html {
   font-size: 16px;
 }
 
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
 @media (max-width: 800px) {
+    #nav-logged-out p {
+        display: none;
+    }
+
     #navlinks {
         font-size: 14px;
     }
@@ -238,10 +211,28 @@ html {
 
     .navbar-brand {
         float: left;
-       
+    }
+
+    #svg_navmenu_logo {
+        height: 35px;
+        width: 35px;
+        margin-left: 20px;
+    }
+
+    .nav-menu-lo {
+        padding-right: 30px;
     }
 }
 
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+@media screen and (max-width:530px) {
+
+
+    #home_btn_sign_up {
+        margin-right: -15px;
+        margin-left: 15px;
+    }
+
+    .nav-menu-lo {
+        padding-right: 30px;
+    }
 }
