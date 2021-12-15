@@ -11,6 +11,7 @@ import { Account } from './components/Account/Account';
 import { SafeSideBar } from './components/SafeSideBar/SafeSideBar';
 import { AddEditSafeItem } from './components/AddEditSafeItem/AddEditSafeItem';
 import { EmailConfirmation } from './components/EmailConfirmation/EmailConfirmation.js';
+import { EmailChange } from './components/EmailChange/EmailChange.js';
 import { DecryptFolders, DecryptSafe, AttempRefresh } from './components/HelperFunctions.js'
 import './custom.css'
 
@@ -141,6 +142,16 @@ class AppComponent extends Component {
                             ) : (
                                     <EmailConfirmation />
                                 )
+                        )} />
+                        <Route path='/emailchange' render={() => (
+                            !this.state.loggedIn ? (
+                                <Redirect to="/login" />
+                            ) : (
+                                <EmailChange
+                                    AppState={this.state}
+                                    SetAppState={this.SetAppState}
+                                />
+                            )
                         )} />
                         <Route path='/dashboard' render={() => (
                             this.state.loggedIn ? (

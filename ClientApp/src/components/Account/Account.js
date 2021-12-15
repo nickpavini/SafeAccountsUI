@@ -82,7 +82,7 @@ export class Account extends Component {
                     <span className="acc_info_label">Last Name</span>
                     <div><span className="acc_info" id="acc_info_lastName" onBlur={() => this.BlurInfo("acc_info_lastName")}>{this.props.AppState.account_info.last_Name}</span><button className="btn_acc_info_edit" onClick={() => this.SetInfoEditable("acc_info_lastName")} /></div>
                     <span className="acc_info_label">Email</span>
-                    <div><span className="acc_info">{this.props.AppState.account_info.email}</span><button className="btn_acc_info_edit" onClick={null} /></div>
+                    <div><span className="acc_info" id="acc_info_email" onBlur={() => this.BlurInfo("acc_info_email")}>{this.props.AppState.account_info.email}</span><button className="btn_acc_info_edit" onClick={() => this.SetInfoEditable("acc_info_email")} /></div>
                 </div>
             </div>
         );
@@ -118,17 +118,24 @@ export class Account extends Component {
         // set url based on info to edit
         var url = process.env.REACT_APP_WEBSITE_URL + '/users/' + this.props.AppState.uid;
         var updatedAccInfo = this.props.AppState.account_info
+        var resetInfo = ''
         switch(infoToEdit) {
             case "firstName":
                 url += '/firstname';
                 updatedAccInfo.first_Name = info;
+                resetInfo = this.props.AppState.account_info.first_Name
                 break;
             case "lastName":
                 url += '/lastname';
                 updatedAccInfo.last_Name = info;
+                resetInfo = this.props.AppState.account_info.last_Name
+                break;
+            case "email":
+                url += '/email';
+                resetInfo = this.props.AppState.account_info.email
                 break;
             default:
-                break;
+                return;
         }
 
         // HTTP request options
@@ -157,7 +164,7 @@ export class Account extends Component {
         }
         // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
         else {
-            document.getElementById(id).innerHTML = infoToEdit === "firstName" ? this.props.AppState.account_info.first_Name : this.props.AppState.account_info.last_Name; // reset info if the api call failed
+            document.getElementById(id).innerHTML = resetInfo; // reset info if the api call failed
         }
 
     }
