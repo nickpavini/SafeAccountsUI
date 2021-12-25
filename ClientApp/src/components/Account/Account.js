@@ -82,7 +82,7 @@ export class Account extends Component {
                     <span className="acc_info_label">Last Name</span>
                     <div><span className="acc_info" id="acc_info_lastName" onBlur={() => this.BlurInfo("acc_info_lastName")}>{this.props.AppState.account_info.last_Name}</span><button className="btn_acc_info_edit" onClick={() => this.SetInfoEditable("acc_info_lastName")} /></div>
                     <span className="acc_info_label">Email</span>
-                    <div><span className="acc_info">{this.props.AppState.account_info.email}</span><button className="btn_acc_info_edit" onClick={null} /></div>
+                    <div><span className="acc_info" id="acc_info_email" onBlur={() => this.BlurInfo("acc_info_email")}>{this.props.AppState.account_info.email}</span><button className="btn_acc_info_edit" onClick={() => this.SetInfoEditable("acc_info_email")} /></div>
                 </div>
             </div>
         );
@@ -107,8 +107,8 @@ export class Account extends Component {
         document.getElementById(id).setAttribute("contentEditable", "false");
         var info = document.getElementById(id).innerHTML;
 
-        // check for name change, and set as needed
-        if (info !== this.props.AppState.account_info.first_Name) {
+        // check for change, and set as needed
+        if (info !== this.props.AppState.account_info.first_Name || info !== this.props.AppState.account_info.last_Name || info !== this.props.AppState.account_info.email) {
             this.EditInfo(id, id.replace("acc_info_", ""), info);
         }
     }
@@ -127,8 +127,9 @@ export class Account extends Component {
                 url += '/lastname';
                 updatedAccInfo.last_Name = info;
                 break;
-            default:
-                break;
+            case "email":
+                url += '/email';
+                updatedAccInfo.email = info;
         }
 
         // HTTP request options
@@ -157,7 +158,17 @@ export class Account extends Component {
         }
         // if not ok or unauthorized, then its some form of error. code 500, 400, etc...
         else {
-            document.getElementById(id).innerHTML = infoToEdit === "firstName" ? this.props.AppState.account_info.first_Name : this.props.AppState.account_info.last_Name; // reset info if the api call failed
+            // reset info if the api call failed
+            switch (infoToEdit) {
+                case "firstName":
+                    document.getElementById(id).innerHTML = this.props.AppState.account_info.first_Name;
+                    break;
+                case "lastName":
+                    document.getElementById(id).innerHTML = this.props.AppState.account_info.last_Name;
+                    break;
+                case "email":
+                    document.getElementById(id).innerHTML = this.props.AppState.account_info;
+            }
         }
 
     }
